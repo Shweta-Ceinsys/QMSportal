@@ -8,11 +8,15 @@ body,
   height: 100%;
   width: 100%;
   font-family: "Source Sans Pro", sans-serif;
+  margin:0;
+  /* background-color: #EBB4F0 */
+ 
 }
 
 .app {
   display: flex;
   position: relative;
+  /* background-color: #EBB4F0 */
 }
 
 ::-webkit-scrollbar {

@@ -1,47 +1,21 @@
 import React, { useState,useContext } from 'react';
 import './Login.css';
 // import { ColorModeContext, tokens,themeSettings } from "../../theme";
-import {  Button, Typography, Box, Modal, TextField,Link,useTheme,IconButton, InputAdornment, Alert, Grid, Paper} from '@mui/material';
+import {  Button, Typography, Box, Modal, TextField,Link,useTheme,IconButton, InputAdornment, Alert, Grid} from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-
-
-
 import ceinsysLogo from "../../images/Ceinsys.jpg"
-
-import AuthService from "../../Services/AuthService"
-
-// function Copyright(props) {
-//   return (
-//     <Typography 
-//     variant="body2" 
-//     color="text.secondary" 
-//     align="center" 
-//     style={{
-//       position: 'fixed',
-//       bottom: 0,
-//       right: 0,
-//       padding: '8px', // Adjust padding as needed
-//       color: 'white'
-//     }}
-//     {...props}
-//   >
-//     {'Copyright © www.ceinsys'}
-//     <Link color="inherit" href="#">
-//     </Link>{' '}
-//     {new Date().getFullYear()}
-//     {'.'}
-//   </Typography>
-//   );
-// }
+import AuthService from '../../Services/AuthService';
+import superadmin from '../../Services/superadmin';
 
 
-const Login = ({ onLoginClick }) => {
 
-  const mode = "light";
+
+
+const ForgotPassword = () => {
+
 
   let navigate = useNavigate();
 
@@ -64,6 +38,21 @@ const Login = ({ onLoginClick }) => {
     setIsModalOpen(false);
   };
 
+  const [params, setParams] = useState({
+    
+    email:"",
+    password:"",
+   
+    
+  });
+
+//   const handleChange = (e) => {
+//     const { name, value } = e.target;
+//     setParams((prevUser) => ({
+//       ...prevUser,
+//       [name]: value,
+//     }));
+//   };
 
   const onChangeUsername = (e) => {
     const email = e.target.value;
@@ -79,9 +68,30 @@ const Login = ({ onLoginClick }) => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
   };
 
+//   const handleSubmit = (event) => {
+//     event.preventDefault();
+//    try{
+//     if (params.email.trim().length === 0 && params.password.trim().length === 0) {
+//       toast.warning('Please Enter Credentials !');
+//     } else if (params.email.trim().length === 0 ) {
+//       toast.warning('Please Enter Username!');
+//     } else if (params.password.trim().length === 0) {
+//       toast.warning('Please Enter Password!');
+//     }else {
+//         const response = superadmin.forgetPassword(params);
+//      toast.success('Password changed Successfuly');
+//      navigate("/login")
+   
+// }}catch (error) {
+//     console.error("Error adding user:", error);
+//     toast.error("Failed to change password!");
+//   }
+    
+    
+//   };
   const handleSubmit = (event) => {
     event.preventDefault();
-   
+   try{
     if (email.trim().length === 0 && password.trim().length === 0) {
       toast.warning('Please Enter Credentials !');
     } else if (email.trim().length === 0 ) {
@@ -89,66 +99,53 @@ const Login = ({ onLoginClick }) => {
     } else if (password.trim().length === 0) {
       toast.warning('Please Enter Password!');
     }else {
-     
-      try {
-      AuthService.login(email, password).then(
-        () => {
-          const role = (sessionStorage.getItem("Role"));
-          console.log(role); 
-          if (role === "SUPER_ADMIN") {
-            navigate("/qmsLibrary")
-          } else if (role === "ADMIN") {
-            navigate("/user");
-          } else if (role === "USER") {
-            navigate("/user");
-          }  else {
-            toast.error('Invalid Role!'); 
-          } 
-        },
-        (error) => {
-          console.error('Login error:', error);
-          toast.error('Invalid Credentials!');
-          
-
-        }
-      );
-  } catch (error) {
-    toast.info('Unexpected Error!');
+        const response = AuthService.forgetPassword(email,password);
+     toast.success('Password changed Successfuly');
+     navigate("/login")
+   
+}}catch (error) {
+    console.error("Error adding user:", error);
+    toast.error("Failed to change password!");
   }
-}
     
     
   };
-
   return (
    
-    <div  className="app" style={{ backgroundColor: '#EEF0F6',  }}>
-  
-
-    <Grid container spacing={0} sx={{display:"flex",justifyContent:"center",alignContent:"center"}}>
-    <Grid item xs={false} sm={1} md={1} lg={2} xl={2} />
-      <Grid  item xs={12} sm={10} md={10} lg={8} xl={8} >
-        <Paper elevation={3} sx={{ backgroundColor:'#CDF0EA',  }}>
-          <Grid container spacing={0} >
-          <Grid item xs={false} sm={5} md={7} lg={7} xl={7} sx={{display:"flex",justifyContent:"center",alignItems:"center"}} >
-            <Box   textAlign={"center"} >
-              <h1 >
-                Welcome to Ceinsys 
-              </h1>
-              <h3 >
-                QMS Document Center
-              </h3>
-            </Box>
-            </Grid>
-            <Grid item xs={12} sm={7} md={5} lg={5} xl={5} >
-            <Box
+    <div  className="app" style={{ backgroundColor: '#F6F5F2', width: '100vw', height: '100vh' }}>
+    <Grid container spacing={0} sx={{ height: '100%' }}>
+      <Grid item xs={false} md={7} lg={8} xl={8} />
+      <Grid item xs={12} md={5} lg={4} xl={3} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <Box
           sx={{
             bgcolor: 'white',
+            // border: '2px solid #000',
+            boxShadow: 24,
             p: 4,
-        
+            width: '100%',
+            maxWidth: 400,
+            position: 'relative',
+            // Center the form in the middle of the page on mobile
+            '@media (max-width:400px)': {
+              position: 'static',
+              transform: 'none',
+              mx: 'auto',
+            }
           }}
         >
-          <Box  sx={{height:'100%'}}>
+          <Button
+            onClick={() => { handleCloseModal() }}
+            sx={{
+              position: 'absolute',
+              top: 0,
+              right: 0,
+              mt: 2,
+            }}
+          >
+            Close
+          </Button>
+
+          {/* Logo */}
           <div style={{ margin: '8px', textAlign: 'center' }}>
             <img 
               src= {ceinsysLogo}
@@ -158,7 +155,7 @@ const Login = ({ onLoginClick }) => {
           </div>
 
           <Typography variant="h5" component="h1" textAlign="center">
-            Sign In
+           Change Password?
           </Typography>
 
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
@@ -199,18 +196,13 @@ const Login = ({ onLoginClick }) => {
             />
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Button
-                onClick={handleSubmit}
+                // onClick={handleSubmit}
                 type="submit"
                 variant="contained"
                 sx={{
                   mt: 1,
-                  backgroundColor:"#CDF0EA",
-                  color:"black",
-                  "&:hover": {
-                    // Apply styles on hover
-                    backgroundColor:"#A4BCDB",
-                    boxShadow:
-                      "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                  '&:hover': {
+                    boxShadow: '0 0 10px 5px rgba(255, 255, 255, 0.5)',
                   },
                 }}
               >
@@ -218,39 +210,10 @@ const Login = ({ onLoginClick }) => {
               </Button>
               <ToastContainer />
             </div>
-            <div style={{ textAlign: 'center', marginTop: '8px' }}>
-              <Link href="/forgotPassword" variant="body2">
-                Forgot password?
-              </Link>
-            </div>
+           
           </Box>
-          </Box>
-          {/* <Button
-            onClick={() => { handleCloseModal() }}
-            sx={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              mt: 2,
-            }}
-          >
-            Close
-          </Button> */}
-
-        
-          
         </Box>
- 
-            </Grid>
-            
-          </Grid>
-
-
-        </Paper>
-
       </Grid>
-      <Grid item xs={false} sm={1} md={1} lg={2} xl={2} />
-
     </Grid>
   </div>
    
@@ -258,7 +221,7 @@ const Login = ({ onLoginClick }) => {
    
      
              
-  ); 
+  );
 };
 
-export default Login; 
+export default ForgotPassword;

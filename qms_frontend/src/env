@@ -1,3 +1,0 @@
-HTTPS=true
-SSL_CRT_FILE=./certs/server.crt
-SSL_KEY_FILE=./certs/server.key

@@ -16,21 +16,21 @@ class AuthService extends Component {
      })
      .then((response) => {
        if (response.data.jwt) {
-        console.log("We are Logged in");
+        // console.log("We are Logged in");
          
-        //  sessionStorage.setItem("UserId", response.data.id);
-        //  sessionStorage.setItem("Email", response.data.email);
-        //  sessionStorage.setItem("Name", response.data.name);
+         sessionStorage.setItem("UserId", response.data.id);
+         sessionStorage.setItem("Email", response.data.email);
+         sessionStorage.setItem("Name", response.data.name);
          
-        //  sessionStorage.setItem("Role", response.data.role);
-        //  sessionStorage.setItem("type", response.data.type);
-        //  sessionStorage.setItem("token", response.data.jwt);
-        //  sessionStorage.setItem("isLoggedIn", true);
-        //  console.log( sessionStorage.getItem("UserId"));
-        //  console.log( sessionStorage.getItem("Email"));
-        //  console.log( sessionStorage.getItem("Name"));
-        //  console.log( sessionStorage.getItem("Email"));
-        //  console.log( sessionStorage.getItem("Role"));
+         sessionStorage.setItem("Role", response.data.role);
+         sessionStorage.setItem("type", response.data.type);
+         sessionStorage.setItem("token", response.data.jwt);
+         sessionStorage.setItem("isLoggedIn", true);
+         console.log( sessionStorage.getItem("UserId"));
+         console.log( sessionStorage.getItem("Email"));
+         console.log( sessionStorage.getItem("Name"));
+         console.log( sessionStorage.getItem("Email"));
+         console.log( sessionStorage.getItem("Role"));
          
 
        }
@@ -63,6 +63,20 @@ class AuthService extends Component {
     }
   });
 }
+
+
+forgetPassword = (email,password) => {
+  return axios.post(URL + "forgetPassword",{
+      params: {
+          email:email ,
+          password:password
+      },
+      
+  });
+
+
+};
+
  }
  
  
