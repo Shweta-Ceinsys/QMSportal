@@ -1,4 +1,4 @@
-import { Box,  Button,  IconButton,  Tooltip,  Typography } from "@mui/material";
+import { Box,  Button,  Grid,  IconButton,  Tooltip,  Typography } from "@mui/material";
 import { useState, useEffect } from "react";
 import "./Card.css";
 import Fab from "@mui/material/Fab";
@@ -9,6 +9,7 @@ import { DataGrid } from "@mui/x-data-grid";
  import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import folderImage from  "../../../../images/folder.png"
 const Card = (props) => {
   const param = props;
   const imageURL = car;
@@ -19,24 +20,25 @@ const Card = (props) => {
   const userId = sessionStorage.getItem("UserId");
   // const [isLoading, setIsLoading] = useState(false);
  
-  const toggleTable = () => {
-    setOpen(!open);
-  };
+ 
+ 
 
 
   let navigate = useNavigate();
- const  handleNavigate =(id)=>{
-  navigate(`/fCards?versionId=${id}`);
+ const  handleNavigate =(id,version)=>{
+  // navigate(`/fCards?versionId=${id}`);
+  navigate(`/fCards?versionId=${id}&versionName=${version}`);
  }
   return (
     <Box>
        {/* <CircularLoading isLoading={isLoading} /> */}
       <Box
         className="compactCard"
-        onClick={toggleTable}
+      
         sx={{
            background: 'white',
-          
+          display:"flex",
+          flexDirection:"row",
            boxShadow: 4,
           "&:hover": {
             // backgroundColor: colors.purpleAccent[800],
@@ -46,18 +48,39 @@ const Card = (props) => {
         }}
       
       >
+
+        <Grid container>
+        <Grid item xs="5" sm="5" md="5" lg="5" xl="5" sx={{ display: "flex",
+           
+           alignItems:"center",}}>
+            <Box >
+              <img
+                src={folderImage}
+                alt="Folder"
+                style={{
+                  width: "100%",
+                  // height: "170px",
+                  height: {xl:"170px",lg:"160px",md:"140px" ,sm:"120px",xs:"110px"},
+                  display: "inline-block",
+                  opacity: 0.3,
+                  // paddingLeft: "20px"
+                }}
+              />
+            </Box>
+          </Grid>
+          <Grid item xs="7" sm="7" md="7" lg="7" xl="7" display="flex" flexDirection="column"  >
+             <Box >
         <Box display="flex"  justifyContent="flex-end" >
-          <IconButton onClick={()=>handleNavigate(param.id)}>
+          <IconButton onClick={()=>handleNavigate(param.id,param.version)}>
                    <ArrowForwardIcon variant="outlined" sx={{color:"black"}} />
                   
           </IconButton>
           
         </Box>
-        <Box className="radialBar" display="flex" flexDirection="column" justifyContent="center"
-          alignItems="center">
+        <Box  display="flex"  justifyContent="center" alignContent="center">
         
           
-          <Box display="flex" sx={{
+          <Box  sx={{
             // color: colors.grey[100], 
             fontSize: {
               xs: '1rem',
@@ -65,11 +88,12 @@ const Card = (props) => {
               md: '1rem'
             }
           }} >
-            <span><b >{param.version}  </b></span>
+            <span><b >{param.version}  </b></span><br/>
+            <span><b >{param.month} {param.year}</b></span>
           </Box>
 
         
-          <Box display="flex" sx={{
+          {/* <Box display="flex" sx={{
             // color: colors.grey[100], 
             fontSize: {
               xs: '1rem',
@@ -79,20 +103,22 @@ const Card = (props) => {
           }} >
             <span><b >{param.month} {param.year}</b></span>
           </Box>
-          
+           */}
           
         </Box>
-        <Box display={"flex"} justifyContent={"flex-end"} >
-                <Box>
+        <Box display={"flex"} justifyContent={"flex-start"}  >
+          <Grid container spacing={0.5}>
+            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
+            <Box>
                   <Tooltip title="Delete">
                     <Button
                       size="small"
                       // onClick={handleOpenModal}
                     
                       sx={{
-                         m: 1,
+                        width:"100%",
                          marginTop:4,
-                        fontSize: "14px",
+                        fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
                         fontWeight: "bold",
                         padding: "10px 20px",
                         backgroundColor: "#F5A4A0",
@@ -110,16 +136,18 @@ const Card = (props) => {
                     </Button>
                   </Tooltip>
                 </Box>
-                <Box>
+            </Grid>
+            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
+            <Box>
                   <Tooltip title="Launch">
                     <Button
                       size="small"
                       // onClick={handleOpenModal}
                     
                       sx={{
-                         m: 1,
+                        width:"100%",
                          marginTop:4,
-                        fontSize: "14px",
+                         fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
                         fontWeight: "bold",
                         padding: "10px 20px",
                         backgroundColor: "#CDF0EA",
@@ -137,8 +165,16 @@ const Card = (props) => {
                     </Button>
                   </Tooltip>
                 </Box>
+            </Grid>
+          </Grid>
+                
+                
               </Box>
-
+              </Box>
+          </Grid>
+        </Grid>
+        
+       
       </Box>
       
 

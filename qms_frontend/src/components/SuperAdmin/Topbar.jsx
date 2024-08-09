@@ -260,6 +260,8 @@ const Topbar = () => {
                 variant="contained"
                 sx={{
                   mt: 1,
+                  backgroundColor:"#CDF0EA",
+                  color:"Black",
                   "&:hover": {
                     boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                   },
@@ -306,6 +308,7 @@ const Topbar = () => {
                     width: "260px",
                     height: "60px",
                     display: "inline-block",
+                    opacity:"2"
                     // paddingLeft: "20px"
                   }}
                 />

@@ -70,6 +70,10 @@ getFilesByDirId = (Vid) => {
 }, headers: authHeader() });
 };
 
+uploadBulkFiles =(formData)=>{
+  return axios.post(API_URL + "api/uploadBulkFiles",formData,{ headers: authHeader() });
+}
+
 
 }
 

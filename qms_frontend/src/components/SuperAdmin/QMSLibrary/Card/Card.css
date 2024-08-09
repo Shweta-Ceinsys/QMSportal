@@ -8,9 +8,9 @@
    /* box-shadow: 5px 5px 2px #7e90a0;  */
   position: relative;
   cursor: pointer;
-  padding: 10px;
-  margin-left: 10px;
- 
+  padding: 10px; 
+   margin-left: 10px;
+ background-image: "../../../../images/folder.png";
   /* font-size: 18px; */
 
 }
