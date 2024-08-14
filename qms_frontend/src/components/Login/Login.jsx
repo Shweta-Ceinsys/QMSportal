@@ -98,9 +98,9 @@ const Login = ({ onLoginClick }) => {
           if (role === "SUPER_ADMIN") {
             navigate("/qmsLibrary")
           } else if (role === "ADMIN") {
-            navigate("/user");
+            navigate("/aQmsLibrary");
           } else if (role === "USER") {
-            navigate("/user");
+            navigate("/uQmsLibrary");
           }  else {
             toast.error('Invalid Role!'); 
           } 
@@ -133,7 +133,7 @@ const Login = ({ onLoginClick }) => {
           <Grid item xs={false} sm={5} md={7} lg={7} xl={7} sx={{display:"flex",justifyContent:"center",alignItems:"center"}} >
             <Box   textAlign={"center"} >
               <h1 >
-                Welcome to Ceinsys 
+                Welcome to Ceinsys, Pune
               </h1>
               <h3 >
                 QMS Document Center

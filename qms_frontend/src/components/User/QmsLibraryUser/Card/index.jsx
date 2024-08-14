@@ -13,7 +13,7 @@ const Cards = () => {
    
   useEffect(() => {
     // setIsLoading(true);
-    SuperAdminService.getVesions()
+    SuperAdminService.getlaunchedVersions()
     .then((response) => {
       setGetallVersions(response.data);
       // setIsLoading(false);

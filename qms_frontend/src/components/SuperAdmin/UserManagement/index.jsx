@@ -12,6 +12,8 @@ import {
   Grid,
   IconButton,
   Typography,
+  DialogActions,
+  Dialog,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
@@ -378,7 +380,7 @@ const UserManagment = () => {
               <DeleteIcon variant="outlined" color="secondary" size="small" />
             }
             label="Delete"
-            onClick={() => handleDelete(row.id)}
+            onClick={() => DeleteHandleOpen(row.id)}
             color="inherit"
           />,
         ];
@@ -639,12 +641,24 @@ const UserManagment = () => {
   );
 
   // ============================= code for Delete the Modal===================================================
-  const handleDelete = (id) => {
+
+  const [DialogOpen, setDialogOpen] = useState(false);
+
+ const [id, setFId] = useState(false);
+ const DeletehandleClose = () => {
+   setDialogOpen(false);
+ }
+ const DeleteHandleOpen =(id) =>{
+   setFId(id);
+   setDialogOpen(true);
+ }
+  const handleDelete = () => {
     SuperAdminService.deleteUser(id)
       .then((response) => {
         toast.success("User Deleted Successfully");
         SuperAdminService.getAllUsers().then((response) => {
           setRows(response.data);
+          setDialogOpen(false);
         });
       })
       .catch((error) => {
@@ -652,6 +666,93 @@ const UserManagment = () => {
         toast.error("Failed to Delete User");
       });
   };
+
+  const DeleteDialog = (
+    <Dialog
+      open={DialogOpen}
+      onClose={() => setDialogOpen(false)}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      sx={{
+        zIndex: 999991,
+        // "& .MuiDialog-paper": {
+        //   width: 600, // Set the maximum width as per your requirement
+        // },
+      }}
+    >
+      
+      
+        
+        
+        <DialogActions
+       
+      >
+        <Grid container spacing={1}>
+          <Grid item xl="12" lg="12" md="12" sm="12" xs="12">
+          <Box display={"flex"} justifyContent={"space-between"} >
+       
+       <Typography
+         variant="body2"
+         // color={colors.redAccent[700]}
+         fontWeight={"bold"}
+        paddingTop={1}
+       >
+         Do you want to Delete this User?
+       </Typography>
+      
+      
+       <IconButton
+       aria-label="close"
+       onClick={DeletehandleClose}
+      
+      //  sx={{
+      //    position: "absolute",
+      //    right: 8,
+      //    top: 8,
+      //    // color: (theme) => theme.palette.grey[500],
+      //  }}
+     >
+       <CloseIcon />
+     </IconButton>
+       
+       </Box>
+          </Grid>
+          <Grid item  xl="12" lg="12" md="12" sm="12" xs="12">
+          <Box  >
+        <Button
+          sx={{
+            // backgroundColor: colors.blueAccent[600],
+            // color: colors.grey[100],
+            fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
+            fontWeight: "bold",
+            padding: "5px 10px",
+            backgroundColor: "#F5A4A0",
+            color: "black",
+            boxShadow: 2,
+            "&:hover": {
+              // Apply styles on hover
+              // bgcolor: colors.blueAccent[600], // Change background color
+              boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+            },
+          }}
+          onClick={handleDelete}
+          color="primary"
+        >
+          OK
+        </Button>
+        </Box>
+          </Grid>
+        </Grid>
+        
+        
+      </DialogActions>
+        
+     
+     
+      
+      
+    </Dialog>
+  );
 
   return (
     <div className="app" style={{ backgroundColor: '#EEF0F6', }}>
@@ -821,6 +922,7 @@ const UserManagment = () => {
         </Box>
         {AddUserModal}
         {EditUserModal}
+        {DeleteDialog}
       </main>
       <ToastContainer style={{ zIndex: "1000000" }} />
     </div>

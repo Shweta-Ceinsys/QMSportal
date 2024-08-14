@@ -25,7 +25,22 @@ const QmsLibrary = () => {
   const username = sessionStorage.getItem("Name");
   const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
   const  CurrentUser = Number(idString);
-  
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+];
+
+const years=["2024","2025","2026","2027","2028","2029","2030",];
   
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -175,29 +190,72 @@ const QmsLibrary = () => {
                   fullWidth
                   margin="normal"
                 />
-                <TextField
-                  label="Month"
-                  type="text"
-                  name="month"
-                  required
-                  value={addVersions.month}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
-                  placeholder="MM" // Optional: Helps the user understand the expected format
-                />
+               <FormControl fullWidth margin="normal">
+      <InputLabel id="month-select-label">Month</InputLabel>
+      <Select
+        labelId="month-select-label"
+        id="month-select"
+        name="month"
+        value={addVersions.month}
+        onChange={handleChange}
+        label="Month"
+        fullWidth
+        MenuProps={{ style: { zIndex: 999991 } }}
+        sx={{
+          fontSize: {
+            xl: "1.1rem",
+            xs: "0.8rem",
+            sm: "0.9rem",
+            md: "1rem",
+          },
+        }}
+      >
+        {months.map((month) => (
+          <MenuItem
+            key={month}
+            value={month}
+            // onClick={() => modelClick(month)} // Adjust this if needed
+            onChange={handleChange}
+          >
+            {month}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+                
 
-                <TextField
-                  label="Year"
-                  type="text"
-                  name="year"
-                  required
-                  value={addVersions.year}
-                  onChange={handleChange}
-                  fullWidth
-                  margin="normal"
-                  placeholder="YYYY" // Optional: Helps the user understand the expected format
-                />
+<FormControl fullWidth margin="normal">
+      <InputLabel id="year-select-label">Year</InputLabel>
+      <Select
+        labelId="year-select-label"
+        id="year-select"
+        name="year"
+        value={addVersions.year}
+        onChange={handleChange}
+        label="Year"
+        fullWidth
+        MenuProps={{ style: { zIndex: 999991 } }}
+        sx={{
+          fontSize: {
+            xl: "1.1rem",
+            xs: "0.8rem",
+            sm: "0.9rem",
+            md: "1rem",
+          },
+        }}
+      >
+        {years.map((year) => (
+          <MenuItem
+            key={year}
+            value={year}
+            // onClick={() => modelClick(month)} // Adjust this if needed
+            onChange={handleChange}
+          >
+            {year}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
 
                 <Button
                   type="submit"

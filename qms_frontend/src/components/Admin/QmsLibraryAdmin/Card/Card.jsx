@@ -30,7 +30,7 @@ const Card = (props) => {
   let navigate = useNavigate();
  const  handleNavigate =(id,version)=>{
   // navigate(`/fCards?versionId=${id}`);
-  navigate(`/fCards?versionId=${id}&versionName=${version}`);
+  navigate(`/afCards?versionId=${id}&versionName=${version}`);
  }
 
 

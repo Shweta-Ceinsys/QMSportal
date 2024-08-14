@@ -30,7 +30,7 @@ const Card = (props) => {
   let navigate = useNavigate();
  const  handleNavigate =(id,version)=>{
   // navigate(`/fCards?versionId=${id}`);
-  navigate(`/fCards?versionId=${id}&versionName=${version}`);
+  navigate(`/ufCards?versionId=${id}&versionName=${version}`);
  }
 
 
@@ -232,7 +232,7 @@ const handleLaunch = (vid) => {
            */}
           
         </Box>
-        <Box display={"flex"} justifyContent={"flex-start"}  >
+        {/* <Box display={"flex"} justifyContent={"flex-start"}  >
           <Grid container spacing={0.5}>
             <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
             <Box>
@@ -302,7 +302,7 @@ const handleLaunch = (vid) => {
           </Grid>
                 
                 
-              </Box>
+              </Box> */}
               </Box>
           </Grid>
         </Grid>

@@ -39,7 +39,7 @@ const navigate = useNavigate();
     // dir.current = dirId;
     // setDirIds(dirId);
     // console.log("DirIds",dir.current);
- navigate(`/fLists?directoryId=${dirId}`);
+ navigate(`/afLists?directoryId=${dirId}`);
 
 // navigate("/fLists");
   }
@@ -79,8 +79,8 @@ const navigate = useNavigate();
           setDialogOpen(false);
         })
         .catch((error) => {
-          console.error("Error deleting Directory:", error);
-          toast.error("Failed to Delete Directory");
+          console.error("Error Empting Directory:", error);
+          toast.error("Failed to empty Directory");
         });
     };
 
