@@ -1,5 +1,5 @@
 import { Box, Button, Dialog, DialogActions, FormControl, Grid, IconButton, InputLabel, MenuItem, Modal, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import "./FolderCard.css";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
@@ -14,6 +14,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { useNavigate } from "react-router-dom";
+import { DataContext } from "../../../../../DataContext";
 const FolderCard = (props) => {
   const param = props;
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ const FolderCard = (props) => {
 
 const [dirIds, setDirIds] = useState(0);
 const dir = useRef(0);
+const { setDirId } = useContext(DataContext);
   // const toggleTable = (dirId) => {
   //   setOpen(!open);
   //   SuperAdminService.getFilesByDirId(dirId)
@@ -39,7 +41,10 @@ const navigate = useNavigate();
     // dir.current = dirId;
     // setDirIds(dirId);
     // console.log("DirIds",dir.current);
- navigate(`/ufLists?directoryId=${dirId}`);
+    sessionStorage.setItem('directoryId', dirId);
+    setDirId(dirId);
+    navigate(`/ufLists`);
+//  navigate(`/ufLists?directoryId=${dirId}`);
 
 // navigate("/fLists");
   }

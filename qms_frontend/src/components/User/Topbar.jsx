@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Divider, Grid, IconButton, InputAdornment, ListItemIcon, Menu, MenuItem, Modal, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
+import { Badge, Box, Button, Divider, Grid, IconButton, InputAdornment, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Modal, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/ceinsysLogo.png"
@@ -6,12 +6,15 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AuthService from "../../Services/AuthService";
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import CloseIcon from "@mui/icons-material/Close";
 import SuperAdminService from "../../Services/superadmin";
 import { toast } from "react-toastify";
+import NotificationService from "../../Services/NotificationService";
+import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 const Topbar = () => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -23,7 +26,45 @@ const Topbar = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const location = useLocation();
   let navigate = useNavigate();
+
+
+  
+
+
+  const [count, setCount] = useState(0);
+
+
+  //State for NotificationAcchor
+  const [notiAnchor, setNotiAnchor] = useState(null);
+
+  //Notifications
+  const [data, setData] = useState([]);
+
+  //History
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    NotificationService.unReadCount(id)
+      .then((response) => {
+        // Now you can use the count value
+        setCount(response.data);
+        console.log("Unread notification count:", count);
+      })
+      .catch((error) => {
+        console.error("Error fetching notification count:", error);
+      });
+  }, [notiAnchor]);
+
+
+
+  const [expanded, setExpanded] = useState(false);
+
+  const toggleExpanded = () => {
+    setExpanded(!expanded);
+  };
   // Function to open the menu
+
+
   const handleMenuOpen = (event) => {
     setMenuAnchor(event.currentTarget);
   };
@@ -181,14 +222,14 @@ const Topbar = () => {
                   </IconButton>
                 </Box>
               </Box>
-<Box sx={{padding:"20px"}}>
+             <Box sx={{padding:"20px"}}>
               <TextField
                 margin="normal"
                 required
                 fullWidth
                 name="oldPassword"
                 label="Old Password"
-                type={showPassword ? 'text' : 'oldPassword'}
+                type={showPassword ? 'text' : 'password'}
                 id="oldPassword"
                 value={oldPassword}
                 onChange={onChangePassword}
@@ -212,7 +253,7 @@ const Topbar = () => {
                 fullWidth
                 name="newPassword"
                 label="newPassword"
-                type={showNewPassword ? 'text' : 'newPassword'}
+                type={showNewPassword ? 'text' : 'password'}
                 id="newPassword"
                 value={newPassword}
                 onChange={onChangeNewPassword}
@@ -237,7 +278,7 @@ const Topbar = () => {
                 fullWidth
                 name="confirmPassword"
                 label="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'confirmPassword'}
+                type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={onChangeConfirmPassword}
@@ -279,6 +320,150 @@ const Topbar = () => {
       </Grid>
     </Modal>
   );
+
+
+  const truncateText = (text, maxLength) => {
+    if (text.length > maxLength) {
+      return text.substring(0, maxLength - 3) + "..."; // Truncate text and add ellipsis
+    } else {
+      return text;
+    }
+  };
+
+  // Function to open the NotificationAcchor
+  const handleNotificationOpen = (event) => {
+    NotificationService.unReadNotification(id)
+      .then((response) => {
+        setData(response.data);
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+
+    NotificationService.getHistory(id)
+      .then((response) => {
+        setHistory(response.data);
+        console.log(history);
+      })
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+      });
+
+    setNotiAnchor(event.currentTarget);
+  };
+
+  // Function to close the NotificationAcchor
+  const handleNotificationClose = () => {
+    setNotiAnchor(null);
+  };
+
+ 
+
+  const renderMenuItems = () => {
+    if (data === null || data.length === 0) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>No Records Available</Typography>
+        </Box>
+      ); // Return null when there are no records
+    }
+
+    return data.map((item, index) => (
+      <React.Fragment key={index}>
+        <MenuItem onClick={toggleExpanded}>
+          <ListItemText
+            primary={
+              <Typography
+                variant="body2"
+                sx={{
+                  whiteSpace: "pre-line",
+                  maxHeight: expanded ? "none" : 80,
+                  overflowY: "auto",
+                }} // Allow scrolling if expanded
+                dangerouslySetInnerHTML={{
+                  __html: expanded
+                    ? item.message.replace(/\n/g, "<br>")
+                    : truncateText(item.message.replace(/\n/g, "<br>"), 50),
+                }} // Replace \n with <br> and apply HTML dangerously
+              />
+            }
+            secondary={
+              <Typography variant="caption">
+                {new Date(item.Date).toLocaleString()}
+              </Typography>
+            }
+          />
+        </MenuItem>
+        {index < data.length - 1 && <Divider />}
+      </React.Fragment>
+    ));
+  };
+
+  const renderHistoryItems = () => {
+    // Placeholder logic to render history items
+    if (history === null || history.length === 0) {
+      return (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            height: "100%",
+          }}
+        >
+          <Typography>No Records Available</Typography>
+        </Box>
+      ); // Return null when there are no records
+    }
+
+    return history.map((item, index) => (
+      <React.Fragment key={index}>
+        <MenuItem onClick={toggleExpanded}>
+          <ListItemText
+            primary={
+              <Typography
+                variant="body2"
+                sx={{
+                  whiteSpace: "pre-line",
+                  maxHeight: expanded ? "none" : 80,
+                  overflowY: "auto",
+                }} // Allow scrolling if expanded
+                dangerouslySetInnerHTML={{
+                  __html: expanded
+                    ? item.message.replace(/\n/g, "<br>")
+                    : truncateText(item.message.replace(/\n/g, "<br>"), 50),
+                }} // Replace \n with <br> and apply HTML dangerously
+              />
+            }
+            secondary={
+              <Typography variant="caption">
+                {new Date(item.Date).toLocaleString()}
+              </Typography>
+            }
+          />
+        </MenuItem>
+        {index < history.length - 1 && <Divider />}
+      </React.Fragment>
+    ));
+  };
+
+  const [showHistory, setShowHistory] = useState(false);
+
+  const handleHistoryClick = () => {
+    setShowHistory(true);
+  };
+
+  const handleBackClick = () => {
+    setShowHistory(false);
+  };
 
   return (
     <div>
@@ -340,14 +525,14 @@ const Topbar = () => {
             <Box >
               <Tooltip title="Notification" PopperProps ={{sx:{zIndex:999999}}} >
                 <IconButton  >
-                  <Badge color="secondary">
+                  <Badge badgeContent={count} color="secondary">
                     <NotificationsOutlinedIcon variant="outlined" sx={{color:"black"}}
-                      
+                      onClick={handleNotificationOpen}
                       size="small" />
                   </Badge>
                 </IconButton>
               </Tooltip>
-              {/* <Menu
+              <Menu
           anchorEl={notiAnchor}
           open={Boolean(notiAnchor)}
           onClose={handleNotificationClose}
@@ -385,7 +570,7 @@ const Topbar = () => {
           
             
           </Paper>
-        </Menu> */}
+        </Menu>
 
               <Tooltip title="Profile" PopperProps ={{sx:{zIndex:999999}}}>
                 <IconButton >

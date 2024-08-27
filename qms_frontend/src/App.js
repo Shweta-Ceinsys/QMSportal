@@ -1,5 +1,4 @@
 
-
 import { Routes, Route } from "react-router-dom";
 import UserManagement from './components/SuperAdmin/UserManagement';
 import Login from './components/Login/Login';

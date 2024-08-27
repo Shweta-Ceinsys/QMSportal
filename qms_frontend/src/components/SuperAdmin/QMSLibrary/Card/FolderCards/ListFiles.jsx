@@ -1,25 +1,32 @@
 import { ToastContainer, toast } from "react-toastify";
 import Topbar from "../../../Topbar";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions,  Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
 
 
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import SuperAdminService from "../../../../../Services/superadmin";
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useContext, useEffect, useState, version } from "react";
+// import { useLocation } from "react-router-dom";
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import CloseIcon from "@mui/icons-material/Close";
+import { DataContext } from "../../../../../DataContext";
+import { useNavigate } from "react-router-dom";
 const ListFiles =(props) =>{
     const [rows, setRows] = useState([]);
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-     const dirIds = queryParams.get('directoryId');
+    // const location = useLocation();
+    // const queryParams = new URLSearchParams(location.search);
+    //  const dirIds = queryParams.get('directoryId');
+    const { dataId } = useContext(DataContext);
+    const { setDirId } = useContext(DataContext);
+     const { dirId } = useContext(DataContext);
     
      useEffect(() => {
       // Fetch files based on directory ID
-      SuperAdminService.getFilesByDirId(dirIds)
+      const storedId = sessionStorage.getItem('directoryId');
+      setDirId(storedId)
+      SuperAdminService.getFilesByDirId(dirId)
           .then((response) => {
               // Map rows to include serial numbers
               const rowsWithSerialNumbers = response.data.map((row, index) => ({
@@ -31,76 +38,50 @@ const ListFiles =(props) =>{
           .catch((error) => {
               console.error('Error fetching files:', error);
           });
-  }, [dirIds]);
+  }, [dirId]);
    
-    
+  const handleDownload = (id) => {
+    SuperAdminService.downloadFile(id)
+      .then((response) => {
+        // Get Content-Disposition header
+        const contentDisposition = response.headers.get('content-disposition');
+        let filename = 'downloaded-file'; // Default filename if not specified
+
+        if (contentDisposition) {
+          // Extract filename from Content-Disposition header
+          const filenameRegex = /filename[^;=\n]*=[\'"]?([^\'";\n]*)[\'"]?/;
+          const matches = filenameRegex.exec(contentDisposition);
+          if (matches != null && matches[1]) {
+            filename = decodeURIComponent(matches[1]); // Decode and use the filename
+          }
+        }
+
+        // Create a Blob object with the correct Content-Type
+        const blob = new Blob([response.data], { type: response.headers.get('content-type') });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', filename); // Use the extracted filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url); // Clean up the URL object
+
+        toast.success("File downloaded successfully");
+      })
+      .catch((error) => {
+        toast.error("File download failed");
+        console.error('Error downloading file:', error);
+      });
+};
+
     
    
        
-  const handleDownload = (id) => {
-    SuperAdminService.downloadFile(id)
-        .then((response) => {
-            // Extract filename from Content-Disposition header
-            //  const contentDisposition = response.headers.Content-Desposition
-             const contentDisposition = response.headers["Content-Disposition"];
-          
-             let filename = 'downloaded-file'; // Default filename if not specified
-
-            if (contentDisposition) {
-                // Extract the filename using a regex
-                const matches = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(contentDisposition);
-                if (matches != null && matches[1]) {
-                    filename = matches[1].replace(/['"]/g, ''); // Remove any surrounding quotes
-                }
-            }
-
-            // Create a Blob object with the correct Content-Type
-            const blob = new Blob([response.data], { type: response.headers["Content-Type"] });
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', contentDisposition); // Use the extracted filename
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url); // Clean up the URL object
-
-            toast.success("File downloaded successfully");
-        })
-        .catch((error) => {
-            toast.error("File download failed");
-            console.error('Error downloading file:', error);
-        });
-};
 
 
-  // const handleDownload = (id) => {
-  //   SuperAdminService.downloadFile(id)
-  //   .then(response => { 
 
-  //     const headers = response.headers; 
-  
-  //     return response.blob().then(blob => { 
-  
-  //       const filename = headers.get('Content-Disposition').split(';')[1].trim().split('=')[1]; 
-  
-  //       const link = document.createElement('a'); 
-  
-  //       link.href = window.URL.createObjectURL(blob); 
-  
-  //       link.download = filename; 
-  
-  //       link.click(); 
-  
-  //     }); 
-  
-  //   }) 
-    
-  //       .catch((error) => {
-  //           toast.error("File download failed");
-  //           console.error('Error downloading file:', error);
-  //       });
-// };
+
 const [DialogOpen, setDialogOpen] = useState(false);
 
 const [fId, setFId] = useState(false);
@@ -116,7 +97,7 @@ const handleDelete = () => {
   SuperAdminService.deleteFile(fId)
     .then((response) => {
       toast.success("File Deleted Successfully");
-      SuperAdminService.getFilesByDirId(dirIds)
+      SuperAdminService.getFilesByDirId(dirId)
           .then((response) => {
               // Map rows to include serial numbers
               const rowsWithSerialNumbers = response.data.map((row, index) => ({
@@ -135,6 +116,13 @@ const handleDelete = () => {
       toast.error("Failed to Delete File");
     });
 };
+let navigate = useNavigate();
+const  handleNavigate =()=>{
+  // navigate(`/fCards?versionId=${id}`);
+  // setData({ id, version });
+  navigate(`/fCards`);
+  // navigate(`/fCards?versionId=${id}&versionName=${version}`);
+ }
   
 const DeleteDialog = (
   <Dialog
@@ -272,8 +260,10 @@ const DeleteDialog = (
           <Box  >
           <Box marginTop={"100px"}>
         <Tooltip title="Back">
-          <IconButton href="/qmsLibrary"
-          // onClick={()=>toggleTable(param.dirId)}
+          <IconButton 
+          // href="/qmsLibrary"
+          //  onClick={()=>handleNavigate(dataId.id,dataId.version)}
+          onClick={handleNavigate}
           >
                    <ArrowBackOutlinedIcon variant="outlined" sx={{color:"black"}} />
                   

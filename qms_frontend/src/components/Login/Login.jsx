@@ -218,11 +218,11 @@ const Login = ({ onLoginClick }) => {
               </Button>
               <ToastContainer />
             </div>
-            <div style={{ textAlign: 'center', marginTop: '8px' }}>
+            {/* <div style={{ textAlign: 'center', marginTop: '8px' }}>
               <Link href="/forgotPassword" variant="body2">
                 Forgot password?
               </Link>
-            </div>
+            </div> */}
           </Box>
           </Box>
           {/* <Button

@@ -4,28 +4,34 @@ import Card from "./FolderCard";
 import Grid from "@mui/material/Grid";
 import Topbar from "../../../Topbar"
 import SuperAdminService from "../../../../../Services/superadmin"
-import { useEffect, useState, version } from "react";
+import { useContext, useEffect, useState, version } from "react";
 import { useLocation } from "react-router-dom";
 // import CircularLoading from "../../../global/Circularloading";
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 import { toast } from "react-toastify";
 import CloseIcon from "@mui/icons-material/Close";
+import { DataContext } from "../../../../../DataContext";
 const FolderCards = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const versionId = queryParams.get('versionId');
   const versionIName = queryParams.get('versionName');
-  
+  const { dataId } = useContext(DataContext);
    const [getallDir, setGetallDir] = useState([]);
+   const { setData } = useContext(DataContext);
   //  const [isLoading, setIsLoading] = useState(false);
    
   useEffect(() => {
     // setIsLoading(true);
-    SuperAdminService.getDir(versionId)
+    const storedId = sessionStorage.getItem('versionId');
+  if (storedId) {
+    setData({ id: storedId, version: sessionStorage.getItem('versionName') });
+  }
+    SuperAdminService.getDir(dataId.id)
     .then((response) => {
       setGetallDir(response.data);
-      console.log("id",response.data.id)
+      console.log("Versionid",dataId.id)
 
     })
     .catch((error) => {
@@ -33,7 +39,7 @@ const FolderCards = () => {
       // setIsLoading(false);
     });
    
-  }, []);
+  }, [dataId.id]);
 
 
 
@@ -55,8 +61,7 @@ const FolderCards = () => {
 
   const [addFolder, setAddFolder] = useState({
     name: "",
-    version: versionId,
-    
+    version:dataId.id,
     created_by:CurrentUser,
   });
 
@@ -85,7 +90,7 @@ const FolderCards = () => {
     e.preventDefault();
 
     try {
-      if (addFolder.version.trim().length === 0) {
+      if (addFolder.name.trim().length === 0) {
         toast.warning("Please Enter  Folder Name!");
       }  else {
         const response = SuperAdminService.createDir(addFolder);
@@ -236,7 +241,7 @@ const FolderCards = () => {
           </Grid>
           <Grid item xs="11" sm="11" md="5" lg="5" xl="">
           <Box >
-            <span style={{fontWeight:"bold"}} > {versionIName}</span>
+            <span style={{fontWeight:"bold"}} > {dataId.version}</span>
          
         </Box>
 

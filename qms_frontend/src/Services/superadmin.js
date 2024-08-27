@@ -78,10 +78,16 @@ uploadBulkFiles =(formData)=>{
   return axios.post(API_URL + "api/uploadBulkFiles",formData,{ headers: authHeader() });
 }
 downloadFile = (id) => {
-  return axios.get(API_URL + "api/downloadFile",{params: {
-    fileId:id // Use the passed dealer parameter here
-}, headers: authHeader() });
+  return axios.get(API_URL + "api/downloadFile", {
+    params: {
+      fileId: id
+    },
+    responseType:'blob',
+    headers: authHeader(),
+    
+  });
 };
+
 
 deleteFile = (id) => {
   return axios.delete(API_URL + "api/deleteFile",{

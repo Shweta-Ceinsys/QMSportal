@@ -1,5 +1,5 @@
 import { Box,  Button,  Dialog,  DialogActions,  Grid,  IconButton,  Tooltip,  Typography } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import "./Card.css";
 import Fab from "@mui/material/Fab";
 // import { useTheme } from "@emotion/react";
@@ -13,9 +13,11 @@ import folderImage from  "../../../../images/folder.png"
 import { toast } from "react-toastify";
 import SuperAdminService from "../../../../Services/superadmin";
 import CloseIcon from "@mui/icons-material/Close";
+import { DataContext } from "../../../../DataContext";
 const Card = (props) => {
   const param = props;
   const imageURL = car;
+  const { setData } = useContext(DataContext);
   // const theme = useTheme();
   // const colors = tokens(theme.palette.mode);
   const [ecu, setEcu] = useState([]);
@@ -30,7 +32,11 @@ const Card = (props) => {
   let navigate = useNavigate();
  const  handleNavigate =(id,version)=>{
   // navigate(`/fCards?versionId=${id}`);
-  navigate(`/ufCards?versionId=${id}&versionName=${version}`);
+  sessionStorage.setItem('versionId', id);
+  sessionStorage.setItem('versionName', version);
+  setData({ id, version });
+  navigate(`/ufCards`);
+  // navigate(`/ufCards?versionId=${id}&versionName=${version}`);
  }
 
 

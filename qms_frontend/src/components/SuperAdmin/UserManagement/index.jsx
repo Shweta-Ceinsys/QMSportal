@@ -83,7 +83,7 @@ const UserManagment = () => {
       } else {
         const response = SuperAdminService.addUser(user);
         toast.success("User added successfully!");
-
+       
         setUser({
           name: "",
           email: "",
@@ -92,6 +92,7 @@ const UserManagment = () => {
         });
 
         handleCloseModal();
+        
       }
     } catch (error) {
       console.error("Error adding user:", error);
