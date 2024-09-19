@@ -1,167 +1,151 @@
-import React, { useState,useContext } from 'react';
-import './Login.css';
-// import { ColorModeContext, tokens,themeSettings } from "../../theme";
-import {  Button, Typography, Box, Modal, TextField,Link,useTheme,IconButton, InputAdornment, Alert, Grid, Paper} from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import {
+  Button,
+  Typography,
+  Box,
+  TextField,
+  IconButton,
+  InputAdornment,
+  Grid,
+  Paper,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import ceinsysLogo from "../../images/Ceinsys.jpg";
+import BackgroundImage from "../../images/BackgroundImage.png";
+import Hello_sign from "../../images/wave.gif";
+import AuthService from "../../Services/AuthService";
 
-
-
-import ceinsysLogo from "../../images/Ceinsys.jpg"
-
-import AuthService from "../../Services/AuthService"
-
-// function Copyright(props) {
-//   return (
-//     <Typography 
-//     variant="body2" 
-//     color="text.secondary" 
-//     align="center" 
-//     style={{
-//       position: 'fixed',
-//       bottom: 0,
-//       right: 0,
-//       padding: '8px', // Adjust padding as needed
-//       color: 'white'
-//     }}
-//     {...props}
-//   >
-//     {'Copyright © www.ceinsys'}
-//     <Link color="inherit" href="#">
-//     </Link>{' '}
-//     {new Date().getFullYear()}
-//     {'.'}
-//   </Typography>
-//   );
-// }
-
-
-const Login = ({ onLoginClick }) => {
-
-  const mode = "light";
-
+const Login = () => {
   let navigate = useNavigate();
-
-  
-  
-  
-
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-
-  const onChangeUsername = (e) => {
-    const email = e.target.value;
-    setEmail(email);
-  };
-
-  const onChangePassword = (e) => {
-    const password = e.target.value;
-    setPassword(password);
-  };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword((prevShowPassword) => !prevShowPassword);
-  };
+  const onChangeUsername = (e) => setEmail(e.target.value);
+  const onChangePassword = (e) => setPassword(e.target.value);
+  const handleTogglePasswordVisibility = () => setShowPassword(prev => !prev);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-   
-    if (email.trim().length === 0 && password.trim().length === 0) {
-      toast.warning('Please Enter Credentials !');
-    } else if (email.trim().length === 0 ) {
-      toast.warning('Please Enter Username!');
-    } else if (password.trim().length === 0) {
-      toast.warning('Please Enter Password!');
-    }else {
-     
-      try {
-      AuthService.login(email, password).then(
-        () => {
-          const role = (sessionStorage.getItem("Role"));
-          console.log(role); 
-          if (role === "SUPER_ADMIN") {
-            navigate("/qmsLibrary")
-          } else if (role === "ADMIN") {
-            navigate("/aQmsLibrary");
-          } else if (role === "USER") {
-            navigate("/uQmsLibrary");
-          }  else {
-            toast.error('Invalid Role!'); 
-          } 
-        },
-        (error) => {
-          console.error('Login error:', error);
-          toast.error('Invalid Credentials!');
-          
 
-        }
-      );
-  } catch (error) {
-    toast.info('Unexpected Error!');
-  }
-}
-    
-    
+    if (email.trim().length === 0 && password.trim().length === 0) {
+      toast.warning("Please Enter Credentials!");
+    } else if (email.trim().length === 0) {
+      toast.warning("Please Enter Username!");
+    } else if (password.trim().length === 0) {
+      toast.warning("Please Enter Password!");
+    } else {
+      try {
+        AuthService.login(email, password).then(
+          () => {
+            const role = sessionStorage.getItem("Role");
+
+            if (role === "SUPER_ADMIN") {
+              navigate("/qmsLibrary");
+            } else if (role === "ADMIN") {
+              navigate("/aQmsLibrary");
+            } else if (role === "USER") {
+              navigate("/uQmsLibrary");
+            } else {
+              toast.error("Invalid Role!");
+            }
+          },
+          (error) => {
+            console.error("Login error:", error);
+            toast.error("Invalid Credentials!");
+          }
+        );
+      } catch (error) {
+        toast.info("Unexpected Error!");
+      }
+    }
   };
 
   return (
-   
-    <div  className="app" style={{ backgroundColor: '#EEF0F6',  }}>
-  
-
-    <Grid container spacing={0} sx={{display:"flex",justifyContent:"center",alignContent:"center"}}>
-    <Grid item xs={false} sm={1} md={1} lg={2} xl={2} />
-      <Grid  item xs={12} sm={10} md={10} lg={8} xl={8} >
-        <Paper elevation={3} sx={{ backgroundColor:'#CDF0EA',  }}>
-          <Grid container spacing={0} >
-          <Grid item xs={false} sm={5} md={7} lg={7} xl={7} sx={{display:"flex",justifyContent:"center",alignItems:"center"}} >
-            <Box   textAlign={"center"} >
-              <h1 >
-                Welcome to Ceinsys, Pune
-              </h1>
-              <h3 >
-                QMS Document Center
-              </h3>
-            </Box>
-            </Grid>
-            <Grid item xs={12} sm={7} md={5} lg={5} xl={5} >
-            <Box
-          sx={{
-            bgcolor: 'white',
-            p: 4,
+    <Grid container sx={{ height: '100vh' }}>
+    {/* Left side with background image */}
+    <Grid 
+      item 
+      xs={false} 
+      sm={7}
+      md={8} 
+      lg={9}
+     xl={9}
+      sx={{
+        backgroundImage: `url(${BackgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'brightness(100%)',
+        height: '100%',
+        position: 'relative',
+        opacity:1
         
-          }}
+      }}
+    > 
+  </Grid>
+  
+    {/* Right side with login form */}
+    <Grid 
+      item 
+      xs={12} 
+      sm={5}
+      md={4} 
+      lg={3}
+      xl={3}
+     
+      alignItems="center" 
+      justifyContent="center" 
+      sx={{ p: 5 }}
+    >
+      <Grid container>
+        <Grid 
+          item 
+          xs={12} 
+          sx={{ display: "flex", flexDirection: "column", justifyContent:"center"  }}
         >
-          <Box  sx={{height:'100%'}}>
-          <div style={{ margin: '8px', textAlign: 'center' }}>
-            <img 
-              src= {ceinsysLogo}
-              alt="Logo" 
-              style={{ width: '200px', height: '80px', display: 'inline-block' }} 
-            />
-          </div>
+          <Grid container sx={{ display: "flex", flexDirection: "column", justifyContent:"center"  }}>
+          <Grid item xl={1}>
 
-          <Typography variant="h5" component="h1" textAlign="center">
+</Grid>
+<Grid item xl={10}>
+<Box textAlign={"center"} mb={5}>
+            <img
+              src={ceinsysLogo}
+              alt="Logo"
+              style={{ width:'100%' }}
+            />
+          </Box>
+</Grid>
+<Grid item xl={1}>
+
+</Grid>
+        </Grid>
+          
+          <Box style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '32px' }}>
+     
+      <Typography variant="h4" component="h1" fontWeight="bold" color="#5da8e9">
+        Welcome!!
+      </Typography>
+      <img
+        alt="User"
+        src={Hello_sign}
+        style={{
+          width: '48px', // Adjust the width as needed
+          height: '48px', // Adjust the height as needed
+          // marginLeft: '0px',
+           // Space between image and text
+        }}
+      />
+    </Box>
+          <Typography variant="h5" component="h1" textAlign="center" fontWeight="bold" mb={5}>
             Sign In
           </Typography>
-
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit}  >
             <TextField
               margin="normal"
               required
@@ -179,7 +163,7 @@ const Login = ({ onLoginClick }) => {
               fullWidth
               name="password"
               label="Password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               id="password"
               value={password}
               onChange={onChangePassword}
@@ -197,68 +181,31 @@ const Login = ({ onLoginClick }) => {
                 ),
               }}
             />
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center",  }} marginTop={5}>
               <Button
-                onClick={handleSubmit}
                 type="submit"
                 variant="contained"
                 sx={{
-                  mt: 1,
-                  backgroundColor:"#CDF0EA",
-                  color:"black",
+                  backgroundColor: "#CDF0EA",
+                  color: "black",
+                  
                   "&:hover": {
-                    // Apply styles on hover
-                    backgroundColor:"#A4BCDB",
-                    boxShadow:
-                      "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                    backgroundColor: "#A4BCDB",
+                    boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)",
                   },
                 }}
               >
                 Sign In
               </Button>
-              <ToastContainer />
-            </div>
-            {/* <div style={{ textAlign: 'center', marginTop: '8px' }}>
-              <Link href="/forgotPassword" variant="body2">
-                Forgot password?
-              </Link>
-            </div> */}
+            </Box>
+            <ToastContainer />
           </Box>
-          </Box>
-          {/* <Button
-            onClick={() => { handleCloseModal() }}
-            sx={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              mt: 2,
-            }}
-          >
-            Close
-          </Button> */}
-
-        
-          
-        </Box>
- 
-            </Grid>
-            
-          </Grid>
-
-
-        </Paper>
-
+        </Grid>
       </Grid>
-      <Grid item xs={false} sm={1} md={1} lg={2} xl={2} />
-
     </Grid>
-  </div>
-   
-
-   
-     
-             
-  ); 
+  </Grid>
+  
+  );
 };
 
-export default Login; 
+export default Login;

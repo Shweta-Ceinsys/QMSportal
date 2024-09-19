@@ -5,11 +5,11 @@ import Grid from "@mui/material/Grid";
 import Topbar from "../../../Topbar"
 import SuperAdminService from "../../../../../Services/superadmin"
 import { useContext, useEffect, useState,  } from "react";
-// import { useLocation } from "react-router-dom";
-// import CircularLoading from "../../../global/Circularloading";
+
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 
 import { DataContext } from "../../../../../DataContext";
+import { useNavigate } from "react-router-dom";
 const FolderCards = () => {
   // const location = useLocation();
 
@@ -35,17 +35,18 @@ const FolderCards = () => {
       // setIsLoading(false);
     });
    
-  }, [dataId.id]);
+  }, [dataId.id,]);
 
 
 
  
-  // const username = sessionStorage.getItem("Name");
-  // const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
-  // // const  CurrentUser = Number(idString);
   
   
   
+  let navigate = useNavigate();
+const navigateRoute =() =>{
+  navigate('/uQmsLibrary')
+}
 
   
   return (
@@ -58,8 +59,8 @@ const FolderCards = () => {
           <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
           <Box>
         <Tooltip title="Back">
-          <IconButton href="/uQmsLibrary"
-          // onClick={()=>toggleTable(param.dirId)}
+          <IconButton 
+          onClick={navigateRoute}
           >
                    <ArrowBackOutlinedIcon variant="outlined" sx={{color:"black"}} />
                   

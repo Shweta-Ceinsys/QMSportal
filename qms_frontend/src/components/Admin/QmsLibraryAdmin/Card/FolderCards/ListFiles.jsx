@@ -1,22 +1,21 @@
 import { ToastContainer, toast } from "react-toastify";
 import Topbar from "../../../Topbar";
-import { Box, Button, Dialog, DialogActions,  Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Dialog, DialogActions,  FormControl,  Grid, IconButton, Paper, TextField, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import SuperAdminService from "../../../../../Services/superadmin";
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../../../DataContext";
 const ListFiles =(props) =>{
     const [rows, setRows] = useState([]);
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    //  const dirId = queryParams.get('directoryId');
+    
     const { setDirId } = useContext(DataContext);
     const { dirId } = useContext(DataContext);
+    const UserId = sessionStorage.getItem("UserId");
      useEffect(() => {
       // Fetch files based on directory ID
       const storedId = sessionStorage.getItem('directoryId');
@@ -37,13 +36,12 @@ const ListFiles =(props) =>{
       
   let navigate = useNavigate();
   const  handleNavigate =()=>{
-    // navigate(`/fCards?versionId=${id}`);
-    // setData({ id, version });
+    
     navigate(`/afCards`);
-    // navigate(`/fCards?versionId=${id}&versionName=${version}`);
+   
    }
    const handleDownload = (id) => {
-    SuperAdminService.downloadFile(id)
+    SuperAdminService.downloadFile(id,UserId)
       .then((response) => {
         // Get Content-Disposition header
         const contentDisposition = response.headers.get('content-disposition');
@@ -76,33 +74,7 @@ const ListFiles =(props) =>{
         console.error('Error downloading file:', error);
       });
 };
-  // const handleDownload = (id) => {
-  //   SuperAdminService.downloadFile(id)
-  //   .then(response => { 
-
-  //     const headers = response.headers; 
   
-  //     return response.blob().then(blob => { 
-  
-  //       const filename = headers.get('Content-Disposition').split(';')[1].trim().split('=')[1]; 
-  
-  //       const link = document.createElement('a'); 
-  
-  //       link.href = window.URL.createObjectURL(blob); 
-  
-  //       link.download = filename; 
-  
-  //       link.click(); 
-  
-  //     }); 
-  
-  //   }) 
-    
-  //       .catch((error) => {
-  //           toast.error("File download failed");
-  //           console.error('Error downloading file:', error);
-  //       });
-// };
 const [DialogOpen, setDialogOpen] = useState(false);
 
 const [fId, setFId] = useState(false);
@@ -138,6 +110,29 @@ const handleDelete = () => {
     });
 };
   
+// -----------------------------------------------------------------Search Functionality----------------------------------------------------------------------------
+const [searchText, setSearchText] = useState("");
+
+const filteredRows = rows.filter((row) => {
+
+  if (
+    searchText &&
+    Object.values(row).some(
+      (value) =>
+        value &&
+        value.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  ) {
+    return true;
+  }
+  return !searchText;
+});
+
+
+
+const handleSearchChange = (event) => {
+  setSearchText(event.target.value);
+};
 const DeleteDialog = (
   <Dialog
     open={DialogOpen}
@@ -146,9 +141,7 @@ const DeleteDialog = (
     aria-describedby="alert-dialog-description"
     sx={{
       zIndex: 999991,
-      // "& .MuiDialog-paper": {
-      //   width: 600, // Set the maximum width as per your requirement
-      // },
+     
     }}
   >
     
@@ -176,12 +169,7 @@ const DeleteDialog = (
      aria-label="close"
      onClick={DeletehandleClose}
     
-    //  sx={{
-    //    position: "absolute",
-    //    right: 8,
-    //    top: 8,
-    //    // color: (theme) => theme.palette.grey[500],
-    //  }}
+    
    >
      <CloseIcon />
    </IconButton>
@@ -192,8 +180,7 @@ const DeleteDialog = (
         <Box  >
       <Button
         sx={{
-          // backgroundColor: colors.blueAccent[600],
-          // color: colors.grey[100],
+          
           fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
           fontWeight: "bold",
           padding: "5px 10px",
@@ -201,8 +188,7 @@ const DeleteDialog = (
           color: "black",
           boxShadow: 2,
           "&:hover": {
-            // Apply styles on hover
-            // bgcolor: colors.blueAccent[600], // Change background color
+           
             boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
           },
         }}
@@ -229,9 +215,9 @@ const DeleteDialog = (
         field: 'serialNumber',
         headerName: 'Sr. No.',
         width: 150,
-        // valueGetter: (params) => params.api.getRowIndex(params.row.id) + 1,
+        
     },
-        //  { field: "id", headerName: "ID", width: 100 },
+        
         {
           field: "name",
           headerName: "Name",
@@ -284,6 +270,36 @@ const DeleteDialog = (
           </Tooltip>
           </Box>
           <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px' }}>
+            <Box>
+                   {/* Search TextField */}
+                   <FormControl
+                        variant="standard"
+                        sx={{ m: 1, minWidth: 100 }}
+                      >
+                        <Typography sx={{ mr: 1 }}>Search:</Typography>
+                        <TextField
+                          variant="standard"
+                          value={searchText}
+                          onChange={handleSearchChange}
+                          sx={{
+                            ml: 1,
+                            "& .MuiInputBase-root": {
+                              color: "inherit", // Maintain text color
+                            },
+                            "& .MuiInput-underline:before": {
+                              borderBottomColor: "currentColor", // Maintain underline color
+                            },
+                            "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                              {
+                                borderBottomColor: "currentColor", // Maintain underline color on hover
+                              },
+                            "& .MuiInput-underline:after": {
+                              borderBottomColor: "currentColor", // Maintain underline color after typing
+                            },
+                          }}
+                        />
+                      </FormControl>
+            </Box>
           <Box sx={{
                     "& .MuiDataGrid-root": {
                       border: "none",
@@ -310,10 +326,10 @@ const DeleteDialog = (
                       // color: `${colors.greenAccent[200]} !important`,
                     },
                   }}  >
-            <Box style={{ height: `calc(100vh - 160px)`,  }}
+            <Box style={{ height: `calc(100vh - 240px)`,  }}
             >
           <DataGrid
-            rows={rows}
+            rows={filteredRows}
             columns={columns}
             stickyHeader
           />

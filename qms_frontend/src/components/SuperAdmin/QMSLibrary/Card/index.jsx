@@ -7,7 +7,7 @@ import SuperAdminService from "../../../../Services/superadmin"
 import { useEffect, useState } from "react";
 // import CircularLoading from "../../../global/Circularloading";
 const Cards = () => {
-  
+  const [refresh, setRefresh] = useState(false);
    const [getallVersions, setGetallVersions] = useState([]);
   //  const [isLoading, setIsLoading] = useState(false);
    

@@ -21,7 +21,6 @@ import { useState } from "react";
 import SuperAdminService from "../../../Services/superadmin";
 const QmsLibrary = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [rows, setRows] = useState([]);
   const username = sessionStorage.getItem("Name");
   const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
   const  CurrentUser = Number(idString);
@@ -61,17 +60,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // if (name === 'month') {
-    //   // Ensure the month value is between 01 and 12
-    //   if (/^(0[1-9]|1[0-2])?$/.test(value)) {
-    //     setAddVersion((prev) => ({ ...prev, [name]: value }));
-    //   }
-    // } else if (name === 'year') {
-    //   // Ensure the year value is a 4-digit number
-    //   if (/^\d{0,4}$/.test(value)) {
-    //     setAddVersion((prev) => ({ ...prev, [name]: value }));
-    //   }
-    // }
+   
     setAddVersion((prevUser) => ({
       ...prevUser,
       [name]: value,
@@ -215,7 +204,6 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
           <MenuItem
             key={month}
             value={month}
-            // onClick={() => modelClick(month)} // Adjust this if needed
             onChange={handleChange}
           >
             {month}
@@ -249,7 +237,6 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
           <MenuItem
             key={year}
             value={year}
-            // onClick={() => modelClick(month)} // Adjust this if needed
             onChange={handleChange}
           >
             {year}
@@ -310,7 +297,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                         backgroundColor: "#CDF0EA",
                         color: "black",
                         boxShadow: 4,
-                        // color:"black",
+                      
                         "&:hover": {
                           // Apply styles on hover
                           backgroundColor: "#A4BCDB",

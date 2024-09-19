@@ -77,10 +77,11 @@ getFilesByDirId = (dirId) => {
 uploadBulkFiles =(formData)=>{
   return axios.post(API_URL + "api/uploadBulkFiles",formData,{ headers: authHeader() });
 }
-downloadFile = (id) => {
+downloadFile = (id,UserId) => {
   return axios.get(API_URL + "api/downloadFile", {
     params: {
-      fileId: id
+      fileId: id,
+      userId: UserId
     },
     responseType:'blob',
     headers: authHeader(),

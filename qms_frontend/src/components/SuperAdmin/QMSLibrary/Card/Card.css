@@ -1,40 +1,20 @@
-
-
-
 .compactCard {
-   
   height: 11rem !important;
   border-radius: 0.2rem;
-   /* box-shadow: 5px 5px 2px #7e90a0;  */
+  /* box-shadow: 5px 5px 2px #7e90a0;  */
   position: relative;
   cursor: pointer;
-  padding: 10px; 
-   margin-left: 10px;
- background-image: "../../../../images/folder.png";
+  padding: 10px;
+  margin-left: 10px;
+  background-image: "../../../../images/folder.png";
   /* font-size: 18px; */
-
 }
 
 .radialBar {
-  
   /* justify-content: flex-start; */
   gap: 1rem;
 }
-/* .CircularProgressbar {
-  width: 4rem !important;
-  overflow: visible;
-}
-.CircularProgressbar-path {
-  stroke: #2563eb!important ;
-  stroke-width: 12px !important;
-  filter: drop-shadow(2px 4px 6px #2563eb);
-}
-.CircularProgressbar-trail {
-  display: none;
-}
-/* .CircularProgressbar-text {
-  fill: white !important;
-} */ 
+
 .radialBar > span {
   /* font-size: 17px; */
   font-weight: bold;
@@ -68,19 +48,18 @@
 
 .expandedCard > span:nth-of-type(1) {
   font-size: 15px;
- 
+
   font-weight: bold;
   /* text-shadow: 0px 0px 10px white; */
 }
 
 .textname {
   font-size: 27px;
-  
+
   font-weight: bold;
   /* text-shadow: 0px 0px 10px white; */
 }
 
-
-.appexcharts-menu{
-  background-color:#2563eb;
+.appexcharts-menu {
+  background-color: #2563eb;
 }

@@ -1,6 +1,5 @@
 import {
   Box,
-  Fab,
   Select,
   MenuItem,
   InputLabel,
@@ -16,11 +15,8 @@ import {
   Dialog,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+
 import PersonAddAltOutlinedIcon from "@mui/icons-material/PersonAddAltOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import CarCrashOutlinedIcon from "@mui/icons-material/CarCrashOutlined";
-import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,8 +24,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Topbar from "../Topbar";
 import Tooltip from "@mui/material/Tooltip";
 import SuperAdminService from "../../../Services/superadmin";
-// import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-// import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 const UserManagment = () => {
@@ -83,7 +78,7 @@ const UserManagment = () => {
       } else {
         const response = SuperAdminService.addUser(user);
         toast.success("User added successfully!");
-       
+
         setUser({
           name: "",
           email: "",
@@ -92,7 +87,6 @@ const UserManagment = () => {
         });
 
         handleCloseModal();
-        
       }
     } catch (error) {
       console.error("Error adding user:", error);
@@ -130,7 +124,7 @@ const UserManagment = () => {
               justifyContent: "center",
               alignItems: "center",
               overflowY: "auto",
-              border: "4px solid #CDF0EA"
+              border: "4px solid #CDF0EA",
             }}
           >
             <Box
@@ -145,7 +139,7 @@ const UserManagment = () => {
                 justifyContent={"space-between"}
                 sx={{
                   backgroundColor: "#CDF0EA",
-                  boxShadow: 5
+                  boxShadow: 5,
                 }}
               >
                 <Box
@@ -164,14 +158,14 @@ const UserManagment = () => {
                 </Box>
                 <Box>
                   <IconButton
-                    sx={{ color: "#1C1678", padding: "20px", }}
+                    sx={{ color: "#1C1678", padding: "20px" }}
                     onClick={handleCloseModal}
                   >
                     <CloseIcon />
                   </IconButton>
                 </Box>
               </Box>
-              <Box sx={{ padding: "20px", }}>
+              <Box sx={{ padding: "20px" }}>
                 <TextField
                   label="Name"
                   type="text"
@@ -181,7 +175,6 @@ const UserManagment = () => {
                   onChange={handleChange}
                   fullWidth
                   margin="normal"
-
                 />
                 <TextField
                   label="Email"
@@ -221,17 +214,15 @@ const UserManagment = () => {
                 </FormControl>
                 <Button
                   type="submit"
-                 
                   size="small"
                   sx={{
                     mt: 1,
-                    backgroundColor:"#CDF0EA",
-                    color:"black",
+                    backgroundColor: "#CDF0EA",
+                    color: "black",
                     "&:hover": {
                       // Apply styles on hover
-                      backgroundColor:"#A4BCDB",
-                      boxShadow:
-                        "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                      backgroundColor: "#A4BCDB",
+                      boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
                   }}
@@ -263,75 +254,7 @@ const UserManagment = () => {
       headerName: "Role",
       flex: 1,
       renderCell: ({ value: role }) => {
-        let icon = null;
         let backgroundColor = null;
-
-        // switch (role) {
-        //   case "SUPER_ADMIN":
-        //     icon = (
-        //       <AdminPanelSettingsOutlinedIcon
-        //         sx={{
-        //           color: "black",
-        //           fontSize: {
-        //             xl: "1.1rem",
-        //             xs: "0.8rem",
-        //             sm: "0.9rem",
-        //             md: "1rem",
-        //           },
-        //         }}
-        //       />
-        //     );
-        //     // backgroundColor = "#ffcdd2";
-        //     break;
-        //   case "ADMIN":
-        //     icon = (
-        //       <ContactsOutlinedIcon
-        //         sx={{
-        //           color: "black",
-        //           fontSize: {
-        //             xl: "1.1rem",
-        //             xs: "0.8rem",
-        //             sm: "0.9rem",
-        //             md: "1rem",
-        //           },
-        //         }}
-        //       />
-        //     );
-        //     // backgroundColor = "#f0f4c3";
-        //     break;
-        //   case "USER":
-        //     icon = (
-        //       <CarCrashOutlinedIcon
-        //         sx={{
-        //           color: "black",
-        //           fontSize: {
-        //             xl: "1.1rem",
-        //             xs: "0.8rem",
-        //             sm: "0.9rem",
-        //             md: "1rem",
-        //           },
-        //         }}
-        //       />
-        //     );
-        //     // backgroundColor = "#e1bee7";
-        //     break;
-        //   default:
-        //     icon = (
-        //       <PersonOutlinedIcon
-        //         sx={{
-        //           color: "black",
-        //           fontSize: {
-        //             xl: "1.1rem",
-        //             xs: "0.8rem",
-        //             sm: "0.9rem",
-        //             md: "1rem",
-        //           },
-        //         }}
-        //       />
-        //     );
-        //     // backgroundColor = "#b2dfdb";
-        //     break;
-        // }
 
         return (
           <Box
@@ -341,20 +264,6 @@ const UserManagment = () => {
             backgroundColor={backgroundColor}
             borderRadius="4px"
           >
-            {/* {icon}
-            <Typography
-              fontSize={"10px"}
-              sx={{
-                fontSize: {
-                  xl: "3rem",
-                  xs: "0.8rem",
-                  sm: "0.9rem",
-                  md: "1rem",
-                },
-              }}
-            >
-              {role}
-            </Typography> */}
             <span> {role}</span>
           </Box>
         );
@@ -397,9 +306,8 @@ const UserManagment = () => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-  }, [openModal]);
+  }, [openModal, openEditModal]);
 
-  //const filteredRows = filterRole === 'All' ? rows : rows.filter(row => row.role === filterRole);
   const filteredRows = rows.filter((row) => {
     if (filterRole !== "All" && row.role !== filterRole) {
       return false;
@@ -510,15 +418,6 @@ const UserManagment = () => {
               overflowY: "auto",
             }}
           >
-            {/* <Button onClick={handleCloseEditModal} sx={{ mt: 1, color: theme.palette.primary.contrastText, bgcolor: colors.blueAccent[600],
-                    '&:hover': { // Apply styles on hover
-                      bgcolor: colors.blueAccent[600], // Change background color
-                      boxShadow: '0 0 10px 5px rgba(255, 255, 255, 0.5)' // Apply box shadow
-                    },
-                    margin: '0 auto' // Center the button horizontally
-                  }}>
-               Close
-          </Button> */}
             <Box
               component="form"
               noValidate
@@ -531,7 +430,7 @@ const UserManagment = () => {
                 justifyContent={"space-between"}
                 sx={{
                   backgroundColor: "#CDF0EA",
-                  boxShadow: 5
+                  boxShadow: 5,
                 }}
               >
                 <Box
@@ -554,7 +453,7 @@ const UserManagment = () => {
                   </IconButton>
                 </Box>
               </Box>
-              <Box sx={{ padding: "20px", }}>
+              <Box sx={{ padding: "20px" }}>
                 <TextField
                   label="Name"
                   type="text"
@@ -575,26 +474,7 @@ const UserManagment = () => {
                   fullWidth
                   margin="normal"
                 />
-                {/* <TextField
-                label="UserName"
-                type="text"
-                name="username"
-                required
-                value={editUser.username}
-                onChange={handleChanges}
-                fullWidth
-                margin="normal"
-                disabled
-              /> */}
-                {/* <TextField
-              label="Password"
-              type="password"
-              name="password" required
-              value={editUser.password}
-              onChange={handleChanges}
-              fullWidth
-              margin="normal"
-           /> */}
+
                 <FormControl fullWidth margin="normal">
                   <InputLabel>Role</InputLabel>
                   <Select
@@ -613,19 +493,17 @@ const UserManagment = () => {
                 <Button
                   onClick={handleEditSubmit}
                   type="submit"
-                  
                   color="primary"
                   size="small"
                   sx={{
                     mt: 1,
-                    backgroundColor:"#CDF0EA",
-                    color:"black",
+                    backgroundColor: "#CDF0EA",
+                    color: "black",
 
                     "&:hover": {
                       // Apply styles on hover
-                      backgroundColor:"#A4BCDB",
-                      boxShadow:
-                        "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                      backgroundColor: "#A4BCDB",
+                      boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
                   }}
@@ -645,14 +523,14 @@ const UserManagment = () => {
 
   const [DialogOpen, setDialogOpen] = useState(false);
 
- const [id, setFId] = useState(false);
- const DeletehandleClose = () => {
-   setDialogOpen(false);
- }
- const DeleteHandleOpen =(id) =>{
-   setFId(id);
-   setDialogOpen(true);
- }
+  const [id, setFId] = useState(false);
+  const DeletehandleClose = () => {
+    setDialogOpen(false);
+  };
+  const DeleteHandleOpen = (id) => {
+    setFId(id);
+    setDialogOpen(true);
+  };
   const handleDelete = () => {
     SuperAdminService.deleteUser(id)
       .then((response) => {
@@ -676,87 +554,60 @@ const UserManagment = () => {
       aria-describedby="alert-dialog-description"
       sx={{
         zIndex: 999991,
-        // "& .MuiDialog-paper": {
-        //   width: 600, // Set the maximum width as per your requirement
-        // },
       }}
     >
-      
-      
-        
-        
-        <DialogActions
-       
-      >
+      <DialogActions>
         <Grid container spacing={1}>
           <Grid item xl="12" lg="12" md="12" sm="12" xs="12">
-          <Box display={"flex"} justifyContent={"space-between"} >
-       
-       <Typography
-         variant="body2"
-         // color={colors.redAccent[700]}
-         fontWeight={"bold"}
-        paddingTop={1}
-       >
-         Do you want to Delete this User?
-       </Typography>
-      
-      
-       <IconButton
-       aria-label="close"
-       onClick={DeletehandleClose}
-      
-      //  sx={{
-      //    position: "absolute",
-      //    right: 8,
-      //    top: 8,
-      //    // color: (theme) => theme.palette.grey[500],
-      //  }}
-     >
-       <CloseIcon />
-     </IconButton>
-       
-       </Box>
+            <Box display={"flex"} justifyContent={"space-between"}>
+              <Typography
+                variant="body2"
+                // color={colors.redAccent[700]}
+                fontWeight={"bold"}
+                paddingTop={1}
+              >
+                Do you want to Delete this User?
+              </Typography>
+
+              <IconButton aria-label="close" onClick={DeletehandleClose}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
           </Grid>
-          <Grid item  xl="12" lg="12" md="12" sm="12" xs="12">
-          <Box  >
-        <Button
-          sx={{
-            // backgroundColor: colors.blueAccent[600],
-            // color: colors.grey[100],
-            fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-            fontWeight: "bold",
-            padding: "5px 10px",
-            backgroundColor: "#F5A4A0",
-            color: "black",
-            boxShadow: 2,
-            "&:hover": {
-              // Apply styles on hover
-              // bgcolor: colors.blueAccent[600], // Change background color
-              boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-            },
-          }}
-          onClick={handleDelete}
-          color="primary"
-        >
-          OK
-        </Button>
-        </Box>
+          <Grid item xl="12" lg="12" md="12" sm="12" xs="12">
+            <Box>
+              <Button
+                sx={{
+                  fontSize: {
+                    xl: "14px",
+                    lg: "13px",
+                    md: "12px",
+                    sm: "11px",
+                    xs: "10px",
+                  },
+                  fontWeight: "bold",
+                  padding: "5px 10px",
+                  backgroundColor: "#F5A4A0",
+                  color: "black",
+                  boxShadow: 2,
+                  "&:hover": {
+                    boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                  },
+                }}
+                onClick={handleDelete}
+                color="primary"
+              >
+                OK
+              </Button>
+            </Box>
           </Grid>
         </Grid>
-        
-        
       </DialogActions>
-        
-     
-     
-      
-      
     </Dialog>
   );
 
   return (
-    <div className="app" style={{ backgroundColor: '#EEF0F6', }}>
+    <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
         <Box paddingTop={"130px"}>
@@ -826,9 +677,9 @@ const UserManagment = () => {
                               borderBottomColor: "currentColor", // Maintain underline color
                             },
                             "& .MuiInput-underline:hover:not(.Mui-disabled):before":
-                            {
-                              borderBottomColor: "currentColor", // Maintain underline color on hover
-                            },
+                              {
+                                borderBottomColor: "currentColor", // Maintain underline color on hover
+                              },
                             "& .MuiInput-underline:after": {
                               borderBottomColor: "currentColor", // Maintain underline color after typing
                             },
@@ -860,9 +711,9 @@ const UserManagment = () => {
                               borderBottomColor: "currentColor", // Maintain underline color
                             },
                             "& .MuiInput-underline:hover:not(.Mui-disabled):before":
-                            {
-                              borderBottomColor: "currentColor", // Maintain underline color on hover
-                            },
+                              {
+                                borderBottomColor: "currentColor", // Maintain underline color on hover
+                              },
                             "& .MuiInput-underline:after": {
                               borderBottomColor: "currentColor", // Maintain underline color after typing
                             },
@@ -873,32 +724,28 @@ const UserManagment = () => {
                     <Box>
                       <Tooltip title="Add user">
                         <Button
-                          
-                         
                           size="small"
                           onClick={handleOpenModal}
-                          startIcon={<PersonAddAltOutlinedIcon  color="black"/>}
+                          startIcon={<PersonAddAltOutlinedIcon color="black" />}
                           sx={{
                             m: 1,
                             fontSize: "14px",
                             fontWeight: "bold",
                             padding: "10px 20px",
-                            backgroundColor:"#CDF0EA",
-                            color:"black",
-                            boxShadow:4,
+                            backgroundColor: "#CDF0EA",
+                            color: "black",
+                            boxShadow: 4,
                             // color:"black",
                             "&:hover": {
                               // Apply styles on hover
-                              backgroundColor:"#A4BCDB",
+                              backgroundColor: "#A4BCDB",
                               boxShadow:
                                 "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                             },
-                           
                           }}
                         >
                           ADD USER
                         </Button>
-
                       </Tooltip>
                     </Box>
                   </Box>

@@ -1,14 +1,11 @@
 import { Box,  Button,  Dialog,  DialogActions,  Grid,  IconButton,  Tooltip,  Typography } from "@mui/material";
-import { useState, useEffect, useContext } from "react";
+import { useState,  useContext } from "react";
 import "./Card.css";
-import Fab from "@mui/material/Fab";
-// import { useTheme } from "@emotion/react";
-import { DataGrid } from "@mui/x-data-grid";
-// import { tokens } from "../../../../theme";
+
  import car from '../../../../images/car.png';
  import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+
 import folderImage from  "../../../../images/folder.png"
 import { toast } from "react-toastify";
 import SuperAdminService from "../../../../Services/superadmin";
@@ -16,15 +13,13 @@ import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../../DataContext";
 const Card = (props) => {
   const param = props;
-  const imageURL = car;
+ 
   const { setData } = useContext(DataContext);
-  // const theme = useTheme();
-  // const colors = tokens(theme.palette.mode);
-  const [ecu, setEcu] = useState([]);
-  const [open, setOpen] = useState(false);
+ 
+
   const userId = sessionStorage.getItem("UserId");
   const userid = Number(userId);
- 
+  const [isLaunched, setIsLaunched] = useState(param.launch);
  
  
 
@@ -35,7 +30,7 @@ const Card = (props) => {
   sessionStorage.setItem('versionName', version);
   setData({ id, version });
    navigate(`/afCards`);
-  // navigate(`/afCards?versionId=${id}&versionName=${version}`);
+
  }
 
 
@@ -71,9 +66,7 @@ const DeleteDialog = (
     aria-describedby="alert-dialog-description"
     sx={{
       zIndex: 999991,
-      // "& .MuiDialog-paper": {
-      //   width: 600, // Set the maximum width as per your requirement
-      // },
+     
     }}
   >
     
@@ -89,7 +82,7 @@ const DeleteDialog = (
      
      <Typography
        variant="body2"
-       // color={colors.redAccent[700]}
+      
        fontWeight={"bold"}
       paddingTop={1}
      >
@@ -101,12 +94,7 @@ const DeleteDialog = (
      aria-label="close"
      onClick={DeletehandleClose}
     
-    //  sx={{
-    //    position: "absolute",
-    //    right: 8,
-    //    top: 8,
-    //    // color: (theme) => theme.palette.grey[500],
-    //  }}
+   
    >
      <CloseIcon />
    </IconButton>
@@ -117,8 +105,7 @@ const DeleteDialog = (
         <Box  >
       <Button
         sx={{
-          // backgroundColor: colors.blueAccent[600],
-          // color: colors.grey[100],
+        
           fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
           fontWeight: "bold",
           padding: "5px 10px",
@@ -126,8 +113,7 @@ const DeleteDialog = (
           color: "black",
           boxShadow: 2,
           "&:hover": {
-            // Apply styles on hover
-            // bgcolor: colors.blueAccent[600], // Change background color
+           
             boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
           },
         }}
@@ -153,6 +139,7 @@ const handleLaunch = (vid) => {
   SuperAdminService.versionlaunch(vid,userid)
     .then((response) => {
       toast.success("Version Launched Successfully");
+      setIsLaunched(true); 
      
     })
     .catch((error) => {
@@ -171,11 +158,7 @@ const handleLaunch = (vid) => {
           display:"flex",
           flexDirection:"row",
            boxShadow: 4,
-          "&:hover": {
-            // backgroundColor: colors.purpleAccent[800],
-            // color: colors.grey[900],
-            // boxShadow: `5px 5px 2px  ${colors.purpleAccent[300]}`,
-          },
+         
         }}
       
       >
@@ -190,11 +173,11 @@ const handleLaunch = (vid) => {
                 alt="Folder"
                 style={{
                   width: "100%",
-                  // height: "170px",
+                 
                   height: {xl:"170px",lg:"160px",md:"140px" ,sm:"120px",xs:"110px"},
                   display: "inline-block",
                   opacity: 0.3,
-                  // paddingLeft: "20px"
+                 
                 }}
               />
             </Box>
@@ -212,7 +195,7 @@ const handleLaunch = (vid) => {
         
           
           <Box  sx={{
-            // color: colors.grey[100], 
+             
             fontSize: {
               xs: '1rem',
               sm: '0.8rem',
@@ -224,17 +207,7 @@ const handleLaunch = (vid) => {
           </Box>
 
         
-          {/* <Box display="flex" sx={{
-            // color: colors.grey[100], 
-            fontSize: {
-              xs: '1rem',
-              sm: '0.8rem',
-              md: '1rem'
-            }
-          }} >
-            <span><b >{param.month} {param.year}</b></span>
-          </Box>
-           */}
+         
           
         </Box>
         <Box display={"flex"} justifyContent={"flex-start"}  >
@@ -255,9 +228,9 @@ const handleLaunch = (vid) => {
                         backgroundColor: "#F5A4A0",
                         color: "black",
                         boxShadow: 2,
-                        // color:"black",
+                        
                         "&:hover": {
-                          // Apply styles on hover
+                        
                           backgroundColor: "#A4BCDB",
                           boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                         },
@@ -299,7 +272,7 @@ const handleLaunch = (vid) => {
                         },
                       }}
                     >
-                    {param.launch ? "Launched" :"Launch"}
+                    {isLaunched ? "Launched" :"Launch"}
                     </Button>
                   </Tooltip>
                 </Box>

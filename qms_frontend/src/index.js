@@ -7,11 +7,13 @@ import { DataProvider } from './DataContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <DataProvider>
     <BrowserRouter>
+     <DataProvider>
+    
     <App />
-    </BrowserRouter>
+    
     </DataProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

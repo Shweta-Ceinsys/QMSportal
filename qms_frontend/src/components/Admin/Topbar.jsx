@@ -1,9 +1,8 @@
-import { Badge, Box, Button, Divider, Grid, IconButton, InputAdornment, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Modal, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
+import { Badge, Box, Button, Divider, Grid, IconButton, InputAdornment, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Modal, Paper,  TextField, Tooltip, Typography } from "@mui/material";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/ceinsysLogo.png"
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import React, { useEffect, useState } from "react";
@@ -26,20 +25,11 @@ const Topbar = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const location = useLocation();
   let navigate = useNavigate();
-
-
-  
-
-
   const [count, setCount] = useState(0);
-
-
   //State for NotificationAcchor
   const [notiAnchor, setNotiAnchor] = useState(null);
-
   //Notifications
   const [data, setData] = useState([]);
-
   //History
   const [history, setHistory] = useState([]);
 
@@ -54,7 +44,6 @@ const Topbar = () => {
         console.error("Error fetching notification count:", error);
       });
   }, [notiAnchor]);
-
 
 
   const [expanded, setExpanded] = useState(false);
@@ -508,17 +497,9 @@ const Topbar = () => {
                     color:'#037D84'
                   },}}
                 >
-                  QMS Document Center
+                  QMS Artefacts
                 </Button>
-                {/* <Button
-                  component={Link}
-                  to="/user"
-                  sx={{ fontWeight: "bold", fontSize: '0.8rem',color: location.pathname === "/user" ? '#037D84' : 'black' ,"&:hover": {
-                    color:'#037D84'
-                  }, }}
-                >
-                  User Management
-                </Button> */}
+                
               </Box>
             </Box>
             {/* ICONS */}

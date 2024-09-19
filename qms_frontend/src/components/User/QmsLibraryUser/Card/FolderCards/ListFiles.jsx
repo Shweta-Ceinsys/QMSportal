@@ -1,24 +1,23 @@
 import { ToastContainer, toast } from "react-toastify";
 import Topbar from "../../../Topbar";
-import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Grid, IconButton, Paper, Tooltip, Typography } from "@mui/material";
+import { Box,  FormControl,  IconButton, Paper, TextField, Tooltip, Typography,  } from "@mui/material";
 
 
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import SuperAdminService from "../../../../../Services/superadmin";
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+
 import { useContext, useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-import CloseIcon from "@mui/icons-material/Close";
+
 import { DataContext } from "../../../../../DataContext";
 const ListFiles =(props) =>{
     const [rows, setRows] = useState([]);
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    //  const dirId = queryParams.get('directoryId');
+   
     const { setDirId } = useContext(DataContext);
      const { dirId } = useContext(DataContext);
+     const UserId = sessionStorage.getItem("UserId");
      useEffect(() => {
       // Fetch files based on directory ID
       const storedId = sessionStorage.getItem('directoryId');
@@ -42,7 +41,7 @@ const ListFiles =(props) =>{
    
        
   const handleDownload = (id) => {
-    SuperAdminService.downloadFile(id)
+    SuperAdminService.downloadFile(id,UserId)
       .then((response) => {
         // Get Content-Disposition header
         const contentDisposition = response.headers.get('content-disposition');
@@ -83,7 +82,29 @@ const ListFiles =(props) =>{
     navigate(`/ufCards`);
     // navigate(`/fCards?versionId=${id}&versionName=${version}`);
    }
- 
+ // -----------------------------------------------------------------Search Functionality----------------------------------------------------------------------------
+const [searchText, setSearchText] = useState("");
+
+const filteredRows = rows.filter((row) => {
+
+  if (
+    searchText &&
+    Object.values(row).some(
+      (value) =>
+        value &&
+        value.toString().toLowerCase().includes(searchText.toLowerCase())
+    )
+  ) {
+    return true;
+  }
+  return !searchText;
+});
+
+
+
+const handleSearchChange = (event) => {
+  setSearchText(event.target.value);
+};
     const columns = [
       {
         field: 'serialNumber',
@@ -113,14 +134,7 @@ const ListFiles =(props) =>{
                 onClick={() => handleDownload(row.id,)}
                 color="inherit"
               />,
-              // <GridActionsCellItem
-              //   icon={
-              //     <DeleteIcon variant="outlined" color="secondary" size="small" />
-              //   }
-              //   label="Delete"
-              //    onClick={() => DeleteHandleOpen(row.id)}
-              //   color="inherit"
-              // />,
+            
             ];
           },
         },
@@ -144,6 +158,36 @@ const ListFiles =(props) =>{
           </Tooltip>
           </Box>
           <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px' }}>
+          <Box>
+                   {/* Search TextField */}
+                   <FormControl
+                        variant="standard"
+                        sx={{ m: 1, minWidth: 100 }}
+                      >
+                        <Typography sx={{ mr: 1 }}>Search:</Typography>
+                        <TextField
+                          variant="standard"
+                          value={searchText}
+                          onChange={handleSearchChange}
+                          sx={{
+                            ml: 1,
+                            "& .MuiInputBase-root": {
+                              color: "inherit", // Maintain text color
+                            },
+                            "& .MuiInput-underline:before": {
+                              borderBottomColor: "currentColor", // Maintain underline color
+                            },
+                            "& .MuiInput-underline:hover:not(.Mui-disabled):before":
+                              {
+                                borderBottomColor: "currentColor", // Maintain underline color on hover
+                              },
+                            "& .MuiInput-underline:after": {
+                              borderBottomColor: "currentColor", // Maintain underline color after typing
+                            },
+                          }}
+                        />
+                      </FormControl>
+            </Box>
           <Box sx={{
                     "& .MuiDataGrid-root": {
                       border: "none",
@@ -170,10 +214,10 @@ const ListFiles =(props) =>{
                       // color: `${colors.greenAccent[200]} !important`,
                     },
                   }}  >
-            <Box style={{ height: `calc(100vh - 160px)`,  }}
+            <Box style={{ height: `calc(100vh - 240px)`,  }}
             >
           <DataGrid
-            rows={rows}
+            rows={filteredRows}
             columns={columns}
             stickyHeader
           />
@@ -184,7 +228,7 @@ const ListFiles =(props) =>{
           </Box>
  
         </main>
-        {/* {DeleteDialog} */}
+        
         <ToastContainer style={{ zIndex: "1000000" }} />
       </div>
     );

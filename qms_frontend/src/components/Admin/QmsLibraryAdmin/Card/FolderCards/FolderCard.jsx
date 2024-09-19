@@ -1,12 +1,9 @@
-import { Box, Button, Dialog, DialogActions, FormControl, Grid, IconButton, InputLabel, MenuItem, Modal, Paper, Select, TextField, Tooltip, Typography } from "@mui/material";
-import { useState, useEffect, useRef, useContext } from "react";
+import { Box, Button, Dialog, DialogActions,  Grid, IconButton,  Modal, Paper,  Tooltip, Typography } from "@mui/material";
+import { useState,  useContext } from "react";
 import "./FolderCard.css";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import SuperAdminService from "../../../../../Services/superadmin";
 import folderImage from  "../../../../../images/folder.png"
 import FolderUpload from "../../../../../images/FolderUpload.png"
@@ -22,15 +19,11 @@ const { setDirId } = useContext(DataContext);
 
 const navigate = useNavigate();
   const toggleTable = (dirId) => {
-    // dir.current = dirId;
-    // setDirIds(dirId);
-    // console.log("DirIds",dir.current);
+    
     sessionStorage.setItem('directoryId', dirId);
     setDirId(dirId);
     navigate('/afLists');
-//  navigate(`/afLists?directoryId=${dirId}`);
 
-// navigate("/fLists");
   }
   
   const extractFilesFromFolder = async (item, fileList) => {
@@ -81,9 +74,7 @@ const navigate = useNavigate();
         aria-describedby="alert-dialog-description"
         sx={{
           zIndex: 999991,
-          // "& .MuiDialog-paper": {
-          //   width: 600, // Set the maximum width as per your requirement
-          // },
+        
         }}
       >
         
@@ -99,7 +90,7 @@ const navigate = useNavigate();
          
          <Typography
            variant="body2"
-           // color={colors.redAccent[700]}
+         
            fontWeight={"bold"}
           paddingTop={1}
          >
@@ -111,12 +102,7 @@ const navigate = useNavigate();
          aria-label="close"
          onClick={DeletehandleClose}
         
-        //  sx={{
-        //    position: "absolute",
-        //    right: 8,
-        //    top: 8,
-        //    // color: (theme) => theme.palette.grey[500],
-        //  }}
+      
        >
          <CloseIcon />
        </IconButton>
@@ -127,8 +113,7 @@ const navigate = useNavigate();
             <Box  >
           <Button
             sx={{
-              // backgroundColor: colors.blueAccent[600],
-              // color: colors.grey[100],
+             
               fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
               fontWeight: "bold",
               padding: "5px 10px",
@@ -136,8 +121,7 @@ const navigate = useNavigate();
               color: "black",
               boxShadow: 2,
               "&:hover": {
-                // Apply styles on hover
-                // bgcolor: colors.blueAccent[600], // Change background color
+              
                 boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
               },
             }}
@@ -174,7 +158,7 @@ const navigate = useNavigate();
    
    
      const [files, setFiles] = useState([]);
-    //  const [fileName, setFileName] = useState('');
+  
 
   const handleFileChange = (event) => {
     const selectedFiles = Array.from(event.target.files);
@@ -398,9 +382,7 @@ const navigate = useNavigate();
           flexDirection:"row",
            boxShadow: 4,
           "&:hover": {
-            // backgroundColor: colors.purpleAccent[800],
-            // color: colors.grey[900],
-            // boxShadow: `5px 5px 2px  ${colors.purpleAccent[300]}`,
+            
           },
         }}
       
@@ -450,17 +432,7 @@ const navigate = useNavigate();
           </Box>
 
         
-          {/* <Box display="flex" sx={{
-            // color: colors.grey[100], 
-            fontSize: {
-              xs: '1rem',
-              sm: '0.8rem',
-              md: '1rem'
-            }
-          }} >
-            <span><b >{param.month} {param.year}</b></span>
-          </Box>
-           */}
+         
           
         </Box>
         <Box display={"flex"} justifyContent={"flex-start"}  >

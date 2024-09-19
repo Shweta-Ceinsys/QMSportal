@@ -10,18 +10,20 @@ import {
   Paper,
   Select,
   TextField,
-  Tooltip,
+
 } from "@mui/material";
 import Topbar from "../Topbar";
 import Cards from "./Card";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import SuperAdminService from "../../../Services/superadmin";
+
 const QmsLibrary = () => {
+ 
   const [openModal, setOpenModal] = useState(false);
-  const [rows, setRows] = useState([]);
+
   const username = sessionStorage.getItem("Name");
   const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
   const  CurrentUser = Number(idString);
@@ -60,17 +62,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // if (name === 'month') {
-    //   // Ensure the month value is between 01 and 12
-    //   if (/^(0[1-9]|1[0-2])?$/.test(value)) {
-    //     setAddVersion((prev) => ({ ...prev, [name]: value }));
-    //   }
-    // } else if (name === 'year') {
-    //   // Ensure the year value is a 4-digit number
-    //   if (/^\d{0,4}$/.test(value)) {
-    //     setAddVersion((prev) => ({ ...prev, [name]: value }));
-    //   }
-    // }
+   
     setAddVersion((prevUser) => ({
       ...prevUser,
       [name]: value,
@@ -90,8 +82,12 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
       } else if (addVersions.year.trim().length === 0) {
         toast.warning("Please Enter Year!");
       } else {
-        const response = SuperAdminService.addVersion(addVersions);
+        SuperAdminService.addVersion(addVersions).then((resp) => {
+          
+        })
+        
         toast.success("Version added successfully!");
+        
 
         setAddVersion({
           version: "",
@@ -101,6 +97,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
         });
 
         handleCloseModal();
+        
       }
     } catch (error) {
       console.error("Error adding Version:", error);
@@ -214,7 +211,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
           <MenuItem
             key={month}
             value={month}
-            // onClick={() => modelClick(month)} // Adjust this if needed
+            
             onChange={handleChange}
           >
             {month}
@@ -248,7 +245,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
           <MenuItem
             key={year}
             value={year}
-            // onClick={() => modelClick(month)} // Adjust this if needed
+            
             onChange={handleChange}
           >
             {year}
@@ -293,36 +290,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                 
               </Box>
             </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <Box display={"flex"} justifyContent={"flex-end"} m={1}>
-                <Box>
-                  <Tooltip title="Add Version">
-                    <Button
-                      size="small"
-                      onClick={handleOpenModal}
-                      startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
-                      sx={{
-                        m: 1,
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
-                        color: "black",
-                        boxShadow: 4,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                      ADD Version
-                    </Button>
-                  </Tooltip>
-                </Box>
-              </Box>
-            </Grid>
+          
           </Grid>
           
           <Box>
