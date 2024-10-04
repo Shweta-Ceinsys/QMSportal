@@ -3,17 +3,23 @@ import { Routes, Route } from "react-router-dom";
 import Protected from "./Protected/Protected";
 import UserManagement from './components/SuperAdmin/UserManagement';
 import Login from './components/Login/Login';
+import Login1 from './components/Login/Login1';
+import Login2 from './components/Login/Login2';
+import Login3 from './components/Login/Login';
 import QmsLibrary from "./components/SuperAdmin/QMSLibrary";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import FolderCards from "./components/SuperAdmin/QMSLibrary/Card/FolderCards";
 import ListFiles from "./components/SuperAdmin/QMSLibrary/Card/FolderCards/ListFiles";
 import AdminQmsLibrary from "./components/Admin/QmsLibraryAdmin";
-
 import AdminFolderCards from "./components/Admin/QmsLibraryAdmin/Card/FolderCards";
  import AdminListFiles from "./components/Admin/QmsLibraryAdmin/Card/FolderCards/ListFiles";
  import UserQmsLibrary from "./components/User/QmsLibraryUser";
 import UserFolderCards from "./components/User/QmsLibraryUser/Card/FolderCards";
 import UserListFiles from "./components/User/QmsLibraryUser/Card/FolderCards/ListFiles";
+import Helpdesk from "./components/SuperAdmin/Helpdesk/Helpdesk";
+import UserHelpdesk from "./components/User/Helpdesk/Helpdesk";
+import  AdminHelpdesk from "./components/Admin/Helpdesk/Helpdesk";
+import AdminUserList from "./components/Admin/UserList/UserList";
 
 function App() {
   return (
@@ -21,6 +27,9 @@ function App() {
       <Routes>
               <Route path="/" element={<Login />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/login1" element={<Login1 />} />
+              <Route path="/login2" element={<Login2 />} />
+              <Route path="/login3" element={<Login3 />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
               
              <>
@@ -37,7 +46,7 @@ function App() {
       <Route path="/qmsLibrary" element={<QmsLibrary role="SUPER_ADMIN"/>} />
       <Route path="/fCards" element={<FolderCards role="SUPER_ADMIN"/>} />
       <Route path="/fLists" element={<ListFiles role="SUPER_ADMIN"/>} />
-
+      <Route path="/helpdesk" element={<Helpdesk role="SUPER_ADMIN"/>} />
 
 {/* Admin */}
 
@@ -48,7 +57,8 @@ function App() {
           <Route path="/aQmsLibrary" element={<AdminQmsLibrary role="ADMIN"/>} />
           <Route path="/afCards" element={<AdminFolderCards role="ADMIN"/>} />
           <Route path="/afLists" element={<AdminListFiles role="ADMIN"/>} />
-
+          <Route path="/ahelpdesk" element={<AdminHelpdesk role="ADMIN"/>} />
+          <Route path="/auserlist" element={<AdminUserList role="ADMIN"/>} />
      
 {/* User */}
           {/* <Route exact path="/uQmsLibrary" element={<Protected cmp={UserQmsLibrary} role="USER"/>} ></Route>
@@ -57,7 +67,8 @@ function App() {
 
           <Route path="/uQmsLibrary" element={<UserQmsLibrary role="USER"/>} />
           <Route path="/ufCards" element={<UserFolderCards role="USER"/>} />
-          <Route path="/ufLists" element={<UserListFiles role="USER"/>} />     
+          <Route path="/ufLists" element={<UserListFiles role="USER"/>} />   
+          <Route path="/uhelpdesk" element={<UserHelpdesk role="USER"/>} />  
               </>
      </Routes>
    

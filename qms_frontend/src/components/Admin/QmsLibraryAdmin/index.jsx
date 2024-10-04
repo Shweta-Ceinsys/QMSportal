@@ -120,47 +120,47 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
         }}
       >
         <Grid item xs={11} sm={11} md={8} lg={5} xl={5}>
-          <Paper
-            elevation={3}
-            style={{
-              width: "100%",
-              // padding: "20px",
-              justifyContent: "center",
-              alignItems: "center",
-              overflowY: "auto",
-              border: "4px solid #CDF0EA",
-            }}
-          >
-            <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ alignItems: "center" }}
-            >
-              <Box
-                display={"flex"}
-                flexDirection={"row"}
-                justifyContent={"space-between"}
-                sx={{
-                  backgroundColor: "#CDF0EA",
-                  boxShadow: 5,
-                }}
-              >
-                <Box
-                  className="textname"
-                  sx={{
-                    padding: "20px",
-                    fontSize: {
-                      xs: "16px",
-                      sm: "24px",
-                      md: "28px",
-                      xl: "30px",
-                    },
-                  }}
-                >
-                  <span>Add Version</span>
-                </Box>
-                <Box>
+         <Paper
+  elevation={3}
+  style={{
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    overflowY: "auto",
+    border: "4px solid #579aef",
+  }}
+>
+  <Box
+    component="form"
+    noValidate
+    onSubmit={handleSubmit}
+    sx={{ alignItems: "center" }}
+  >
+    <Box
+      display={"flex"}
+      flexDirection={"row"}
+      justifyContent={"space-between"}
+    //   sx={{
+    //     background: 'linear-gradient(135deg, #3095f0, #fdf9fd, #b6bced)',
+    //     boxShadow: 5,
+    //   }}
+    >
+      <Box
+        className="textname"
+        sx={{
+          padding: "20px",
+          fontSize: {
+            xs: "16px",
+            sm: "24px",
+            md: "28px",
+            xl: "30px",
+          },
+        }}
+      >
+        <span>ADD VERSION</span>
+      </Box>
+    <Box>
+
                   <IconButton
                     sx={{ color: "#1C1678", padding: "20px" }}
                     onClick={handleCloseModal}
@@ -250,11 +250,11 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                   size="small"
                   sx={{
                     mt: 1,
-                    backgroundColor: "#CDF0EA",
+                    backgroundColor: "#d1d2f2",
                     color: "black",
                     "&:hover": {
                       // Apply styles on hover
-                      backgroundColor: "#A4BCDB",
+                      backgroundColor: "#8e93e4",
                       boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
@@ -273,11 +273,11 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box marginTop={"75px"}>
+        <Box marginTop={"75px"} marginLeft={"290px"}>
           <Grid container>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Box display={"flex"} justifyContent={"flex-start"}>
-                <h3 >Welcome {username}</h3>
+                <h3 >Welcome {username} !!</h3>
                 
               </Box>
             </Grid>
@@ -294,18 +294,18 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                         fontSize: "14px",
                         fontWeight: "bold",
                         padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
+                        backgroundColor: "#d1d2f2",
                         color: "black",
                         boxShadow: 4,
                       
                         "&:hover": {
                           // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
+                          backgroundColor: "#8e93e4",
                           boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                         },
                       }}
                     >
-                      ADD Version
+                      ADD VERSION
                     </Button>
                   </Tooltip>
                 </Box>

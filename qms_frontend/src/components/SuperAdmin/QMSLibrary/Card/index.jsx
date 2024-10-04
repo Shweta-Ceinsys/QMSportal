@@ -30,7 +30,7 @@ const Cards = () => {
   return (
     <div >
     {/* <CircularLoading isLoading={isLoading} /> */}
-    <Box m={2}>
+    <Box m={2} >
           
       <Grid container spacing={0.5} >
         {getallVersions.map((card, id) => (

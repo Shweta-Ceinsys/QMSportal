@@ -1,13 +1,39 @@
-import { Badge, Box, Button, Divider, Grid, IconButton, InputAdornment, ListItemIcon, ListItemText, Menu, MenuItem, MenuList, Modal, Paper,  TextField, Tooltip, Typography } from "@mui/material";
+import {
+  Badge,
+  Box,
+  Button,
+  Divider,
+  Grid,
+  IconButton,
+  InputAdornment,
+  ListItemIcon,
+  ListItemText,
+  Menu,
+  MenuItem,
+  MenuList,
+  Modal,
+  Paper,
+  TextField,
+  Tooltip,
+  Typography,
+  Drawer,
+  List,
+  ListItem,
+} from "@mui/material";
+import PeopleAltOutlinedIcon from '@mui/icons-material/PeopleAltOutlined';
+import DescriptionIcon from '@mui/icons-material/Description';
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
+import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import ceinsysLogo from "../../images/ceinsysLogo.png"
+import ceinsysLogo from "../../images/ceinsysLogo.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import React, { useEffect, useState } from "react";
 import AuthService from "../../Services/AuthService";
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
 import SuperAdminService from "../../Services/superadmin";
 import { toast } from "react-toastify";
@@ -23,13 +49,18 @@ const Topbar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const location = useLocation();
   let navigate = useNavigate();
+
   const [count, setCount] = useState(0);
+
   //State for NotificationAcchor
   const [notiAnchor, setNotiAnchor] = useState(null);
+
   //Notifications
   const [data, setData] = useState([]);
+
   //History
   const [history, setHistory] = useState([]);
 
@@ -44,7 +75,12 @@ const Topbar = () => {
         console.error("Error fetching notification count:", error);
       });
   }, [notiAnchor]);
-
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setOpenDrawer(open);
+  };
 
   const [expanded, setExpanded] = useState(false);
 
@@ -52,7 +88,6 @@ const Topbar = () => {
     setExpanded(!expanded);
   };
   // Function to open the menu
-
 
   const handleMenuOpen = (event) => {
     setMenuAnchor(event.currentTarget);
@@ -74,9 +109,8 @@ const Topbar = () => {
   var email = sessionStorage.getItem("Email");
   var Role = sessionStorage.getItem("Role");
 
-
   const handleOpenModal = () => {
-    setOpenModal(true);
+    setOpenModal(false);
   };
 
   const handleCloseModal = () => {
@@ -97,38 +131,40 @@ const Topbar = () => {
     setConfirmPassword(password);
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
       if (oldPassword.trim().length === 0 && newPassword.trim().length === 0) {
-        toast.warning('Please Enter passwords !');
+        toast.warning("Please Enter passwords !");
       } else if (oldPassword.trim().length === 0) {
-        toast.warning('Please Enter Old Password!');
+        toast.warning("Please Enter Old Password!");
       } else if (newPassword.trim().length === 0) {
-        toast.warning('Please Enter New Password!');
-      }
-      else if (confirmPassword.trim().length === 0) {
-        toast.warning('Please Enter Confirm Password!');
-      }
-      else if (newPassword !== confirmPassword) {
-        toast.warning('Both Password must be the same!');
+        toast.warning("Please Enter New Password!");
+      } else if (confirmPassword.trim().length === 0) {
+        toast.warning("Please Enter Confirm Password!");
+      } else if (newPassword !== confirmPassword) {
+        toast.warning("Both Password must be the same!");
       } else {
-        const response = SuperAdminService.changePassword(id, oldPassword, newPassword);
+        const response = SuperAdminService.changePassword(
+          id,
+          oldPassword,
+          newPassword
+        );
         // We have to check the staus code for ailed request.
-        console.log('status code', ((await response).status))
+        console.log("status code", (await response).status);
         if ((await response).status === 200) {
           toast.success("User password changed successfully!");
           handleCloseModal();
         } else {
-
-          toast.error(`Failed to change password: ${(await response).data || 'Unknown error'}`);
+          toast.error(
+            `Failed to change password: ${
+              (await response).data || "Unknown error"
+            }`
+          );
         }
         handleCloseModal();
-
       }
-
     } catch (error) {
       console.error("Error  Change Password:", error);
       toast.error("Failed to change Password!");
@@ -170,19 +206,17 @@ const Topbar = () => {
             elevation={3}
             style={{
               width: "100%",
-             border:"4px solid #CDF0EA",
+              border: "4px solid #CDF0EA",
               justifyContent: "center",
               alignItems: "center",
               overflowY: "auto",
             }}
           >
-
-
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{  alignItems: "center" }}
+              sx={{ alignItems: "center" }}
             >
               <Box
                 display={"flex"}
@@ -211,105 +245,107 @@ const Topbar = () => {
                   </IconButton>
                 </Box>
               </Box>
-             <Box sx={{padding:"20px"}}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="oldPassword"
-                label="Old Password"
-                type={showPassword ? 'text' : 'password'}
-                id="oldPassword"
-                value={oldPassword}
-                onChange={onChangePassword}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleTogglePasswordVisibility}
-                        edge="end"
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="newPassword"
-                label="newPassword"
-                type={showNewPassword ? 'text' : 'password'}
-                id="newPassword"
-                value={newPassword}
-                onChange={onChangeNewPassword}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleToggleNewPasswordVisibility}
-                        edge="end"
-                      >
-                        {showNewPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+              <Box sx={{ padding: "20px" }}>
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="oldPassword"
+                  label="Old Password"
+                  type={showPassword ? "text" : "password"}
+                  id="oldPassword"
+                  value={oldPassword}
+                  onChange={onChangePassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleTogglePasswordVisibility}
+                          edge="end"
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="newPassword"
+                  label="newPassword"
+                  type={showNewPassword ? "text" : "password"}
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={onChangeNewPassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleToggleNewPasswordVisibility}
+                          edge="end"
+                        >
+                          {showNewPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="confirmPassword"
-                label="confirmPassword"
-                type={showConfirmPassword ? 'text' : 'password'}
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={onChangeConfirmPassword}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleToggleConfirmPasswordVisibility}
-                        edge="end"
-                      >
-                        {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={onChangeConfirmPassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleToggleConfirmPasswordVisibility}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
 
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{
-                  mt: 1,
-                  backgroundColor:"#CDF0EA",
-                  color:"Black",
-                  "&:hover": {
-                    boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                  },
-                  margin: "0 auto", // Center the button horizontally
-                }}
-              >
-                Reset
-              </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    mt: 1,
+                    backgroundColor: "#CDF0EA",
+                    color: "Black",
+                    "&:hover": {
+                      boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                    },
+                    margin: "0 auto", // Center the button horizontally
+                  }}
+                >
+                  Reset
+                </Button>
               </Box>
             </Box>
-
           </Paper>
         </Grid>
       </Grid>
     </Modal>
   );
-
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -346,8 +382,6 @@ const Topbar = () => {
   const handleNotificationClose = () => {
     setNotiAnchor(null);
   };
-
- 
 
   const renderMenuItems = () => {
     if (data === null || data.length === 0) {
@@ -456,118 +490,167 @@ const Topbar = () => {
 
   return (
     <div>
-      <Grid container spacing={0} >
-        <Grid item xs={12} md={12} lg={12} xl={12}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems={"center"}
-            width={"100%"}
-             height={"70px"}
-            position={"fixed"}
-            backgroundColor={'#CDF0EA'}
-            boxShadow={5}
-            flexWrap={"wrap"}
-           paddingTop={0.8}
-           paddingBottom={0.8}
-            sx={{ zIndex: 999991 }}
-          >
-            <Box display="flex"
-              justifyContent="space-between"
-              alignItems={"center"}>
-              <Box>
-                <img
-                  src={ceinsysLogo}
-                  alt="Logo"
-                  style={{
-                    width: {xl:"260px",lg:"240px",md:"220px",sm:"200px",xs:"180px"},
-                    height: "60px",
-                    display: "inline-block",
-                    opacity:"2"
-                    // paddingLeft: "20px"
-                  }}
-                />
-              </Box>
-              <Box color={'#1C1678'}>
-               
-                <Button
-                  component={Link}
-                  to="/aQmsLibrary"
-                  sx={{ fontWeight: "bold", fontSize: '0.8rem', color: location.pathname === "/aQmsLibrary" ? '#037D84' : 'black' ,"&:hover": {
-                    color:'#037D84'
-                  },}}
-                >
-                  QMS Artefacts
-                </Button>
-                
-              </Box>
-            </Box>
+      <Grid container spacing={0}>
+        <Grid item xs={12}>
+        <Box
+  display="flex"
+  justifyContent="space-between"
+  alignItems="center"
+  width="100%"
+  height="60px"
+  position="fixed"
+  sx={{
+    background: 'linear-gradient(135deg, #3095f0, #fdf9fd, #b6bced)', // Gradient background
+    boxShadow: 4,
+    flexWrap: 'wrap',
+    paddingTop: 0.8,
+    paddingBottom: 0.8,
+    zIndex: 999991,
+  }}
+>
+
+
+            <Box display="flex" alignItems="center" padding="0 25px">
+              {/* Menu Button
+              <IconButton
+                size="medium"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+              >
+                <MenuIcon />
+              </IconButton> */}
+
+              {/* Logo */}
+              <img
+                src={ceinsysLogo}
+                alt="Logo"
+                style={{
+                  width: "auto",
+                  height: "40px",
+                  display: "inline-block",
+                }}
+              />
+  <Box
+                component="nav"
+                sx={{
+                  display: 'flex',
+                  zIndex: 1,
+                  flexDirection: 'column',
+                  background: 'linear-gradient(135deg,#579aef ,#fdf9fd)',
+                  width: '250px',
+                  height: 'calc(100vh - 60px)',
+                  position: 'fixed',
+                  top: '71.5px',
+                  left: 0,
+                  padding: '10px',
+                }}
+              >
+    <List>
+    <ListItem button component={Link} to="/aQmsLibrary" className="menu-item">
+  <ListItemIcon>
+    <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
+  </ListItemIcon>
+  <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+<ListItem button component={Link} to="/auserlist" className="menu-item">
+  <ListItemIcon>
+    <PeopleAltOutlinedIcon sx={{ fontSize: 24 }} /> {/* User List icon */}
+  </ListItemIcon>
+  <ListItemText primary="User List" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+
+      <ListItem button component={Link} to="/ahelpdesk" className="menu-item">
+  <ListItemIcon>
+    <HelpOutlineIcon sx={{ fontSize: 24 }} /> {/* Icon added here */}
+  </ListItemIcon>
+  <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
+</ListItem>
+
+      <Divider />
+      {/* Add more menu items here as needed */}
+    </List>
+    {/* Add more content here as needed */}
+  </Box>
+
+
+      </Box>
+
             {/* ICONS */}
-            <Box >
-              <Tooltip title="Notification" PopperProps ={{sx:{zIndex:999999}}} >
-                <IconButton  >
+            <Box>
+              <Tooltip
+                title="Notification"
+                PopperProps={{ sx: { zIndex: 999999 } }}
+              >
+                <IconButton>
                   <Badge badgeContent={count} color="secondary">
-                    <NotificationsOutlinedIcon variant="outlined" sx={{color:"black"}}
+                    <NotificationsOutlinedIcon
+                      variant="outlined"
+                      sx={{ color: "black" }}
                       onClick={handleNotificationOpen}
-                      size="small" />
+                      size="small"
+                    />
                   </Badge>
                 </IconButton>
               </Tooltip>
               <Menu
-          anchorEl={notiAnchor}
-          open={Boolean(notiAnchor)}
-          onClose={handleNotificationClose}
-          sx={{marginTop:'35px',zIndex:100000}}
-        >
-          <Paper sx={{ width: 520, maxWidth: "100%" }}>
-          <MenuItem
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onClick={showHistory ? handleBackClick : handleHistoryClick}
-            >
-              {showHistory ? (
-                <>
-                  <ListItemIcon>
-                    <ArrowBackOutlinedIcon />
-                  </ListItemIcon>
-                  Back to Notifications
-                </>
-              ) : (
-                <>
-                  <ListItemIcon>
-                    <HistoryOutlinedIcon />
-                  </ListItemIcon>
-                  History
-                </>
-              )}
-            </MenuItem>
-            <Divider />
-            <MenuList>
-              {showHistory ? renderHistoryItems() : renderMenuItems()}
-            </MenuList>
-          
-            
-          </Paper>
-        </Menu>
+                anchorEl={notiAnchor}
+                open={Boolean(notiAnchor)}
+                onClose={handleNotificationClose}
+                sx={{ marginTop: "35px", zIndex: 100000 }}
+              >
+                <Paper sx={{ width: 520, maxWidth: "100%" }}>
+                  <MenuItem
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                    onClick={showHistory ? handleBackClick : handleHistoryClick}
+                  >
+                    {showHistory ? (
+                      <>
+                        <ListItemIcon>
+                          <ArrowBackOutlinedIcon />
+                        </ListItemIcon>
+                        Back to Notifications
+                      </>
+                    ) : (
+                      <>
+                        <ListItemIcon>
+                          <HistoryOutlinedIcon />
+                        </ListItemIcon>
+                        History
+                      </>
+                    )}
+                  </MenuItem>
+                  <Divider />
+                  <MenuList>
+                    {showHistory ? renderHistoryItems() : renderMenuItems()}
+                  </MenuList>
+                </Paper>
+              </Menu>
 
-              <Tooltip title="Profile" PopperProps ={{sx:{zIndex:999999}}}>
-                <IconButton >
-                  <PersonOutlinedIcon onClick={handleMenuOpen} variant="outlined"
-                    sx={{color:"black"}}
-                    size="small" />
+              <Tooltip title="Profile" PopperProps={{ sx: { zIndex: 999999 } }}>
+                <IconButton>
+                  <PersonOutlinedIcon
+                    onClick={handleMenuOpen}
+                    variant="outlined"
+                    sx={{ color: "black" }}
+                    size="small"
+                  />
                 </IconButton>
               </Tooltip>
               <Menu
                 anchorEl={menuAnchor}
                 open={Boolean(menuAnchor)}
                 onClose={handleMenuClose}
-                sx={{ marginTop: '35px', zIndex: 100000 }}
+                sx={{ marginTop: "35px", zIndex: 100000 }}
               >
                 <Box sx={{ p: 1 }}>
-
                   <Typography
                     variant="subtitle2"
                     component="p"
@@ -605,7 +688,7 @@ const Topbar = () => {
                 </MenuItem>
               </Menu>
             </Box>
-          </Box>
+            </Box>
         </Grid>
       </Grid>
       {ChangePasswordModal}
@@ -614,3 +697,5 @@ const Topbar = () => {
 };
 
 export default Topbar;
+
+

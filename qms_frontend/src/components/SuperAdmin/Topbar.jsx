@@ -16,7 +16,14 @@ import {
   TextField,
   Tooltip,
   Typography,
+  Drawer,
+  List,
+  ListItem,
 } from "@mui/material";
+import GroupIcon from '@mui/icons-material/Group'; // Add this import
+
+import DescriptionIcon from '@mui/icons-material/Description';
+import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/ceinsysLogo.png";
@@ -42,6 +49,7 @@ const Topbar = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
   const location = useLocation();
   let navigate = useNavigate();
 
@@ -67,6 +75,12 @@ const Topbar = () => {
         console.error("Error fetching notification count:", error);
       });
   }, [notiAnchor]);
+  const toggleDrawer = (open) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setOpenDrawer(open);
+  };
 
   const [expanded, setExpanded] = useState(false);
 
@@ -96,7 +110,7 @@ const Topbar = () => {
   var Role = sessionStorage.getItem("Role");
 
   const handleOpenModal = () => {
-    setOpenModal(true);
+    setOpenModal(false);
   };
 
   const handleCloseModal = () => {
@@ -477,77 +491,122 @@ const Topbar = () => {
   return (
     <div>
       <Grid container spacing={0}>
-        <Grid item xs={12} md={12} lg={12} xl={12}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems={"center"}
-            width={"100%"}
-            height={"70px"}
-            position={"fixed"}
-            backgroundColor={"#CDF0EA"}
-            boxShadow={5}
-            flexWrap={"wrap"}
-            paddingTop={0.8}
-            paddingBottom={0.8}
-            sx={{ zIndex: 999991 }}
-          >
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems={"center"}
-            >
-              <Box>
-                <img
-                  src={ceinsysLogo}
-                  alt="Logo"
-                  style={{
-                    width: {
-                      xl: "260px",
-                      lg: "240px",
-                      md: "220px",
-                      sm: "200px",
-                      xs: "180px",
-                    },
-                    height: "60px",
-                    display: "inline-block",
-                    opacity: "2",
-                    // paddingLeft: "20px"
-                  }}
-                />
-              </Box>
-              <Box color={"#1C1678"}>
-                <Button
-                  component={Link}
-                  to="/qmsLibrary"
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "0.8rem",
-                    color:
-                      location.pathname === "/qmsLibrary" ? "#037D84" : "black",
-                    "&:hover": {
-                      color: "#037D84",
-                    },
-                  }}
-                >
-                  QMS Artefacts
-                </Button>
-                <Button
-                  component={Link}
-                  to="/user"
-                  sx={{
-                    fontWeight: "bold",
-                    fontSize: "0.8rem",
-                    color: location.pathname === "/user" ? "#037D84" : "black",
-                    "&:hover": {
-                      color: "#037D84",
-                    },
-                  }}
-                >
-                  User Management
-                </Button>
-              </Box>
-            </Box>
+        <Grid item xs={12}>
+        <Box
+  display="flex"
+  justifyContent="space-between"
+  alignItems="center"
+  width="100%"
+  height="60px"
+  position="fixed"
+  sx={{
+    background: 'linear-gradient(135deg, #3095f0, #fdf9fd, #b6bced)', // Gradient background
+    boxShadow: 3,
+    flexWrap: 'wrap',
+    paddingTop: 0.8,
+    paddingBottom: 0.8,
+    zIndex: 999991,
+  }}
+>
+
+
+            <Box display="flex" alignItems="center" padding="0 25px">
+              
+              {/* Logo */}
+              <img
+                src={ceinsysLogo}
+                alt="Logo"
+                style={{
+                  width: "auto",
+                  height: "40px",
+                  display: "inline-block",
+                }}
+              />
+{/* Drawer content
+<Drawer
+  anchor="left"
+  open={openDrawer}
+  onClose={toggleDrawer(false)}
+  sx={{
+    width: "300px", // Increased width of the Drawer
+    "& .MuiDrawer-paper": {
+      background: 'linear-gradient(135deg,#3095f0 ,#fdf9fd)', // Gradient background
+      borderRight: "none", // Optional: remove border if needed
+      top: '60px', // Adjust top to fit below the topbar (adjust as needed)
+      height: `calc(100vh - 60px)`, // Full height minus the topbar height
+      width: '300px', // Ensure the width of the Drawer is set here
+    },
+  }}
+>
+
+  <Box
+    role="presentation"
+    onClick={toggleDrawer(false)}
+    onKeyDown={toggleDrawer(false)}
+    sx={{ 
+      padding: 2,
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      overflowY: 'auto', // Ensure content scrolls if it overflows
+      "& .menu-item": {
+        padding: "10px", // Padding for menu items
+        borderBottom: "1px solid #ddd", // Border for menu items
+      },
+      "& .menu-item:hover": {
+        backgroundColor: '#e0e0e0', // Hover effect for menu items
+      },
+    }}
+  > */}
+
+{/*Side Bar Code */}
+   <Box
+                component="nav"
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  background: 'linear-gradient(135deg,#3095f0 ,#fdf9fd)',
+                  width: '250px',
+                  height: 'calc(100vh - 60px)',
+                  position: 'fixed',
+                  top: '71.5px',
+                  left: 0,
+                  padding: '10px',
+      
+                }}
+              >
+    <List>
+    <ListItem button component={Link} to="/QmsLibrary" className="menu-item">
+  <ListItemIcon>
+    <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
+  </ListItemIcon>
+  <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+<ListItem button component={Link} to="/user" className="menu-item">
+  <ListItemIcon>
+    <GroupIcon sx={{ fontSize: 24 }} /> {/* User Management icon */}
+  </ListItemIcon>
+  <ListItemText primary="User Management" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+      <ListItem button component={Link} to="/helpdesk" className="menu-item">
+  <ListItemIcon>
+    <HelpOutlineIcon sx={{ fontSize: 24 }} /> {/* Icon added here */}
+  </ListItemIcon>
+  <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
+</ListItem>
+
+      <Divider />
+      {/* Add more menu items here as needed */}
+    </List>
+    {/* Add more content here as needed */}
+  </Box>
+
+
+
+      </Box>
+
             {/* ICONS */}
             <Box>
               <Tooltip
@@ -657,7 +716,7 @@ const Topbar = () => {
                 </MenuItem>
               </Menu>
             </Box>
-          </Box>
+            </Box>
         </Grid>
       </Grid>
       {ChangePasswordModal}
@@ -666,3 +725,5 @@ const Topbar = () => {
 };
 
 export default Topbar;
+
+

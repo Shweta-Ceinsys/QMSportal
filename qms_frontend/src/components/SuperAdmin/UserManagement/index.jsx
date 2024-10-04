@@ -610,7 +610,7 @@ const UserManagment = () => {
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box paddingTop={"130px"}>
+        <Box paddingTop={"130px"} marginLeft={"290px"}>
           <Box
             display="flex"
             justifyContent="flex-end"
@@ -732,7 +732,7 @@ const UserManagment = () => {
                             fontSize: "14px",
                             fontWeight: "bold",
                             padding: "10px 20px",
-                            backgroundColor: "#CDF0EA",
+                            backgroundColor: "#ebe9f8",
                             color: "black",
                             boxShadow: 4,
                             // color:"black",
@@ -751,10 +751,11 @@ const UserManagment = () => {
                   </Box>
 
                   <Box
-                    style={{
+                    sx={{
                       height: `calc(100vh - 300px)`,
-
+                    
                       padding: "1%",
+                      
                     }}
                   >
                     <DataGrid

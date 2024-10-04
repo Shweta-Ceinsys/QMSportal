@@ -14,11 +14,11 @@ const QmsLibrary = () => {
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box marginTop={"75px"}>
+        <Box marginTop={"75px"} marginLeft={"290px"}>
           <Grid container>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Box display={"flex"} justifyContent={"flex-start"}>
-                <h3>Welcome {username}</h3>
+                <h3>Welcome {username} !!</h3>
               </Box>
             </Grid>
           </Grid>

@@ -22,7 +22,7 @@ const FolderCard = (props) => {
   };
 
   return (
-    <Box>
+    <Box >
       <Box
         className="compactCard"
         sx={{
@@ -30,6 +30,7 @@ const FolderCard = (props) => {
           display: "flex",
           flexDirection: "row",
           boxShadow: 4,
+          marginLeft:"290px"
         }}
       >
         <Grid container>
@@ -76,9 +77,10 @@ const FolderCard = (props) => {
             xl="7"
             display="flex"
             flexDirection="column"
+            
           >
             <Box>
-              <Box display="flex" justifyContent="flex-end">
+              <Box display="flex" justifyContent="flex-end" >
                 <IconButton onClick={() => toggleTable(param.dirId)}>
                   <ArrowForwardIcon
                     variant="outlined"
@@ -86,7 +88,7 @@ const FolderCard = (props) => {
                   />
                 </IconButton>
               </Box>
-              <Box display="flex" justifyContent="center" alignContent="center">
+              <Box display="flex" justifyContent="center" alignContent="center" >
                 <Box
                   sx={{
                     // color: colors.grey[100],

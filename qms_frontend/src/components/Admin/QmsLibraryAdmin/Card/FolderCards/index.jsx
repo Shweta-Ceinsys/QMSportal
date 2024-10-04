@@ -251,13 +251,13 @@ const FolderCards = () => {
                         fontSize: "14px",
                         fontWeight: "bold",
                         padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
+                        backgroundColor: "#d9d9f5",
                         color: "black",
                         boxShadow: 4,
                         // color:"black",
                         "&:hover": {
                           // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
+                          backgroundColor: "#f4f1fb",
                           boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                         },
                       }}
@@ -273,7 +273,7 @@ const FolderCards = () => {
         </Box>
 
         <Box m={2}>
-          <Grid container spacing={0.2}>
+          <Grid container spacing={0.2} marginLeft={"290px"}>
             {getallDir.map((card, id) => (
               <Grid key={id} item xs={12} sm={6} md={4} lg={4} xl={3}>
                 <Card dirId={card.id} name={card.name} />

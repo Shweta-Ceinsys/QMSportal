@@ -135,7 +135,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
               justifyContent: "center",
               alignItems: "center",
               overflowY: "auto",
-              border: "4px solid #CDF0EA",
+              border: "4px solid #579aef",
             }}
           >
             <Box
@@ -148,10 +148,10 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                 display={"flex"}
                 flexDirection={"row"}
                 justifyContent={"space-between"}
-                sx={{
-                  backgroundColor: "#CDF0EA",
-                  boxShadow: 5,
-                }}
+                // sx={{
+                //   backgroundColor: "#CDF0EA",
+                //   boxShadow: 5,
+                // }}
               >
                 <Box
                   className="textname"
@@ -165,7 +165,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                     },
                   }}
                 >
-                  <span>Add Version</span>
+                  <span>ADD VERSION</span>
                 </Box>
                 <Box>
                   <IconButton
@@ -259,11 +259,11 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
                   size="small"
                   sx={{
                     mt: 1,
-                    backgroundColor: "#CDF0EA",
+                    backgroundColor: "#d1d2f2",
                     color: "black",
                     "&:hover": {
                       // Apply styles on hover
-                      backgroundColor: "#A4BCDB",
+                      backgroundColor: "#8e93e4",
                       boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
@@ -282,11 +282,11 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box marginTop={"75px"}>
+        <Box marginTop={"75px"} marginLeft={"290px"}>
           <Grid container>
             <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
               <Box display={"flex"} justifyContent={"flex-start"}>
-                <h3 >Welcome {username}</h3>
+                <h3 >Welcome {username} !!</h3>
                 
               </Box>
             </Grid>

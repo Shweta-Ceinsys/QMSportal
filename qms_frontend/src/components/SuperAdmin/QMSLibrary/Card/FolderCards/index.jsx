@@ -50,6 +50,7 @@ const FolderCards = () => {
           justifyContent="flex-start"
           alignItems={"center"}
           marginTop={"90px"}
+          marginLeft={"290px"}
         >
           <Grid container alignItems={"center"}>
             <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
@@ -73,7 +74,7 @@ const FolderCards = () => {
         </Box>
 
         <Box m={2}>
-          <Grid container spacing={0.2}>
+          <Grid container spacing={0.2} marginLeft={"290px"}>
             {getallDir.map((card, id) => (
               <Grid key={id} item xs={12} sm={6} md={4} lg={4} xl={3}>
                 <Card dirId={card.id} name={card.name} />

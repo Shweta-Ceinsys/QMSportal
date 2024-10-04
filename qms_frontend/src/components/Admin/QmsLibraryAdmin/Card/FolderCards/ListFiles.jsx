@@ -269,7 +269,7 @@ const DeleteDialog = (
           </IconButton>
           </Tooltip>
           </Box>
-          <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px' }}>
+          <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px', marginLeft:"290px" }}>
             <Box>
                    {/* Search TextField */}
                    <FormControl
