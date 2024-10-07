@@ -226,6 +226,7 @@ const navigate = useNavigate();
       aria-labelledby="add-user-modal"
       aria-describedby="modal-to-add-new-user"
       sx={{ zIndex: 999991 }}
+      
     >
       <Grid
         container
