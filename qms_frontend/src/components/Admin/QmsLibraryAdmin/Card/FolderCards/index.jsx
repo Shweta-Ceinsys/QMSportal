@@ -272,8 +272,8 @@ const FolderCards = () => {
           </Grid>
         </Box>
 
-        <Box m={2}>
-          <Grid container spacing={0.2} marginLeft={"290px"}>
+        <Box  marginLeft={"290px"}>
+          <Grid container spacing={0.2} >
             {getallDir.map((card, id) => (
               <Grid key={id} item xs={12} sm={6} md={4} lg={4} xl={3}>
                 <Card dirId={card.id} name={card.name} />

@@ -1,18 +1,18 @@
-import { Box, Button, Dialog, DialogActions,  Grid, IconButton,  Modal, Paper,  Tooltip, Typography } from "@mui/material";
+import { Box,  Button,  Dialog,  DialogActions,  Grid,  IconButton,  Modal,  Paper,  Tooltip,  Typography } from "@mui/material";
 import { useState,  useContext } from "react";
-import "./FolderCard.css";
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import "./DirectoryCard.css";
 
-
-import SuperAdminService from "../../../../../Services/superadmin";
-import folderImage from  "../../../../../images/folder.png"
-import FolderUpload from "../../../../../images/FolderUpload.png"
-import { ToastContainer, toast } from "react-toastify";
-
-import CloseIcon from "@mui/icons-material/Close";
+ import car from '../../../../../../images/car.png';
+ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
-import { DataContext } from "../../../../../DataContext";
-const FolderCard = (props) => {
+
+import folderImage from  "../../../../../../images/folder.png"
+import { ToastContainer, toast } from "react-toastify";
+import SuperAdminService from "../../../../../../Services/superadmin"
+import CloseIcon from "@mui/icons-material/Close";
+import { DataContext } from "../../../../../../DataContext";
+import FolderUpload from "../../../../../../images/FolderUpload.png"
+const DirecotoryCard = (props) => {
   const param = props;
   
 const { setDirId } = useContext(DataContext);
@@ -22,7 +22,7 @@ const navigate = useNavigate();
     
     sessionStorage.setItem('directoryId', dirId);
     setDirId(dirId);
-    navigate('/afLists');
+    navigate('/aSubfLists');
 
   }
   
@@ -55,7 +55,7 @@ const navigate = useNavigate();
   }
  
      const handleDelete = () => {
-      SuperAdminService.deleteDir(dirId)
+      SuperAdminService.deleteDir(param.subDirId)
         .then((response) => {
           toast.success("Directory Deleted Successfully");
           setDialogOpen(false);
@@ -410,7 +410,7 @@ const navigate = useNavigate();
           <Grid item xs="7" sm="7" md="7" lg="7" xl="7" display="flex" flexDirection="column"  >
              <Box >
         <Box display="flex"  justifyContent="flex-end" >
-          <IconButton onClick={()=>toggleTable(param.dirId)}>
+          <IconButton onClick={()=>toggleTable(param.subDirId)}>
                    <ArrowForwardIcon variant="outlined" sx={{color:"black"}} />
                   
           </IconButton>
@@ -471,7 +471,7 @@ const navigate = useNavigate();
                   <Tooltip title="Upload">
                     <Button
                       size="small"
-                       onClick={()=>handleOpenModal(param.dirId)}
+                       onClick={()=>handleOpenModal(param.subDirId)}
                     
                       sx={{
                         width:"100%",
@@ -513,4 +513,4 @@ const navigate = useNavigate();
     </Box>
   );
 };
-export default FolderCard;
+export default DirecotoryCard ;

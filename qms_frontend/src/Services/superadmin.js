@@ -135,8 +135,17 @@ createDir =(addFolder)=>{
   return axios.post(API_URL + "api/createDir ",addFolder,{ headers: authHeader() });
 }
 
+createSubDir =(addSubFolder)=>{
+  return axios.post(API_URL + "api/createSubDir ",addSubFolder,{ headers: authHeader() });
+}
 
 
+getSubDir = (dirId) => {
+  return axios.get(API_URL + "api/getSubDir", { 
+    params: {
+    dirId:dirId // Use the passed dealer parameter here
+  }, headers: authHeader() });
+};
 }
 
 

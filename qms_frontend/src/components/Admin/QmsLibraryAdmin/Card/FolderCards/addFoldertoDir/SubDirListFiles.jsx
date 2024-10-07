@@ -1,17 +1,17 @@
 import { ToastContainer, toast } from "react-toastify";
-import Topbar from "../../../Topbar";
+import Topbar from "../../../../Topbar";
 import { Box, Button, Dialog, DialogActions,  FormControl,  Grid, IconButton, Modal, Paper, TextField, Tooltip, Typography } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
-import SuperAdminService from "../../../../../Services/superadmin";
+import SuperAdminService from "../../../../../../Services/superadmin";
 import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { useContext, useEffect, useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import CloseIcon from "@mui/icons-material/Close";
-import { DataContext } from "../../../../../DataContext";
-import DirecotoryCard from "./addFoldertoDir/DirectoryCard";
-import DirectoryCards from "./addFoldertoDir";
+import { DataContext } from "../../../../../../DataContext";
+
+
 const ListFiles =(props) =>{
     const [rows, setRows] = useState([]);
     
@@ -424,19 +424,72 @@ const DeleteDialog = (
         <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
         <main className="content">
           <Topbar />
-          <Box marginLeft="290px" marginRight="15px">
-          <Box marginTop={"100px"} >
-        <Tooltip title="Back">
-          <IconButton 
-          // href="/aQmsLibrary"
-           onClick={ handleNavigate}
-          >
-                   <ArrowBackOutlinedIcon variant="outlined" sx={{color:"black"}} />
-                  
-          </IconButton>
-          </Tooltip>
-          </Box>
+          <Box  >
+          <Box
+          display="flex"
+          justifyContent="flex-start"
+          alignItems={"center"}
+          marginTop={"90px"}
+        >
+          <Grid container alignItems={"center"}>
+            <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
+              <Box>
+                <Tooltip title="Back">
+                  <IconButton 
+                  // onClick={navigateRoute}
+                  >
+                    <ArrowBackOutlinedIcon
+                      variant="outlined"
+                      sx={{ color: "black" }}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </Grid>
+            <Grid item xs="11" sm="11" md="5" lg="5" xl="">
+              {/* <Box>
+                <span style={{ fontWeight: "bold" }}> {dataId.version}</span>
+              </Box> */}
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+              <Box display={"flex"} justifyContent={"flex-end"} m={1}>
+                <Box>
+                  <Tooltip title="Add Version">
+                    <Button
+                      size="small"
+                       onClick={handleOpenModal}
+                      // startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
+                      sx={{
+                        m: 1,
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                        backgroundColor: "#d9d9f5",
+                        color: "black",
+                        boxShadow: 4,
+                        // color:"black",
+                        "&:hover": {
+                          // Apply styles on hover
+                          backgroundColor: "#f4f1fb",
+                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                        },
+                      }}
+                    >
+                      ADD Folder
+                      {/* ADD Directory */}
+                    </Button>
+                  </Tooltip>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+          {/* <Box marginLeft="280px">
           
+            <DirectoryCards />
+          
+          </Box> */}
+          <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px', marginLeft:"290px" }}>
             <Box>
                    {/* Search TextField */}
                    <FormControl
@@ -502,7 +555,7 @@ const DeleteDialog = (
           />
         </Box>
         </Box>
-       
+        </Paper>
         
           </Box>
  
