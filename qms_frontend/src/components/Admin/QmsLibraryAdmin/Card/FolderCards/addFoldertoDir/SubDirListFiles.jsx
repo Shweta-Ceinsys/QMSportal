@@ -430,6 +430,7 @@ const DeleteDialog = (
           justifyContent="flex-start"
           alignItems={"center"}
           marginTop={"90px"}
+          marginLeft="280px"
         >
           <Grid container alignItems={"center"}>
             <Grid item xs="1" sm="1" md="1" lg="1" xl="1">

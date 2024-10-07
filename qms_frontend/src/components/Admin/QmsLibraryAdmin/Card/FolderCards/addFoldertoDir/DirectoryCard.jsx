@@ -2,7 +2,7 @@ import { Box,  Button,  Dialog,  DialogActions,  Grid,  IconButton,  Modal,  Pap
 import { useState,  useContext } from "react";
 import "./DirectoryCard.css";
 
- import car from '../../../../../../images/car.png';
+
  import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
 

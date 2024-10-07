@@ -424,20 +424,73 @@ const DeleteDialog = (
         <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
         <main className="content">
           <Topbar />
-          <Box marginLeft="290px" marginRight="15px">
-          <Box marginTop={"100px"} >
-        <Tooltip title="Back">
-          <IconButton 
-          // href="/aQmsLibrary"
-           onClick={ handleNavigate}
-          >
-                   <ArrowBackOutlinedIcon variant="outlined" sx={{color:"black"}} />
-                  
-          </IconButton>
-          </Tooltip>
+          <Box  >
+          <Box
+          display="flex"
+          justifyContent="flex-start"
+          alignItems={"center"}
+          marginTop={"90px"}
+        >
+          <Grid container alignItems={"center"}>
+            <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
+              <Box>
+                <Tooltip title="Back">
+                  <IconButton 
+                  // onClick={navigateRoute}
+                  >
+                    <ArrowBackOutlinedIcon
+                      variant="outlined"
+                      sx={{ color: "black" }}
+                    />
+                  </IconButton>
+                </Tooltip>
+              </Box>
+            </Grid>
+            <Grid item xs="11" sm="11" md="5" lg="5" xl="">
+              {/* <Box>
+                <span style={{ fontWeight: "bold" }}> {dataId.version}</span>
+              </Box> */}
+            </Grid>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+              <Box display={"flex"} justifyContent={"flex-end"} m={1}>
+                <Box>
+                  <Tooltip title="Add Version">
+                    <Button
+                      size="small"
+                       onClick={handleOpenModal}
+                      // startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
+                      sx={{
+                        m: 1,
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        padding: "10px 20px",
+                        backgroundColor: "#d9d9f5",
+                        color: "black",
+                        boxShadow: 4,
+                        // color:"black",
+                        "&:hover": {
+                          // Apply styles on hover
+                          backgroundColor: "#f4f1fb",
+                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                        },
+                      }}
+                    >
+                      ADD Folder
+                      {/* ADD Directory */}
+                    </Button>
+                  </Tooltip>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+          <Box marginLeft="280px">
+          
+            <DirectoryCards />
+          
           </Box>
           
-            <Box>
+            <Box  marginLeft="280px">
                    {/* Search TextField */}
                    <FormControl
                         variant="standard"
@@ -467,7 +520,8 @@ const DeleteDialog = (
                         />
                       </FormControl>
             </Box>
-          <Box sx={{
+          <Box
+           marginLeft="280px" sx={{
                     "& .MuiDataGrid-root": {
                       border: "none",
                     },
