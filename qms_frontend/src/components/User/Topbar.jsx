@@ -25,7 +25,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import ceinsysLogo from "../../images/ceinsysLogo.png";
+import ceinsysLogo from "../../images/Ceinsys.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -490,99 +490,35 @@ const Topbar = () => {
   return (
     <div>
       <Grid container spacing={0}>
-        <Grid item xs={12}>
-        <Box
-  display="flex"
-  justifyContent="space-between"
-  alignItems="center"
-  width="100%"
-  height="60px"
-  position="fixed"
-  sx={{
-    background: 'linear-gradient(135deg, #3095f0, #fdf9fd, #b6bced)', // Gradient background
-    boxShadow: 3,
-    flexWrap: 'wrap',
-    paddingTop: 0.8,
-    paddingBottom: 0.8,
-    zIndex: 999991,
-  }}
->
-
-
-            <Box display="flex" alignItems="center" padding="0 25px">
-              {/* Menu Button
-              <IconButton
-                size="medium"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-              >
-                <MenuIcon />
-              </IconButton> */}
-
-              {/* Logo */}
-              <img
-                src={ceinsysLogo}
-                alt="Logo"
-                style={{
-                  width: "auto",
-                  height: "40px",
-                  display: "inline-block",
-                }}
-              />
-{/* Drawer content */}
-{/* <Drawer
-  anchor="left"
-  open={openDrawer}
-  onClose={toggleDrawer(false)}
-  sx={{
-    width: "300px", // Increased width of the Drawer
-    "& .MuiDrawer-paper": {
-      background: 'linear-gradient(135deg,#3095f0 ,#fdf9fd)', // Gradient background
-      borderRight: "none", // Optional: remove border if needed
-      top: '60px', // Adjust top to fit below the topbar (adjust as needed)
-      height: `calc(100vh - 60px)`, // Full height minus the topbar height
-      width: '300px', // Ensure the width of the Drawer is set here
-    },
-  }}
->
-
-  <Box
-    role="presentation"
-    onClick={toggleDrawer(false)}
-    onKeyDown={toggleDrawer(false)}
-    sx={{ 
-      padding: 2,
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      overflowY: 'auto', // Ensure content scrolls if it overflows
-      "& .menu-item": {
-        padding: "10px", // Padding for menu items
-        borderBottom: "1px solid #ddd", // Border for menu items
-      },
-      "& .menu-item:hover": {
-        backgroundColor: '#e0e0e0', // Hover effect for menu items
-      },
-    }}
-  > */}
-    <Box
-                component="nav"
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  background: 'linear-gradient(135deg,#3095f0 ,#fdf9fd)',
-                  width: '250px',
-                  height: 'calc(100vh - 60px)',
-                  position: 'fixed',
-                  top: '71.5px',
-                  left: 0,
-                  padding: '10px',
-                  // boxShadow: '2px 0 5px rgba(0,0,0,0.5)',
-                }}
-              >
-    <List>
+      <Grid item xs={12}>
+         {/* Sidebar Navigation */}
+      <Box
+            component="nav"
+            sx={{
+              zIndex: 99991,
+              display: 'flex',
+              flexDirection: 'column',
+              background: 'linear-gradient(45deg,#5a9cef ,#fdf9fd)',
+              width: '270px',
+              height: '100%',
+              position: 'fixed',
+              top: '0',
+              left: '0',
+              // padding: '20px 0', // Added padding for the sidebar
+            }}
+          >
+            <img
+              src={ceinsysLogo}
+              alt="Logo"
+              style={{
+                width: '100%',
+                height: '72.5px',
+                display: 'block',
+                // marginTop: '0px',
+                marginBottom: '20px', // Spacing below logo
+              }}
+            />      
+            <List>
     <ListItem button component={Link} to="/uQmsLibrary" className="menu-item">
   <ListItemIcon>
     <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
@@ -602,126 +538,131 @@ const Topbar = () => {
     </List>
     {/* Add more content here as needed */}
   </Box>
+    
 
 
+  <Box
+  display="flex"
+  justifyContent="flex-end"
+  width="100%"
+  height="60px"
+  position="fixed"
+  sx={{
+    background: 'linear-gradient(135deg, #3095f0, #b6bced, #fdf9fd)',
+    paddingTop: 0.8,
+    paddingBottom: 0.8,
+    zIndex: 999991,
+    marginLeft: '270px', // Keep margin for sidebar
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Add a box shadow to make the element more visible
+  }}
+>
+  <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+    <Box sx={{ marginRight: 35}}>
+      {/* Notifications */}
+      <Tooltip title="Notification" PopperProps={{ sx: { zIndex: 999999 } }}>
+        <IconButton>
+          <Badge badgeContent={count} color="secondary">
+            <NotificationsOutlinedIcon
+              variant="outlined"
+              sx={{ color: 'black' }}
+              onClick={handleNotificationOpen}
+              size="small"
+            />
+          </Badge>
+        </IconButton>
+      </Tooltip>
 
-      </Box>
+      {/* Notification Menu */}
+      <Menu
+        anchorEl={notiAnchor}
+        open={Boolean(notiAnchor)}
+        onClose={handleNotificationClose}
+        sx={{ marginTop: '35px', zIndex: 100000 }}
+      >
+        <Paper sx={{ width: 520, maxWidth: '100%' }}>
+          <MenuItem
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onClick={showHistory ? handleBackClick : handleHistoryClick}
+          >
+            {showHistory ? (
+              <>
+                <ListItemIcon>
+                  <ArrowBackOutlinedIcon />
+                </ListItemIcon>
+                Back to Notifications
+              </>
+            ) : (
+              <>
+                <ListItemIcon>
+                  <HistoryOutlinedIcon />
+                </ListItemIcon>
+                History
+              </>
+            )}
+          </MenuItem>
+          <Divider />
+          <MenuList>
+            {showHistory ? renderHistoryItems() : renderMenuItems()}
+          </MenuList>
+        </Paper>
+      </Menu>
 
-            {/* ICONS */}
-            <Box>
-              <Tooltip
-                title="Notification"
-                PopperProps={{ sx: { zIndex: 999999 } }}
-              >
-                <IconButton>
-                  <Badge badgeContent={count} color="secondary">
-                    <NotificationsOutlinedIcon
-                      variant="outlined"
-                      sx={{ color: "black" }}
-                      onClick={handleNotificationOpen}
-                      size="small"
-                    />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-              <Menu
-                anchorEl={notiAnchor}
-                open={Boolean(notiAnchor)}
-                onClose={handleNotificationClose}
-                sx={{ marginTop: "35px", zIndex: 100000 }}
-              >
-                <Paper sx={{ width: 520, maxWidth: "100%" }}>
-                  <MenuItem
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onClick={showHistory ? handleBackClick : handleHistoryClick}
-                  >
-                    {showHistory ? (
-                      <>
-                        <ListItemIcon>
-                          <ArrowBackOutlinedIcon />
-                        </ListItemIcon>
-                        Back to Notifications
-                      </>
-                    ) : (
-                      <>
-                        <ListItemIcon>
-                          <HistoryOutlinedIcon />
-                        </ListItemIcon>
-                        History
-                      </>
-                    )}
-                  </MenuItem>
-                  <Divider />
-                  <MenuList>
-                    {showHistory ? renderHistoryItems() : renderMenuItems()}
-                  </MenuList>
-                </Paper>
-              </Menu>
+      {/* Profile Menu */}
+      <Tooltip title="Profile" PopperProps={{ sx: { zIndex: 999999 } }}>
+        <IconButton>
+          <PersonOutlinedIcon
+            onClick={handleMenuOpen}
+            variant="outlined"
+            sx={{ color: 'black' }}
+            size="small"
+          />
+        </IconButton>
+      </Tooltip>
 
-              <Tooltip title="Profile" PopperProps={{ sx: { zIndex: 999999 } }}>
-                <IconButton>
-                  <PersonOutlinedIcon
-                    onClick={handleMenuOpen}
-                    variant="outlined"
-                    sx={{ color: "black" }}
-                    size="small"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                anchorEl={menuAnchor}
-                open={Boolean(menuAnchor)}
-                onClose={handleMenuClose}
-                sx={{ marginTop: "35px", zIndex: 100000 }}
-              >
-                <Box sx={{ p: 1 }}>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Name: {fullname}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Email: {email}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Role: {Role}
-                  </Typography>
-                </Box>
-                <Divider sx={{ my: 1 }} />
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-                <MenuItem onClick={handleOpenModal}>
-                  <ListItemIcon>
-                    <ManageAccountsOutlinedIcon />
-                  </ListItemIcon>
-                  Change Password
-                </MenuItem>
-              </Menu>
-            </Box>
-            </Box>
-        </Grid>
+      <Menu
+        anchorEl={menuAnchor}
+        open={Boolean(menuAnchor)}
+        onClose={handleMenuClose}
+        sx={{ marginTop: '35px', zIndex: 100000 }}
+      >
+        <Box sx={{ p: 1 }}>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Name: {fullname}
+          </Typography>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Email: {email}
+          </Typography>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Role: {Role}
+          </Typography>
+        </Box>
+        <Divider sx={{ my: 1 }} />
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+        <MenuItem onClick={handleOpenModal}>
+          <ListItemIcon>
+            <ManageAccountsOutlinedIcon />
+          </ListItemIcon>
+          Change Password
+        </MenuItem>
+      </Menu>
+    </Box>
+  </Grid>
+</Box>
+</Grid>
       </Grid>
-      {ChangePasswordModal}
-    </div>
-  );
+  
+    {ChangePasswordModal}
+  </div>
+);
 };
 
 export default Topbar;

@@ -79,7 +79,7 @@ const UserList = () => {
         <Box paddingTop={"130px"} marginLeft={"290px"}>
           <Grid container>
             <Grid item xs={12}>
-              <Paper elevation={2} sx={{ margin: "1%", marginTop: 0 }}>
+              {/* <Paper elevation={2} sx={{ margin: "1%", marginTop: 0 }}> */}
                 <Box sx={{ padding: 2 }}>
                   <Box
                     display="flex"
@@ -132,7 +132,7 @@ const UserList = () => {
                     }}
                   />
                 </Box>
-              </Paper>
+              {/* </Paper> */}
             </Grid>
           </Grid>
         </Box>

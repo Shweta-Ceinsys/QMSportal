@@ -675,7 +675,6 @@ const textFieldStyles = {
     borderBottomColor: '#1a5f8b',
   },
   '& input': {
-    fontFamily: "'Times New Roman', serif",
     color: "#ffffff",
   },
 };

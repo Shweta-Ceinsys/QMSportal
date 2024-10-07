@@ -257,8 +257,8 @@ const DeleteDialog = (
         <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
         <main className="content">
           <Topbar />
-          <Box  >
-          <Box marginTop={"100px"}>
+          <Box marginLeft="290px" marginRight="15px">
+          <Box marginTop={"100px"} >
         <Tooltip title="Back">
           <IconButton 
           // href="/aQmsLibrary"
@@ -269,7 +269,7 @@ const DeleteDialog = (
           </IconButton>
           </Tooltip>
           </Box>
-          <Paper elevation={2} sx={{ margin: "1%", marginTop: '10px', marginLeft:"290px" }}>
+          
             <Box>
                    {/* Search TextField */}
                    <FormControl
@@ -335,7 +335,7 @@ const DeleteDialog = (
           />
         </Box>
         </Box>
-        </Paper>
+       
         
           </Box>
  

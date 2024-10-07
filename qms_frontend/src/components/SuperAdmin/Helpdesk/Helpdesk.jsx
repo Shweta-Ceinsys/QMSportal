@@ -3,7 +3,7 @@ import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
 import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
 import TicketFormDialog from './TicketFormDialog'; // Component for ticket creation form
-import noTicketsImage from '../../../images/helpdesk.jpeg'; // Image for no tickets available
+import noTicketsImage from '../../../images/helpdesk.png'; // Image for no tickets available
 
 const Helpdesk = () => {
   // State to manage the current status (active or closed)
@@ -63,7 +63,13 @@ const Helpdesk = () => {
         <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
           {/* Button to create a new ticket */}
           <Grid item xs={12} display="flex" justifyContent="flex-end" sx={{ mb: 2 }}>
-            <Button variant="outlined" color="primary" onClick={handleClickOpen}>+ New Request</Button>
+          <Button 
+        variant="contained" 
+        sx={{ backgroundColor: '#E6E6FA', color: '#000', '&:hover': { backgroundColor: '#D8BFD8' } }} 
+        onClick={handleClickOpen}
+    >
+        + New Request
+    </Button>
           </Grid>
 
           {/* Status selection buttons */}
@@ -73,14 +79,14 @@ const Helpdesk = () => {
                 <Button
                   onClick={() => handleStatusChange('active')}
                   variant={status === 'active' ? 'contained' : 'outlined'}
-                  sx={{ minWidth: '150px', backgroundColor: status === 'active' ? '#91b3ec' : 'transparent', color: status === 'active' ? '#fff' : '#91b3ec', '&:hover': { backgroundColor: status === 'active' ? '#2196f3' : '#e3f2fd', }, px: 4 }}
+                  sx={{ minWidth: '150px', backgroundColor: status === 'active' ? '#babded' : 'transparent', color: status === 'active' ? '#fff' : '#babded', '&:hover': { backgroundColor: status === 'active' ? '#babded' : '#e3f2fd', }, px: 4 }}
                 >
                   Active
                 </Button>
                 <Button
                   onClick={() => handleStatusChange('closed')}
                   variant={status === 'closed' ? 'contained' : 'outlined'}
-                  sx={{ minWidth: '150px', backgroundColor: status === 'closed' ? '#91b3ec' : 'transparent', color: status === 'closed' ? '#fff' : '#91b3ec', '&:hover': { backgroundColor: status === 'closed' ? '#2196f3' : '#e3f2fd', }, px: 4 }}
+                  sx={{ minWidth: '150px', backgroundColor: status === 'closed' ? '#babded' : 'transparent', color: status === 'closed' ? '#fff' : '#babded', '&:hover': { backgroundColor: status === 'closed' ? '#babded' : '#e3f2fd', }, px: 4 }}
                 >
                   History
                 </Button>
@@ -92,24 +98,7 @@ const Helpdesk = () => {
         {/* Display tickets */}
         <Grid item sx={{ mt: 3 }}>
           <Grid item display="flex" justifyContent='center' sx={{ mb: 2 , marginLeft:"290px"  }}>
-            <Box
-              sx={{
-                border: '1px solid #ccc',
-                borderRadius: '1px',
-                padding: '32px',
-                height: '600px',
-                width: '100%',
-                maxWidth: '1200px', // Adjusted size for the ticket display area
-                backgroundColor: '#ffffff',
-                boxShadow: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start', // Align items at the top
-                alignItems: 'center',
-                textAlign: 'left',
-                overflow: 'hidden',
-              }}
-            >
+            <Box>
               {/* Check if there are tickets to display */}
               {tickets.length === 0 ? (
                 <img

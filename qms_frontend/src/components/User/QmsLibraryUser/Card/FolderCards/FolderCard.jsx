@@ -30,7 +30,7 @@ const FolderCard = (props) => {
           display: "flex",
           flexDirection: "row",
           boxShadow: 4,
-          marginLeft:"290px"
+          "&:hover": {},
         }}
       >
         <Grid container>

@@ -26,7 +26,7 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import ceinsysLogo from "../../images/ceinsysLogo.png";
+import ceinsysLogo from "../../images/Ceinsys.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -490,209 +490,181 @@ const Topbar = () => {
 
   return (
     <div>
-      <Grid container spacing={0}>
-        <Grid item xs={12}>
-        <Box
+    <Grid container spacing={0}>
+      <Grid item xs={12}>
+        {/* Sidebar Navigation */}
+      <Box
+            component="nav"
+            sx={{
+              zIndex: 99991,
+              display: 'flex',
+              flexDirection: 'column',
+              background: 'linear-gradient(45deg,#5a9cef ,#fdf9fd)',
+              width: '270px',
+              height: '100%',
+              position: 'fixed',
+              top: '0',
+              left: '0',
+              // padding: '20px 0', // Added padding for the sidebar
+            }}
+          >
+            <img
+              src={ceinsysLogo}
+              alt="Logo"
+              style={{
+                width: '100%',
+                height: '72.5px',
+                display: 'block',
+                // marginTop: '0px',
+                marginBottom: '20px', // Spacing below logo
+              }}
+            />
+            <List>
+              <ListItem button component={Link} to="/aQmsLibrary" className="menu-item">
+                <ListItemIcon>
+                  <DescriptionIcon sx={{ fontSize: 24 }} />
+                </ListItemIcon>
+                <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+              </ListItem>
+              <Divider />
+              <ListItem button component={Link} to="/auserlist" className="menu-item">
+                <ListItemIcon>
+                  <PeopleAltOutlinedIcon sx={{ fontSize: 24 }} />
+                </ListItemIcon>
+                <ListItemText primary="User List" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+              </ListItem>
+              <Divider />
+              <ListItem button component={Link} to="/ahelpdesk" className="menu-item">
+                <ListItemIcon>
+                  <HelpOutlineIcon sx={{ fontSize: 24 }} />
+                </ListItemIcon>
+                <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} />
+              </ListItem>
+              <Divider />
+              {/* Add more menu items here as needed */}
+            </List>
+          </Box>
+          <Box
   display="flex"
-  justifyContent="space-between"
-  alignItems="center"
+  justifyContent="flex-end"
   width="100%"
   height="60px"
   position="fixed"
   sx={{
-    background: 'linear-gradient(135deg, #3095f0, #fdf9fd, #b6bced)', // Gradient background
-    boxShadow: 4,
-    flexWrap: 'wrap',
+    background: 'linear-gradient(135deg, #3095f0, #b6bced, #fdf9fd)',
     paddingTop: 0.8,
     paddingBottom: 0.8,
     zIndex: 999991,
+    marginLeft: '270px', // Keep margin for sidebar
+    boxShadow: '0px 2px 4px rgba(0, 0, 0, 0.1)', // Add a box shadow to make the element more visible
   }}
 >
+  <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+    <Box sx={{ marginRight: 35}}>
+      {/* Notifications */}
+      <Tooltip title="Notification" PopperProps={{ sx: { zIndex: 999999 } }}>
+        <IconButton>
+          <Badge badgeContent={count} color="secondary">
+            <NotificationsOutlinedIcon
+              variant="outlined"
+              sx={{ color: 'black' }}
+              onClick={handleNotificationOpen}
+              size="small"
+            />
+          </Badge>
+        </IconButton>
+      </Tooltip>
 
+      {/* Notification Menu */}
+      <Menu
+        anchorEl={notiAnchor}
+        open={Boolean(notiAnchor)}
+        onClose={handleNotificationClose}
+        sx={{ marginTop: '35px', zIndex: 100000 }}
+      >
+        <Paper sx={{ width: 520, maxWidth: '100%' }}>
+          <MenuItem
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onClick={showHistory ? handleBackClick : handleHistoryClick}
+          >
+            {showHistory ? (
+              <>
+                <ListItemIcon>
+                  <ArrowBackOutlinedIcon />
+                </ListItemIcon>
+                Back to Notifications
+              </>
+            ) : (
+              <>
+                <ListItemIcon>
+                  <HistoryOutlinedIcon />
+                </ListItemIcon>
+                History
+              </>
+            )}
+          </MenuItem>
+          <Divider />
+          <MenuList>
+            {showHistory ? renderHistoryItems() : renderMenuItems()}
+          </MenuList>
+        </Paper>
+      </Menu>
 
-            <Box display="flex" alignItems="center" padding="0 25px">
-              {/* Menu Button
-              <IconButton
-                size="medium"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                onClick={toggleDrawer(true)}
-              >
-                <MenuIcon />
-              </IconButton> */}
+      {/* Profile Menu */}
+      <Tooltip title="Profile" PopperProps={{ sx: { zIndex: 999999 } }}>
+        <IconButton>
+          <PersonOutlinedIcon
+            onClick={handleMenuOpen}
+            variant="outlined"
+            sx={{ color: 'black' }}
+            size="small"
+          />
+        </IconButton>
+      </Tooltip>
 
-              {/* Logo */}
-              <img
-                src={ceinsysLogo}
-                alt="Logo"
-                style={{
-                  width: "auto",
-                  height: "40px",
-                  display: "inline-block",
-                }}
-              />
-  <Box
-                component="nav"
-                sx={{
-                  display: 'flex',
-                  zIndex: 1,
-                  flexDirection: 'column',
-                  background: 'linear-gradient(135deg,#579aef ,#fdf9fd)',
-                  width: '250px',
-                  height: 'calc(100vh - 60px)',
-                  position: 'fixed',
-                  top: '71.5px',
-                  left: 0,
-                  padding: '10px',
-                }}
-              >
-    <List>
-    <ListItem button component={Link} to="/aQmsLibrary" className="menu-item">
-  <ListItemIcon>
-    <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
-  </ListItemIcon>
-  <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-<ListItem button component={Link} to="/auserlist" className="menu-item">
-  <ListItemIcon>
-    <PeopleAltOutlinedIcon sx={{ fontSize: 24 }} /> {/* User List icon */}
-  </ListItemIcon>
-  <ListItemText primary="User List" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-
-      <ListItem button component={Link} to="/ahelpdesk" className="menu-item">
-  <ListItemIcon>
-    <HelpOutlineIcon sx={{ fontSize: 24 }} /> {/* Icon added here */}
-  </ListItemIcon>
-  <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
-</ListItem>
-
-      <Divider />
-      {/* Add more menu items here as needed */}
-    </List>
-    {/* Add more content here as needed */}
-  </Box>
-
-
-      </Box>
-
-            {/* ICONS */}
-            <Box>
-              <Tooltip
-                title="Notification"
-                PopperProps={{ sx: { zIndex: 999999 } }}
-              >
-                <IconButton>
-                  <Badge badgeContent={count} color="secondary">
-                    <NotificationsOutlinedIcon
-                      variant="outlined"
-                      sx={{ color: "black" }}
-                      onClick={handleNotificationOpen}
-                      size="small"
-                    />
-                  </Badge>
-                </IconButton>
-              </Tooltip>
-              <Menu
-                anchorEl={notiAnchor}
-                open={Boolean(notiAnchor)}
-                onClose={handleNotificationClose}
-                sx={{ marginTop: "35px", zIndex: 100000 }}
-              >
-                <Paper sx={{ width: 520, maxWidth: "100%" }}>
-                  <MenuItem
-                    sx={{
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                    }}
-                    onClick={showHistory ? handleBackClick : handleHistoryClick}
-                  >
-                    {showHistory ? (
-                      <>
-                        <ListItemIcon>
-                          <ArrowBackOutlinedIcon />
-                        </ListItemIcon>
-                        Back to Notifications
-                      </>
-                    ) : (
-                      <>
-                        <ListItemIcon>
-                          <HistoryOutlinedIcon />
-                        </ListItemIcon>
-                        History
-                      </>
-                    )}
-                  </MenuItem>
-                  <Divider />
-                  <MenuList>
-                    {showHistory ? renderHistoryItems() : renderMenuItems()}
-                  </MenuList>
-                </Paper>
-              </Menu>
-
-              <Tooltip title="Profile" PopperProps={{ sx: { zIndex: 999999 } }}>
-                <IconButton>
-                  <PersonOutlinedIcon
-                    onClick={handleMenuOpen}
-                    variant="outlined"
-                    sx={{ color: "black" }}
-                    size="small"
-                  />
-                </IconButton>
-              </Tooltip>
-              <Menu
-                anchorEl={menuAnchor}
-                open={Boolean(menuAnchor)}
-                onClose={handleMenuClose}
-                sx={{ marginTop: "35px", zIndex: 100000 }}
-              >
-                <Box sx={{ p: 1 }}>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Name: {fullname}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Email: {email}
-                  </Typography>
-                  <Typography
-                    variant="subtitle2"
-                    component="p"
-                    onClick={handleMenuClose}
-                  >
-                    Role: {Role}
-                  </Typography>
-                </Box>
-                <Divider sx={{ my: 1 }} />
-                <MenuItem onClick={handleLogout}>
-                  <ListItemIcon>
-                    <LogoutIcon />
-                  </ListItemIcon>
-                  Logout
-                </MenuItem>
-                <MenuItem onClick={handleOpenModal}>
-                  <ListItemIcon>
-                    <ManageAccountsOutlinedIcon />
-                  </ListItemIcon>
-                  Change Password
-                </MenuItem>
-              </Menu>
-            </Box>
-            </Box>
-        </Grid>
+      <Menu
+        anchorEl={menuAnchor}
+        open={Boolean(menuAnchor)}
+        onClose={handleMenuClose}
+        sx={{ marginTop: '35px', zIndex: 100000 }}
+      >
+        <Box sx={{ p: 1 }}>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Name: {fullname}
+          </Typography>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Email: {email}
+          </Typography>
+          <Typography variant="subtitle2" component="p" onClick={handleMenuClose}>
+            Role: {Role}
+          </Typography>
+        </Box>
+        <Divider sx={{ my: 1 }} />
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <LogoutIcon />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+        <MenuItem onClick={handleOpenModal}>
+          <ListItemIcon>
+            <ManageAccountsOutlinedIcon />
+          </ListItemIcon>
+          Change Password
+        </MenuItem>
+      </Menu>
+    </Box>
+  </Grid>
+</Box>
       </Grid>
-      {ChangePasswordModal}
-    </div>
+    </Grid>
+    {ChangePasswordModal}
+  </div>
+  
   );
 };
 

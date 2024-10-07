@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, ButtonGroup, Grid, Typography, Button } from '@mui/material';
 import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
-import noTicketsImage from '../../../images/helpdesk.jpeg'; // Image for no tickets available
+import noTicketsImage from '../../../images/helpdesk.png'; // Image for no tickets available
 
 const Helpdesk = () => {
   const [status, setStatus] = useState('active'); // Current status (active or closed)
@@ -47,10 +47,10 @@ const Helpdesk = () => {
                   onClick={() => handleStatusChange('active')}
                   variant={status === 'active' ? 'contained' : 'outlined'}
                   sx={{
-                    backgroundColor: status === 'active' ? '#91b3ec' : 'transparent',
+                    backgroundColor: status === 'active' ? '#babded' : 'transparent',
                     color: status === 'active' ? '#fff' : '#91b3ec',
                     '&:hover': {
-                      backgroundColor: status === 'active' ? '#2196f3' : '#e3f2fd',
+                      backgroundColor: status === 'active' ? '#babded' : '#e3f2fd',
                     },
                     px: 4
                   }}
@@ -61,10 +61,10 @@ const Helpdesk = () => {
                   onClick={() => handleStatusChange('closed')}
                   variant={status === 'closed' ? 'contained' : 'outlined'}
                   sx={{
-                    backgroundColor: status === 'closed' ? '#91b3ec' : 'transparent',
-                    color: status === 'closed' ? '#fff' : '#91b3ec',
+                    backgroundColor: status === 'closed' ? '#babded' : 'transparent',
+                    color: status === 'closed' ? '#fff' : '#babded',
                     '&:hover': {
-                      backgroundColor: status === 'closed' ? '#2196f3' : '#e3f2fd',
+                      backgroundColor: status === 'closed' ? '#babded' : '#e3f2fd',
                     },
                     px: 4
                   }}
@@ -79,31 +79,14 @@ const Helpdesk = () => {
         {/* Display tickets */}
         <Grid item sx={{ mt: 3 }}>
           <Grid item display="flex" justifyContent='center' sx={{ mb: 2 , marginLeft:"290px"}}>
-            <Box
-              sx={{
-                border: '1px solid #ccc',
-                borderRadius: '1px',
-                padding: '32px',
-                height: '600px',
-                width: '100%',
-                maxWidth: '1200px',
-                backgroundColor: '#ffffff',
-                boxShadow: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'flex-start',
-                alignItems: 'center',
-                textAlign: 'left',
-                overflow: 'hidden',
-              }}
-            >
+            <Box >
               {tickets.length === 0 ? (
                 <img
                   src={noTicketsImage}
                   alt="No tickets"
                   style={{
                     maxWidth: '150%',
-                    maxHeight: '300px',
+                    maxHeight: '400px',
                     marginBottom: '16px',
                     opacity: 0.3,
                     filter: 'grayscale(100%)',
@@ -134,7 +117,7 @@ const Helpdesk = () => {
               )}
               {tickets.length === 0 && (
                 <Typography variant="h6" color="#888">
-                  {status === 'active' ? "Looks like there are no active tickets." : 'Uh-oh! No closed tickets found.'}
+                  {status === 'active' ? "Looks like you're all caught up! No active tickets to display." : 'Uh-oh! Looks like you’ve got a clean slate. No history here!'}
                 </Typography>
               )}
             </Box>
