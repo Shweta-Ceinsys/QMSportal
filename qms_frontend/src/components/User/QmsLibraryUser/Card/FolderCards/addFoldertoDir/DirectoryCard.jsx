@@ -22,7 +22,7 @@ const navigate = useNavigate();
     
     sessionStorage.setItem('subDirectoryId', dirId);
     setSubDirId(dirId);
-    navigate('/aSubfLists');
+    navigate('/uSubfLists');
 
   }
   
@@ -435,7 +435,7 @@ const navigate = useNavigate();
          
           
         </Box>
-        <Box display={"flex"} justifyContent={"flex-start"}  >
+        {/* <Box display={"flex"} justifyContent={"flex-start"}  >
           <Grid container spacing={0.5}>
             <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
             <Box>
@@ -498,7 +498,7 @@ const navigate = useNavigate();
           </Grid>
                 
                 
-              </Box>
+              </Box> */}
               </Box>
           </Grid>
         </Grid>

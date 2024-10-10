@@ -1,49 +1,25 @@
-import {
-  Box,
-  Button,
-  IconButton,
-  Modal,
-  Paper,
-  TextField,
-  Tooltip,
-} from "@mui/material";
-import Card from "./FolderCard";
-import Grid from "@mui/material/Grid";
+
+import { ToastContainer, toast } from "react-toastify";
 import Topbar from "../../../Topbar";
+import { Box, Button, Dialog, DialogActions,  FormControl,  Grid, IconButton, Modal, Paper, TextField, Tooltip, Typography } from "@mui/material";
+import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
 import SuperAdminService from "../../../../../Services/superadmin";
+import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-// import CircularLoading from "../../../global/Circularloading";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
-import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
-import { toast } from "react-toastify";
+import {  useNavigate } from "react-router-dom";
+import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
 import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../../../DataContext";
-const FolderCards = () => {
-  const { dataId } = useContext(DataContext);
+import DirecotoryCard from "./addFoldertoDir/DirectoryCard";
+import DirectoryCards from "./addFoldertoDir";
 
-  const [getallDir, setGetallDir] = useState([]);
-  //  const [isLoading, setIsLoading] = useState(false);
-  const { setData } = useContext(DataContext);
 
-  useEffect(() => {
-    // setIsLoading(true);
-    const storedId = sessionStorage.getItem("versionId");
-    if (storedId) {
-      setData({ id: storedId, version: sessionStorage.getItem("versionName") });
-    }
-    SuperAdminService.getDir(dataId.id)
-      .then((response) => {
-        setGetallDir(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching Model List:", error);
-        // setIsLoading(false);
-      });
-  }, [dataId.id]);
-
+const AddSubDirectory =() =>{
+         // -----------------------------------------------------Add sub Directory to Directory---------------------------------------
+      
   const [openModal, setOpenModal] = useState(false);
-
+  const storedId = sessionStorage.getItem('directoryId');
   const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
   const CurrentUser = Number(idString);
 
@@ -57,8 +33,7 @@ const FolderCards = () => {
 
   const [addFolder, setAddFolder] = useState({
     name: "",
-    version: dataId.id,
-
+    dir: storedId,
     created_by: CurrentUser,
   });
 
@@ -80,12 +55,12 @@ const FolderCards = () => {
       if (addFolder.name.trim().length === 0) {
         toast.warning("Please Enter  Folder Name!");
       } else {
-        const response = SuperAdminService.createDir(addFolder);
+        const response = SuperAdminService.createSubDir(addFolder);
         toast.success("Folder added successfully!");
 
         setAddFolder({
           name: "",
-          version: 0,
+          dir:0,
           created_by: 0,
         });
 
@@ -96,6 +71,12 @@ const FolderCards = () => {
       toast.error("Failed to Create Folder!");
     }
   };
+  let navigate = useNavigate();
+  const  navigateRoute =()=>{
+    
+    navigate(`/fCards`);
+   
+   }
 
   // ============================================================================Code For  Add User Component===============================================================
 
@@ -204,87 +185,74 @@ const FolderCards = () => {
       </Grid>
     </Modal>
   );
-  let navigate = useNavigate();
-  const navigateRoute = () => {
-    navigate("/aQmsLibrary");
-  };
-
-  return (
-    <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
-      <main className="content">
-        <Topbar />
-
+    return(
+        <Box>
         <Box
-          display="flex"
-          justifyContent="flex-start"
-          alignItems={"center"}
-          marginTop={"90px"}
-        >
-          <Grid container alignItems={"center"}>
-            <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
-              <Box marginLeft="280px">
-                <Tooltip title="Back">
-                  <IconButton onClick={navigateRoute}>
-                    <ArrowBackOutlinedIcon
-                      variant="outlined"
-                      sx={{ color: "black" }}
-                    />
-                  </IconButton>
+        display="flex"
+        justifyContent="flex-start"
+        alignItems={"center"}
+        marginTop={"90px"}
+        marginLeft={"290px"}
+      >
+        <Grid container alignItems={"center"}>
+          <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
+            <Box>
+              <Tooltip title="Back">
+                <IconButton 
+                 onClick={navigateRoute}
+                >
+                  <ArrowBackOutlinedIcon
+                    variant="outlined"
+                    sx={{ color: "black" }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </Box>
+          </Grid>
+          <Grid item xs="11" sm="11" md="5" lg="5" xl="">
+            {/* <Box>
+              <span style={{ fontWeight: "bold" }}> {dataId.version}</span>
+            </Box> */}
+          </Grid>
+          <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
+            <Box display={"flex"} justifyContent={"flex-end"} m={1}>
+              <Box>
+                <Tooltip title="Add Version">
+                  <Button
+                    size="small"
+                     onClick={handleOpenModal}
+                    // startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
+                    sx={{
+                      m: 1,
+                      fontSize: "14px",
+                      fontWeight: "bold",
+                      padding: "10px 20px",
+                      backgroundColor: "#d9d9f5",
+                      color: "black",
+                      boxShadow: 4,
+                      // color:"black",
+                      "&:hover": {
+                        // Apply styles on hover
+                        backgroundColor: "#f4f1fb",
+                        boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                      },
+                    }}
+                  >
+                    ADD Folder
+                    {/* ADD Directory */}
+                  </Button>
                 </Tooltip>
               </Box>
-            </Grid>
-            <Grid item xs="11" sm="11" md="5" lg="5" xl="">
-              <Box>
-                <span style={{ fontWeight: "bold" }}> {dataId.version}</span>
-              </Box>
-            </Grid>
-            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
-              <Box display={"flex"} justifyContent={"flex-end"} m={1}>
-                <Box>
-                  <Tooltip title="Add Version">
-                    <Button
-                      size="small"
-                      onClick={handleOpenModal}
-                      startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
-                      sx={{
-                        m: 1,
-                        fontSize: "14px",
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#d9d9f5",
-                        color: "black",
-                        boxShadow: 4,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#f4f1fb",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                      ADD Folder
-                      {/* ADD Directory */}
-                    </Button>
-                  </Tooltip>
-                </Box>
-              </Box>
-            </Grid>
+            </Box>
           </Grid>
-        </Box>
+        </Grid>
+      
+      </Box>
+      {AddVersionModal}
+        <ToastContainer style={{ zIndex: "1000000" }} />
+      </Box>
+      
+    );
 
-        <Box  marginLeft={"290px"}>
-          <Grid container spacing={0.2} >
-            {getallDir.map((card, id) => (
-              <Grid key={id} item xs={12} sm={6} md={4} lg={4} xl={3}>
-                <Card dirId={card.id} name={card.name} />
-              </Grid>
-            ))}
-          </Grid>
-        </Box>
-        {AddVersionModal}
-      </main>
-    </div>
-  );
-};
-
-export default FolderCards;
+}
+export default AddSubDirectory;

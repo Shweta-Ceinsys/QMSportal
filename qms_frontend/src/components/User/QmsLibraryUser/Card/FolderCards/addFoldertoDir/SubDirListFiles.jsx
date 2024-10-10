@@ -52,7 +52,7 @@ const ListFiles = (props) => {
 
   let navigate = useNavigate();
   const handleNavigate = () => {
-    navigate(`/afLists`);
+    navigate(`/ufLists`);
   };
   const handleDownload = (id) => {
     SuperAdminService.downloadFile(id, UserId)
@@ -238,14 +238,14 @@ const ListFiles = (props) => {
             onClick={() => handleDownload(row.id)}
             color="inherit"
           />,
-          <GridActionsCellItem
-            icon={
-              <DeleteIcon variant="outlined" color="secondary" size="small" />
-            }
-            label="Delete"
-            onClick={() => DeleteHandleOpen(row.id)}
-            color="inherit"
-          />,
+          // <GridActionsCellItem
+          //   icon={
+          //     <DeleteIcon variant="outlined" color="secondary" size="small" />
+          //   }
+          //   label="Delete"
+          //   onClick={() => DeleteHandleOpen(row.id)}
+          //   color="inherit"
+          // />,
         ];
       },
     },

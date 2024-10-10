@@ -13,7 +13,9 @@ import ListFiles from "./components/SuperAdmin/QMSLibrary/Card/FolderCards/ListF
 import AdminQmsLibrary from "./components/Admin/QmsLibraryAdmin";
 import AdminFolderCards from "./components/Admin/QmsLibraryAdmin/Card/FolderCards";
 import AdminListFiles from "./components/Admin/QmsLibraryAdmin/Card/FolderCards/ListFiles";
+import SuperAdminSubDirListFiles from "./components/SuperAdmin/QMSLibrary/Card/FolderCards/addFoldertoDir/SubDirListFiles";
 import AdminSubDirListFiles from "./components/Admin/QmsLibraryAdmin/Card/FolderCards/addFoldertoDir/SubDirListFiles";
+ import UserSubDirListFiles from "./components/User/QmsLibraryUser/Card/FolderCards/addFoldertoDir/SubDirListFiles";
 import UserQmsLibrary from "./components/User/QmsLibraryUser";
 import UserFolderCards from "./components/User/QmsLibraryUser/Card/FolderCards";
 import UserListFiles from "./components/User/QmsLibraryUser/Card/FolderCards/ListFiles";
@@ -48,6 +50,7 @@ function App() {
       <Route path="/fCards" element={<FolderCards role="SUPER_ADMIN"/>} />
       <Route path="/fLists" element={<ListFiles role="SUPER_ADMIN"/>} />
       <Route path="/helpdesk" element={<Helpdesk role="SUPER_ADMIN"/>} />
+      <Route path="/subfLists" element={<SuperAdminSubDirListFiles role="SUPER_ADMIN"/>} />
 
 {/* Admin */}
 
@@ -71,6 +74,7 @@ function App() {
           <Route path="/ufCards" element={<UserFolderCards role="USER"/>} />
           <Route path="/ufLists" element={<UserListFiles role="USER"/>} />   
           <Route path="/uhelpdesk" element={<UserHelpdesk role="USER"/>} />  
+          <Route path="/uSubfLists" element={<UserSubDirListFiles role="USER"/>} />
               </>
      </Routes>
    

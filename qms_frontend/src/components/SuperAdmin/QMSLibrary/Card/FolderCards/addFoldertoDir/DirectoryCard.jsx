@@ -22,7 +22,7 @@ const navigate = useNavigate();
     
     sessionStorage.setItem('subDirectoryId', dirId);
     setSubDirId(dirId);
-    navigate('/aSubfLists');
+    navigate('/subfLists');
 
   }
   
@@ -435,70 +435,7 @@ const navigate = useNavigate();
          
           
         </Box>
-        <Box display={"flex"} justifyContent={"flex-start"}  >
-          <Grid container spacing={0.5}>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Delete">
-                    <Button
-                      size="small"
-                      onClick={() => DeleteHandleOpen(param.dirId)}
-                    
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                        fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#F5A4A0",
-                        color: "black",
-                        boxShadow: 2,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    Delete
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Upload">
-                    <Button
-                      size="small"
-                       onClick={()=>handleOpenModal(param.subDirId)}
-                    
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                         fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
-                        color: "black",
-                        boxShadow: 2,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    Upload
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-          </Grid>
-                
-                
-              </Box>
+        
               </Box>
           </Grid>
         </Grid>

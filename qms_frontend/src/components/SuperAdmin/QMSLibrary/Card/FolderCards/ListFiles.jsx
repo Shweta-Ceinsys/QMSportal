@@ -12,6 +12,8 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 import { DataContext } from "../../../../../DataContext";
 import { useNavigate } from "react-router-dom";
+import AddSubDirectory from "./addsubDirectory";
+import DirectoryCards from "./addFoldertoDir";
 const ListFiles = (props) => {
   const [rows, setRows] = useState([]);
 
@@ -142,8 +144,8 @@ const handleSearchChange = (event) => {
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box marginLeft="290px" marginRight="15px">
-          <Box marginTop={"100px"}>
+        <Box  marginRight="15px">
+          <Box marginTop={"100px"} marginLeft="290px">
             <Tooltip title="Back">
               <IconButton onClick={handleNavigate}>
                 <ArrowBackOutlinedIcon
@@ -153,7 +155,13 @@ const handleSearchChange = (event) => {
               </IconButton>
             </Tooltip>
           </Box>
-         
+        {/* <Box>
+          <AddSubDirectory />
+        </Box> */}
+        <Box>
+          <DirectoryCards />
+        </Box>
+        <Box  marginLeft="290px">
           <Box>
                    {/* Search TextField */}
                    <FormControl
@@ -185,38 +193,24 @@ const handleSearchChange = (event) => {
                       </FormControl>
             </Box>
             <Box
-              sx={{
-                "& .MuiDataGrid-root": {
-                  border: "none",
-                },
-                "& .MuiDataGrid-cell": {
-                  borderBottom: "none",
-                },
-
-                "& .MuiDataGrid-columnHeaders": {
-                  backgroundColor: "#F0EBE3 !important",
-                  borderBottom: "none",
-                  fontSize: "1rem",
-                  fontWeight: "bold",
-                },
-
-                "& .MuiDataGrid-virtualScroller": {
-                  // backgroundColor: colors.primary[400],
-                },
-                "& .MuiDataGrid-footerContainer": {
-                  borderTop: "none",
-                  // backgroundColor:'#F0EBE3' ,
-                },
-                "& .MuiCheckbox-root": {
-                  // color: `${colors.greenAccent[200]} !important`,
-                },
-              }}
+             
             >
               <Box style={{ height: `calc(100vh - 240px)` }}>
-                <DataGrid rows={filteredRows} columns={columns} stickyHeader />
+                <DataGrid rows={filteredRows} columns={columns} stickyHeader  sx={{
+                      "& .MuiDataGrid-root": {
+                        border: "none",
+                      },
+                      "& .MuiDataGrid-columnHeaders": {
+                        backgroundColor: "#F0EBE3 !important",
+                        borderBottom: "none",
+                      },
+                      "& .MuiDataGrid-footerContainer": {
+                        borderTop: "none",
+                      },
+                    }}/>
               </Box>
             </Box>
-        
+            </Box>
         </Box>
       </main>
 

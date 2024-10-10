@@ -81,9 +81,9 @@ const navigateRoute =() =>{
          
         </Box>
        
-    <Box m={2}>
+    <Box marginLeft={"290px"}>
           
-      <Grid container spacing={0.2} marginLeft={"290px"}>
+      <Grid container spacing={0.2} >
         {getallDir.map((card, id) => (
           <Grid key={id} item xs={12} sm={6} md={4} lg={4} xl={3}>
             <Card
