@@ -1,8 +1,10 @@
+// Helpdesk.js
 import React, { useState, useEffect } from 'react';
 import { Box, ButtonGroup, Grid, Typography, Button } from '@mui/material';
 import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
 import noTicketsImage from '../../../images/helpdesk.png'; // Image for no tickets available
+import TicketService from '../../../Services/adminticketService'; // Import the ticket service
 
 const Helpdesk = () => {
   const [status, setStatus] = useState('active'); // Current status (active or closed)
@@ -10,17 +12,19 @@ const Helpdesk = () => {
   const [selectedTicket, setSelectedTicket] = useState(null); // Selected ticket details
 
   useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const response = await fetch('/api/tickets');
-        const data = await response.json();
-        setTickets(data);
-      } catch (error) {
-        console.error('Error fetching tickets:', error);
-      }
-    };
     fetchTickets();
-  }, []);
+  }, [status]); // Fetch tickets based on the current status
+
+  const fetchTickets = async () => {
+    try {
+      const response = status === 'active'
+        ? await TicketService.getAllTickets()
+        : await TicketService.getAllClosedTickets();
+      setTickets(response.data);
+    } catch (error) {
+      console.error('Error fetching tickets:', error);
+    }
+  };
 
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
@@ -34,6 +38,17 @@ const Helpdesk = () => {
     setSelectedTicket(null);
   };
 
+  const handleResolveAndClose = async (ticketId) => {
+    try {
+      await TicketService.resolveAndCloseTicket(ticketId);
+      fetchTickets(); // Refresh the ticket list after resolving
+      alert('Ticket resolved and closed successfully.');
+    } catch (error) {
+      console.error('Error resolving and closing ticket:', error);
+      alert(error.response?.data || 'Error closing ticket');
+    }
+  };
+
   return (
     <Box sx={{ backgroundColor: '#f9f9f9', minHeight: '100vh', boxShadow: 1 }}>
       <Topbar /> {/* Render the Topbar component */}
@@ -41,7 +56,7 @@ const Helpdesk = () => {
         <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
           {/* Status selection buttons */}
           <Grid item xs={12} container justifyContent="center" alignItems="center" sx={{ flexDirection: 'column' }}>
-            <Grid item display="flex" justifyContent='center' sx={{ mb: 2 , marginLeft:"290px"}}>
+            <Grid item display="flex" justifyContent='center' sx={{ mb: 2, marginLeft: "290px" }}>
               <ButtonGroup>
                 <Button
                   onClick={() => handleStatusChange('active')}
@@ -69,7 +84,7 @@ const Helpdesk = () => {
                     px: 4
                   }}
                 >
-                  History
+                  Closed
                 </Button>
               </ButtonGroup>
             </Grid>
@@ -78,7 +93,7 @@ const Helpdesk = () => {
 
         {/* Display tickets */}
         <Grid item sx={{ mt: 3 }}>
-          <Grid item display="flex" justifyContent='center' sx={{ mb: 2 , marginLeft:"290px"}}>
+          <Grid item display="flex" justifyContent='center' sx={{ mb: 2, marginLeft: "290px" }}>
             <Box >
               {tickets.length === 0 ? (
                 <img
@@ -89,7 +104,6 @@ const Helpdesk = () => {
                     maxHeight: '400px',
                     marginBottom: '16px',
                     opacity: 0.3,
-                    filter: 'grayscale(100%)',
                     display: 'block',
                     marginLeft: 'auto',
                     marginRight: 'auto'
@@ -104,7 +118,7 @@ const Helpdesk = () => {
                       borderRadius: '4px',
                       p: 2,
                       mb: 2,
-                      width: '100%',
+                      width: '400px',
                       cursor: 'pointer',
                       boxShadow: 1,
                     }}
@@ -112,12 +126,18 @@ const Helpdesk = () => {
                   >
                     <Typography variant="h6">{ticket.subject}</Typography>
                     <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
+                    <Typography variant="body2">Submitted By: {ticket?.name}</Typography>
+                    {status === 'active' && (
+                      <Button onClick={() => handleResolveAndClose(ticket.id)} variant="outlined" sx={{ mt: 1, textAlign: 'right' }}>
+                        Resolve & Close
+                      </Button>
+                    )}
                   </Box>
                 ))
               )}
               {tickets.length === 0 && (
                 <Typography variant="h6" color="#888">
-                  {status === 'active' ? "Looks like you're all caught up! No active tickets to display." : 'Uh-oh! Looks like you’ve got a clean slate. No history here!'}
+                  {status === 'active' ? "Looks like you're all caught up! No active tickets to display." : 'Uh-oh! Looks like you’ve got a clean slate. No closed tickets here!'}
                 </Typography>
               )}
             </Box>

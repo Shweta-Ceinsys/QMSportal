@@ -100,17 +100,30 @@
 // };
 
 // export default TicketFormDialog;
-
-
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, TextField, Select, MenuItem, Box, IconButton, Typography, Slide, CircularProgress } from '@mui/material';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  Box,
+  IconButton,
+  Typography,
+  Slide,
+  CircularProgress,
+} from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
-import TicketService from '../../../Services/TicketService'; // Ensure the correct path
+import TicketService from '../../../Services/TicketService'; 
+import { toast } from 'react-toastify'; 
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="down" ref={ref} {...props} />);
 
-const TicketFormDialog = ({ open, onClose, setTickets }) => {
+const TicketFormDialog = ({ open, onClose, setTickets, userId }) => {
   const [formData, setFormData] = useState({
     category: '',
     name: '',
@@ -119,8 +132,7 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
     description: '',
     file: null,
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [loading, setLoading] = useState(false); // State for loading indicator
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -128,50 +140,145 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
   };
 
   const handleFileChange = (e) => {
-    setFormData((prev) => ({ ...prev, file: e.target.files[0] }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Set loading to true
-
-    try {
-      const createticket = await TicketService.createticket(formData);
-      setTickets((prev) => [...prev, createticket]);
-      onClose(); // Close the dialog
-      setFormData({ category: '', name: '', email: '', subject: '', description: '', file: null }); // Reset form
-      setErrorMessage(''); // Clear any previous error message
-    } catch (error) {
-      setErrorMessage('Error creating ticket. Please try again.'); // User-friendly error message
-      console.error('Error creating ticket:', error);
-    } finally {
-      setLoading(false); // Reset loading state
+    if (e.target.files.length) {
+      setFormData((prev) => ({ ...prev, file: e.target.files[0] }));
     }
   };
 
+  const validateForm = () => {
+    return formData.category && formData.name && formData.email && formData.subject && formData.description;
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!validateForm()) {
+      toast.error("Please fill in all required fields.");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await handleCreateticket(formData);
+      toast.success("Ticket created successfully!");
+      // setTickets((prev) => [...prev, formData]); // Optionally add the new ticket to the state
+      resetForm();
+      onClose();
+    } catch (error) {
+      console.error('Error submitting form:', error.response ? error.response.data : error.message);
+      toast.error(error.response?.data?.message || "Error submitting form.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateticket = async (ticketData) => {
+    const form = new FormData();
+    form.append('category', ticketData.category);
+    form.append('name', ticketData.name);
+    form.append('email', ticketData.email);
+    form.append('subject', ticketData.subject);
+    form.append('description', ticketData.description);
+    form.append('status', 'Active'); 
+    if (ticketData.file) {
+      form.append('file', ticketData.file);
+    }
+
+    await TicketService.createTicket(form);
+  };
+
+  const resetForm = () => {
+    setFormData({
+      category: '',
+      name: '',
+      email: '',
+      subject: '',
+      description: '',
+      file: null,
+    });
+  };
+
+  const handleClose = () => {
+    resetForm();
+    onClose();
+  };
+
   return (
-    <Dialog open={open} onClose={onClose} fullWidth maxWidth="md" TransitionComponent={Transition}>
+    <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" TransitionComponent={Transition}>
       <DialogTitle>
         <Box sx={{ display: 'flex', alignItems: 'center', px: 2 }}>
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>New Request</Typography>
-          <IconButton edge="end" color="inherit" onClick={onClose} aria-label="close" sx={{ position: 'absolute', right: 8, top: 8 }}>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>New Ticket</Typography>
+          <IconButton edge="end" color="inherit" onClick={handleClose} aria-label="close" sx={{ right: 8, top: 8 }}>
             <CloseIcon />
           </IconButton>
         </Box>
       </DialogTitle>
       <DialogContent sx={{ maxHeight: '80vh', overflow: 'hidden' }}>
         <form onSubmit={handleSubmit}>
-          <Select name="category" value={formData.category} onChange={handleInputChange} displayEmpty variant="outlined" sx={{ mb: 2 }} required>
+          <Select 
+            name="category" 
+            value={formData.category} 
+            onChange={handleInputChange} 
+            displayEmpty 
+            variant="outlined" 
+            sx={{ mb: 2 }} 
+            required
+          >
             <MenuItem value="" disabled>Select Category</MenuItem>
             <MenuItem value="technical">Technical Query</MenuItem>
-            <MenuItem value="Template">Template Query</MenuItem>
+            <MenuItem value="template">Template Query</MenuItem>
             <MenuItem value="general">General Query</MenuItem>
           </Select>
-          <TextField margin="dense" name="name" label="Name" type="text" fullWidth variant="outlined" value={formData.name} onChange={handleInputChange} required sx={{ mb: 2 }} />
-          <TextField margin="dense" name="email" label="Email" type="email" fullWidth variant="outlined" value={formData.email} onChange={handleInputChange} required sx={{ mb: 2 }} />
-          <TextField margin="dense" name="subject" label="Subject" type="text" fullWidth variant="outlined" value={formData.subject} onChange={handleInputChange} required sx={{ mb: 2 }} />
-          <TextField margin="dense" name="description" label="Description" type="text" fullWidth variant="outlined" value={formData.description} onChange={handleInputChange} required multiline rows={4} sx={{ mb: 2 }} />
-
+          <TextField 
+            margin="dense" 
+            name="name" 
+            label="Name" 
+            type="text" 
+            fullWidth 
+            variant="outlined" 
+            value={formData.name} 
+            onChange={handleInputChange} 
+            required 
+            sx={{ mb: 2 }} 
+          />
+          <TextField 
+            margin="dense" 
+            name="email" 
+            label="Email" 
+            type="email" 
+            fullWidth 
+            variant="outlined" 
+            value={formData.email} 
+            onChange={handleInputChange} 
+            required 
+            sx={{ mb: 2 }} 
+          />
+          <TextField 
+            margin="dense" 
+            name="subject" 
+            label="Subject" 
+            type="text" 
+            fullWidth 
+            variant="outlined" 
+            value={formData.subject} 
+            onChange={handleInputChange} 
+            required 
+            sx={{ mb: 2 }} 
+          />
+          <TextField 
+            margin="dense" 
+            name="description" 
+            label="Description" 
+            type="text" 
+            fullWidth 
+            variant="outlined" 
+            value={formData.description} 
+            onChange={handleInputChange} 
+            required 
+            multiline 
+            rows={4} 
+            sx={{ mb: 2 }} 
+          />
           <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '16px', padding: '4px', border: '1px dashed #ccc', borderRadius: '4px', backgroundColor: '#fafafa', cursor: 'pointer' }}>
             <input 
               type="file" 
@@ -182,7 +289,9 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
             />
             <label htmlFor="file-upload" style={{ width: '100%' }}>
               <Box sx={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-                <IconButton component="span" sx={{ fontSize: '1.25rem', color: '#42a5f5' }}><AttachFileIcon /></IconButton>
+                <IconButton component="span" sx={{ fontSize: '1.25rem', color: '#42a5f5' }}>
+                  <AttachFileIcon />
+                </IconButton>
                 <Typography variant="body1" sx={{ marginLeft: '8px' }}>{formData.file ? formData.file.name : 'Attach File'}</Typography>
               </Box>
             </label>
@@ -191,10 +300,8 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
             Allowed file types: .pdf, .xls, .xlsx, .doc, .docx, .txt, .ppt, .pptx, .gif, .jpg, .jpeg, .png
           </Typography>
 
-          {errorMessage && <Typography color="error" sx={{ mt: 2 }}>{errorMessage}</Typography>} {/* Display error message */}
-          
           <DialogActions>
-            <Button onClick={onClose} variant="outlined" color="secondary">Cancel</Button>
+            <Button onClick={handleClose} variant="outlined" color="secondary">Cancel</Button>
             <Button type="submit" variant="contained" sx={{ backgroundColor: '#42a5f5', color: '#fff' }} disabled={loading}>
               {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
             </Button>
@@ -206,4 +313,8 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
 };
 
 export default TicketFormDialog;
+
+
+
+
 

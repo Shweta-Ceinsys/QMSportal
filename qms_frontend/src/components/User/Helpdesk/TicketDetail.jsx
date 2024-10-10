@@ -25,24 +25,29 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => (
         Status: <strong>{ticket?.status || 'N/A'}</strong> {/* Display ticket status */}
       </Typography>
 
-      {/* If there is an attached file, show its details */}
-      {ticket?.file && (
-        <>
-          <Typography variant="body1">Attached File: {ticket.file.name}</Typography> {/* Display the file name */}
-          <Button variant="outlined" onClick={() => {
-            // Create a URL for the file object and trigger download
-            const url = URL.createObjectURL(ticket.file);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = ticket.file.name; // Set the download filename
-            document.body.appendChild(a); // Append the anchor to the body
-            a.click(); // Trigger the click to download
-            document.body.removeChild(a); // Clean up by removing the anchor
-          }}>
-            Download File
-          </Button>
-        </>
-      )}
+ {/* If there is an attached file, show its details */}
+{ticket?.filename && (
+  <>
+    <Typography variant="body1">Attached File: {ticket.filename}</Typography> {/* Display the file name */}
+    <Button variant="outlined" onClick={() => {
+      // Logic for downloading the file
+      const url = ticket.filepath; // Use the path stored in the backend
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = ticket.filename; // Set the download filename
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }}>
+      Download File
+    </Button>
+  </>
+)}
+
+      {/* Display the date and time when the ticket was generated */}
+      <Typography variant="body2" sx={{ mt: 2, textAlign: 'right' }}>
+        Created At: {ticket?.createdAt ? new Date(ticket.createdAt).toLocaleString() : 'N/A'}
+      </Typography>
     </DialogContent>
     
     {/* Dialog actions with a button to withdraw the ticket */}

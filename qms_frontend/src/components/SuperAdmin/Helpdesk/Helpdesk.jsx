@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
+import { toast } from 'react-toastify';
 import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
 import TicketFormDialog from './TicketFormDialog'; // Component for ticket creation form
 import noTicketsImage from '../../../images/helpdesk.png'; // Image for no tickets available
-
+import TicketService from '../../../Services/TicketService'; 
 const Helpdesk = () => {
   // State to manage the current status (active or closed)
   const [status, setStatus] = useState('active');
-
+  const [history, setHistory] = useState([]);
   // State to manage the dialog for creating a new ticket
   const [open, setOpen] = useState(false);
 
@@ -19,11 +20,37 @@ const Helpdesk = () => {
   const [selectedTicket, setSelectedTicket] = useState(null);
 
   // Effect to initialize user data on component mount
+  const fetchActiveTickets = async () => {
+    const UserId = sessionStorage.getItem('UserId');
+    try {
+      const response = await TicketService.getAllActiveTickets(UserId);
+      setTickets(response.data || []);
+    } catch (error) {
+      console.error('Error fetching active tickets:', error);
+      toast.error("Error fetching active tickets.");
+      setTickets([]);
+    }
+  };
+
+  const fetchTicketHistory = async () => {
+    const UserId = sessionStorage.getItem('UserId');
+    try {
+      const response = await TicketService.getTicketHistory(UserId);
+      setTickets(response.data);
+      
+    } catch (error) {
+      console.error('Error fetching ticket history:', error);
+      toast.error("Error fetching ticket history.");
+      setTickets([]);
+    }
+  };
   useEffect(() => {
-    const userName = sessionStorage.getItem('userName') || ''; // Get user name from session storage
-    const userEmail = sessionStorage.getItem('userEmail') || ''; // Get user email from session storage
-    // Additional initialization logic can go here
-  }, []);
+    if (status === 'active') {
+      fetchActiveTickets();
+    } else {
+      fetchTicketHistory();
+    }
+  }, [status]);
 
   // Function to handle status change (active or closed)
   const handleStatusChange = (newStatus) => {
@@ -51,9 +78,17 @@ const Helpdesk = () => {
   };
 
   // Function to withdraw a ticket
-  const handleWithdrawTicket = () => {
-    setTickets((prev) => prev.filter(ticket => ticket.id !== selectedTicket.id)); // Remove the selected ticket from the list
-    handleTicketDetailClose(); // Close the ticket detail dialog
+  const handleWithdrawTicket = async () => {
+    try {
+      await TicketService.withdrawTicket(selectedTicket.id);
+      setHistory([...history, selectedTicket]);
+      setTickets(tickets.filter(ticket => ticket.id !== selectedTicket.id));
+      setSelectedTicket(null);
+      toast.success("Ticket withdrawn successfully.");
+    } catch (error) {
+      console.error('Error withdrawing ticket:', error);
+      toast.error("Failed to withdraw ticket.");
+    }
   };
 
   return (
@@ -106,10 +141,9 @@ const Helpdesk = () => {
                   alt="No tickets"
                   style={{
                     maxWidth: '150%',
-                    maxHeight: '300px',
+                    maxHeight: '400px',
                     marginBottom: '16px',
-                    opacity: 0.3,
-                    filter: 'grayscale(100%)',
+                    opacity: 0.4,
                     display: 'block',
                     marginLeft: 'auto',
                     marginRight: 'auto'
@@ -124,7 +158,7 @@ const Helpdesk = () => {
                       borderRadius: '4px',
                       p: 2,
                       mb: 2,
-                      width: '100%',
+                      width: '400px',
                       cursor: 'pointer',
                       boxShadow: 1,
                     }}
@@ -132,6 +166,7 @@ const Helpdesk = () => {
                   >
                     <Typography variant="h6">{ticket.subject}</Typography>
                     <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
+                    <Typography variant='body2' color="textSecondary" sx={{ mt: 2, textAlign: 'right' }}>{ticket.status}</Typography>
                   </Box>
                 ))
               )}
