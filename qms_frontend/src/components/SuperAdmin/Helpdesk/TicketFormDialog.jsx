@@ -18,6 +18,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import TicketService from '../../../Services/TicketService'; 
 import { toast } from 'react-toastify'; 
+import { useNavigate } from 'react-router-dom';
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="down" ref={ref} {...props} />);
 
@@ -69,9 +70,17 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
     }
   };
 
+  const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
+  };
   const handleCreateticket = async (ticketData) => {
     const { category, name, email, subject, description, file } = ticketData;
     await TicketService.createTicket(category, name, email, subject, description, file);
+    handleClickNavigateSPage();
   };
 
   const resetForm = () => {

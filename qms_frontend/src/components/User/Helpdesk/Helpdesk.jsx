@@ -6,6 +6,7 @@ import TicketFormDialog from './TicketFormDialog';
 import noTicketsImage from '../../../images/helpdesk.png';
 import { toast } from 'react-toastify';
 import TicketService from '../../../Services/TicketService'; 
+import { useNavigate } from 'react-router-dom';
 
 const Helpdesk = () => {
   const [status, setStatus] = useState('active');
@@ -23,6 +24,13 @@ const Helpdesk = () => {
       toast.error("Error fetching active tickets.");
       setTickets([]);
     }
+  };
+  const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
   };
 
   const fetchTicketHistory = async () => {
