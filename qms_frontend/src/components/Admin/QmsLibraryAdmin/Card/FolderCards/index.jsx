@@ -25,14 +25,14 @@ const FolderCards = () => {
   const [getallDir, setGetallDir] = useState([]);
   //  const [isLoading, setIsLoading] = useState(false);
   const { setData } = useContext(DataContext);
-
+  const storedId = sessionStorage.getItem("versionId");
   useEffect(() => {
     // setIsLoading(true);
-    const storedId = sessionStorage.getItem("versionId");
+    
     if (storedId) {
       setData({ id: storedId, version: sessionStorage.getItem("versionName") });
     }
-    SuperAdminService.getDir(dataId.id)
+    SuperAdminService.getDir(storedId)
       .then((response) => {
         setGetallDir(response.data);
       })
@@ -57,7 +57,7 @@ const FolderCards = () => {
 
   const [addFolder, setAddFolder] = useState({
     name: "",
-    version: dataId.id,
+    version: storedId,
 
     created_by: CurrentUser,
   });
@@ -70,7 +70,13 @@ const FolderCards = () => {
       [name]: value,
     }));
   };
-
+  const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
+  };
   // =====================================================================Code For Add User Form==========================================================================================
 
   const handleSubmit = async (e) => {
@@ -90,6 +96,7 @@ const FolderCards = () => {
         });
 
         handleCloseModal();
+          handleClickNavigateSPage();
       }
     } catch (error) {
       console.error("Error Creating Folder:", error);

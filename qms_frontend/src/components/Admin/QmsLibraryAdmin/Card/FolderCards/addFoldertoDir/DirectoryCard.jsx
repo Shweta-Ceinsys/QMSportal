@@ -25,7 +25,13 @@ const navigate = useNavigate();
     navigate('/aSubfLists');
 
   }
-  
+  const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
+  };
   const extractFilesFromFolder = async (item, fileList) => {
     if (item.kind === 'file') {
       fileList.push(item.getAsFile());
@@ -59,6 +65,7 @@ const navigate = useNavigate();
         .then((response) => {
           toast.success("Directory Deleted Successfully");
           setDialogOpen(false);
+          handleClickNavigateSPage();
         })
         .catch((error) => {
           console.error("Error Deleting Directory:", error);

@@ -19,6 +19,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import { ToastContainer, toast } from "react-toastify";
 import { useState } from "react";
 import SuperAdminService from "../../../Services/superadmin";
+import { useNavigate } from "react-router-dom";
 const QmsLibrary = () => {
   const [openModal, setOpenModal] = useState(false);
   const username = sessionStorage.getItem("Name");
@@ -66,7 +67,13 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
       [name]: value,
     }));
   };
-
+  const navigate = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigate(0);
+    }, 3000);
+  };
   // =====================================================================Code For Add User Form==========================================================================================
 
   const handleSubmit = async (e) => {
@@ -91,6 +98,7 @@ const years=["2024","2025","2026","2027","2028","2029","2030",];
         });
 
         handleCloseModal();
+        handleClickNavigateSPage();
       }
     } catch (error) {
       console.error("Error adding Version:", error);

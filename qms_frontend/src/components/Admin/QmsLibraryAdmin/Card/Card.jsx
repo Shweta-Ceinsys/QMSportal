@@ -33,6 +33,13 @@ const Card = (props) => {
 
  }
 
+ const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
+  };
 
 
  const [DialogOpen, setDialogOpen] = useState(false);
@@ -48,14 +55,16 @@ const Card = (props) => {
  const handleDelete = () => {
   SuperAdminService.deleteVersion(vid)
     .then((response) => {
+      
       toast.success("Version Deleted Successfully");
       setDialogOpen(false);
-     
+      
     })
     .catch((error) => {
       console.error("Error deleting Version:", error);
       toast.error("Failed to Delete Version");
     });
+    handleClickNavigateSPage();
 };
 
 const DeleteDialog = (
@@ -140,6 +149,7 @@ const handleLaunch = (vid) => {
     .then((response) => {
       toast.success("Version Launched Successfully");
       setIsLaunched(true); 
+      handleClickNavigateSPage();
      
     })
     .catch((error) => {

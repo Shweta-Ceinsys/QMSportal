@@ -26,6 +26,7 @@ import Tooltip from "@mui/material/Tooltip";
 import SuperAdminService from "../../../Services/superadmin";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
+import { useNavigate } from "react-router-dom";
 const UserManagment = () => {
   const [openModal, setOpenModal] = useState(false);
   const [rows, setRows] = useState([]);
@@ -62,7 +63,16 @@ const UserManagment = () => {
     }));
   };
 
+  const navigate = useNavigate();
+  const handleClick = () => {
+    // Navigate to the About page
+    setTimeout(()=>{navigate(0);
+    
+    },3000)
+    // navigate(0);
+  };
   // =====================================================================Code For Add User Form==========================================================================================
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -84,8 +94,10 @@ const UserManagment = () => {
           password: "",
           role: "",
         });
+       
 
         handleCloseModal();
+        handleClick();
       }
     } catch (error) {
       console.error("Error adding user:", error);
@@ -368,6 +380,7 @@ const UserManagment = () => {
       } else {
         const response = SuperAdminService.modifyUser(editUser);
         toast.success("User Updated successfully!");
+      
 
         setUser({
           id: "",
@@ -378,6 +391,7 @@ const UserManagment = () => {
         });
 
         handleCloseEditModal();
+        handleClick();
       }
     } catch (error) {
       console.error("Error Updating user:", error);

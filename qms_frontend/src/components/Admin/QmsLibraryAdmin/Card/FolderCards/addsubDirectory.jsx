@@ -45,7 +45,13 @@ const AddSubDirectory =() =>{
       [name]: value,
     }));
   };
-
+  const navigates = useNavigate();
+  const handleClickNavigateSPage = () => {
+ 
+    setTimeout(() => {
+      navigates(0);
+    }, 3000);
+  };
   // =====================================================================Code For Add User Form==========================================================================================
 
   const handleSubmit = async (e) => {
@@ -65,6 +71,7 @@ const AddSubDirectory =() =>{
         });
 
         handleCloseModal();
+        handleClickNavigateSPage();
       }
     } catch (error) {
       console.error("Error Creating Folder:", error);
