@@ -50,7 +50,18 @@ const Helpdesk = () => {
   const handleStatusChange = (newStatus) => {
     setStatus(newStatus);
   };
-
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'ACTIVE':
+        return '#4caf50'; // Green for open tickets
+      case 'WITHDRAWN':
+        return '#000000'; // Orange for in-progress tickets
+      case 'CLOSED':
+        return '#f44336'; // Red for closed tickets
+      default:
+        return '#000'; // Default color
+    }
+  };
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -115,54 +126,63 @@ const Helpdesk = () => {
             </Grid>
           </Grid>
         </Grid>
-
-        <Grid item sx={{ mt: 3 }}>
-          <Grid item display="flex" justifyContent='center' sx={{ mb: 2, marginLeft: "290px" }}>
-            <Box>
-              {tickets.length === 0 ? (
+        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} justifyContent="center" sx={{ mt: 3 }}>
+          <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
+            {/* Grid for no tickets image */}
+            {tickets.length === 0 && (
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
                 <img
                   src={noTicketsImage}
                   alt="No tickets"
                   style={{
                     maxWidth: '150%',
                     maxHeight: '400px',
-                    marginBottom: '16px',
                     opacity: 0.3,
-                   
                     display: 'block',
-                    marginLeft: 'auto',
-                    marginRight: 'auto'
                   }}
                 />
-              ) : (
-                tickets.slice().reverse().map(ticket => (
-                  <Box
-                    key={ticket.id}
-                    sx={{
-                      border: '1px solid #ccc',
-                      borderRadius: '4px',
-                      p: 2,
-                      mb: 2,
-                      width: '400px',
-                      cursor: 'pointer',
-                      boxShadow: 1,
-                    }}
-                    onClick={() => handleTicketClick(ticket)}
-                  >
-                    <Typography variant="h6">{ticket.subject}</Typography>
-                    <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
-                    <Typography variant='body2' color="textSecondary" sx={{ mt: 2, textAlign: 'right' }}>{ticket.status}</Typography>
-                  </Box>
-                ))
-              )}
-              {tickets.length === 0 && (
-                <Typography variant="h6" color="#888">
-                  {status === 'active' ? "Looks like you're all caught up! No active tickets to display." : 'Uh-oh! Looks like you’ve got a clean slate. No history here!'}
-                </Typography>
-              )}
-            </Box>
+              </Grid>
+            )}
+
+            {/* Grid for displaying tickets */}
+            <Grid item xs={12} sx={{ px: 2, marginLeft: '290px'}}>
+  <Box>
+    {tickets.length > 0 ? (
+      <Grid container spacing={2} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+        {tickets.slice().reverse().map(ticket => (
+        <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={4}>
+        <Box
+          sx={{
+            border: '1px solid #ccc',
+            borderRadius: '4px',
+            p: 2,
+            mb: 2,
+            cursor: 'pointer',
+            boxShadow: 4,
+            width: '90%', // Adjust width as needed
+            maxWidth: '350px', // Set a maximum width for the ticket
+            mx: 'auto', // Center the box horizontally
+            backgroundColor: 'whitesmoke'
+            // You can also add padding to reduce the space further if needed
+          }}
+          onClick={() => handleTicketClick(ticket)} // Show ticket details on click
+        >
+                          <Typography variant="h6">{ticket.subject}</Typography>
+                          <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
+                           <Typography variant='body2' color="textSecondary" sx={{ mt: 2, textAlign: 'right', color: getStatusColor(ticket.status)  }}>{ticket.status}</Typography>
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
+                ) : (
+                  <Typography variant="h6" color="#888" sx={{ textAlign: 'center', mt: 3 }}>
+                    {status === 'active' ? "Looks like you're all caught up! No active tickets to display." : 'Uh-oh! Looks like you’ve got a clean slate. No closed tickets here!'}
+                  </Typography>
+                )}
+              </Box>
+            </Grid>
           </Grid>
-        </Grid>
+        </Box>
 
         {selectedTicket && (
           <TicketDetail ticket={selectedTicket} onClose={handleTicketDetailClose} onWithdraw={handleWithdrawTicket} />

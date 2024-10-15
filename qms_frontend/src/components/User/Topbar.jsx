@@ -27,7 +27,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/Ceinsys.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import DownloadIcon from '@mui/icons-material/Download';
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import React, { useEffect, useState } from "react";
@@ -524,6 +524,13 @@ const Topbar = () => {
     <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
   </ListItemIcon>
   <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+<ListItem button component={Link} to="/udownloadlogs" className="menu-item">
+  <ListItemIcon>
+  <DownloadIcon sx={{ fontSize: 24 }} />
+  </ListItemIcon>
+  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
 </ListItem>
 <Divider />
       <ListItem button component={Link} to="/uhelpdesk" className="menu-item">

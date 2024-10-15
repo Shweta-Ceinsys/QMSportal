@@ -21,7 +21,7 @@ import {
   ListItem,
 } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group'; // Add this import
-
+import DownloadIcon from '@mui/icons-material/Download';
 import DescriptionIcon from '@mui/icons-material/Description';
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
@@ -532,6 +532,13 @@ const Topbar = () => {
     <GroupIcon sx={{ fontSize: 24 }} /> {/* User Management icon */}
   </ListItemIcon>
   <ListItemText primary="User Management" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
+<ListItem button component={Link} to="/downloadlogs" className="menu-item">
+  <ListItemIcon>
+  <DownloadIcon sx={{ fontSize: 24 }} />
+  </ListItemIcon>
+  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
 </ListItem>
 <Divider />
       <ListItem button component={Link} to="/helpdesk" className="menu-item">

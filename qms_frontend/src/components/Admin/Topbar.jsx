@@ -28,7 +28,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/Ceinsys.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import DownloadIcon from '@mui/icons-material/Download';
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import React, { useEffect, useState } from "react";
@@ -534,6 +534,13 @@ const Topbar = () => {
                 <ListItemText primary="User List" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
               </ListItem>
               <Divider />
+              <ListItem button component={Link} to="/adownloadlogs" className="menu-item">
+  <ListItemIcon>
+  <DownloadIcon sx={{ fontSize: 24 }} />
+  </ListItemIcon>
+  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+</ListItem>
+<Divider />
               <ListItem button component={Link} to="/ahelpdesk" className="menu-item">
                 <ListItemIcon>
                   <HelpOutlineIcon sx={{ fontSize: 24 }} />

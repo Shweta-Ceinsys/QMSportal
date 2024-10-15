@@ -23,6 +23,9 @@ import Helpdesk from "./components/SuperAdmin/Helpdesk/Helpdesk";
 import UserHelpdesk from "./components/User/Helpdesk/Helpdesk";
 import  AdminHelpdesk from "./components/Admin/Helpdesk/Helpdesk";
 import AdminUserList from "./components/Admin/UserList/UserList";
+import AdminDownloadLogs from "./components/Admin/DownloadLogsAdmin/DownloadLogs";
+import DownloadLogs from "./components/SuperAdmin/DownloadLogs/DownloadLogs";
+import UserDownloadLogs from "./components/User/DownloadLogs/DownloadLogs";
 
 function App() {
   return (
@@ -51,7 +54,7 @@ function App() {
       <Route path="/fLists" element={<ListFiles role="SUPER_ADMIN"/>} />
       <Route path="/helpdesk" element={<Helpdesk role="SUPER_ADMIN"/>} />
       <Route path="/subfLists" element={<SuperAdminSubDirListFiles role="SUPER_ADMIN"/>} />
-
+      <Route path="/downloadlogs"element={<DownloadLogs role="SUPER_ADMIN"/>}/>
 {/* Admin */}
 
           {/* <Route exact path="/aQmsLibrary" element={<Protected cmp={AdminQmsLibrary} role="ADMIN"/>} ></Route>
@@ -64,7 +67,7 @@ function App() {
           <Route path="/ahelpdesk" element={<AdminHelpdesk role="ADMIN"/>} />
           <Route path="/auserlist" element={<AdminUserList role="ADMIN"/>} />
           <Route path="/aSubfLists" element={<AdminSubDirListFiles role="ADMIN"/>} />
-     
+          <Route path="/adownloadlogs"element={<AdminDownloadLogs role="ADMIN"/>}/>
 {/* User */}
           {/* <Route exact path="/uQmsLibrary" element={<Protected cmp={UserQmsLibrary} role="USER"/>} ></Route>
           <Route exact path="/ufCards" element={<Protected cmp={UserFolderCards} role="USER"/>} ></Route>
@@ -75,6 +78,7 @@ function App() {
           <Route path="/ufLists" element={<UserListFiles role="USER"/>} />   
           <Route path="/uhelpdesk" element={<UserHelpdesk role="USER"/>} />  
           <Route path="/uSubfLists" element={<UserSubDirListFiles role="USER"/>} />
+          <Route path="/udownloadlogs"element={<UserDownloadLogs role="USER"/>}/>
               </>
      </Routes>
    
