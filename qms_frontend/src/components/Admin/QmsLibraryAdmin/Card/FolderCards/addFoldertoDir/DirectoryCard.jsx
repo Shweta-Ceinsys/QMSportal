@@ -255,7 +255,7 @@ const navigate = useNavigate();
               // padding: "20px",
              
               overflowY: "auto",
-              border: "4px solid #CDF0EA"
+              border: "4px solid #579aef"
             }}
           >
           <Box display={"flex"} justifyContent={"flex-end"}>
@@ -320,13 +320,13 @@ const navigate = useNavigate();
                         fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
                         fontWeight: "bold",
                         padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
+                        backgroundColor: "#d1d2f2",
                         color: "black",
                         boxShadow: 2,
                         // color:"black",
                         "&:hover": {
                           // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
+                          backgroundColor: "#8e93e4",
                           boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                         },
                       }} >
