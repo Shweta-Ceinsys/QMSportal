@@ -1,5 +1,5 @@
 import { Box, Grid, IconButton } from "@mui/material";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import "./Card.css";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -30,7 +30,23 @@ const Card = (props) => {
 
 
 
+  const [getUser, setUser] = useState({});
+  //  const [isLoading, setIsLoading] = useState(false);
+   
+  useEffect(() => {
+    // setIsLoading(true);
+    SuperAdminService.getUserById(param.created_by)
+    .then((response) => {
+      setUser(response.data);
+      // setIsLoading(false);
 
+    })
+    .catch((error) => {
+      console.error('Error fetching Model List:', error);
+      // setIsLoading(false);
+    });
+   
+  }, []);
 
   return (
     <Box>
@@ -120,7 +136,8 @@ const Card = (props) => {
                     <b>
                       {param.month} {param.year}
                     </b>
-                  </span>
+                  </span><br/>
+                  <span style={{fontSize:'0.8rem',color:"blue"}}>Created By: {getUser.name}</span>
                 </Box>
               </Box>
             </Box>

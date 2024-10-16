@@ -35,7 +35,16 @@ addUser =(user)=>{
 
 };
 
+getUserById = (id) => {
+  return axios.get(API_URL + "api/getUserById",{
+      params: {
+          Id: id // Use the passed dealer parameter here
+      },
+      headers: authHeader() // Assuming authHeader() returns the necessary authorization headers
+  });
 
+
+};
 
 
 changePassword =(id,oldPassword,newPassword)=>{

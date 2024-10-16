@@ -1,5 +1,5 @@
 import { Box, Grid, IconButton } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./Card.css";
 
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -8,10 +8,28 @@ import { useNavigate } from "react-router-dom";
 import folderImage from "../../../../images/folder.png";
 
 import { DataContext } from "../../../../DataContext";
+import SuperAdminService from "../../../../Services/superadmin";
 const Card = (props) => {
   const param = props;
 
   const { setData } = useContext(DataContext);
+  const [getUser, setUser] = useState({});
+  //  const [isLoading, setIsLoading] = useState(false);
+   
+  useEffect(() => {
+    // setIsLoading(true);
+    SuperAdminService.getUserById(param.created_by)
+    .then((response) => {
+      setUser(response.data);
+      // setIsLoading(false);
+
+    })
+    .catch((error) => {
+      console.error('Error fetching Model List:', error);
+      // setIsLoading(false);
+    });
+   
+  }, []);
 
   const userId = sessionStorage.getItem("UserId");
   const userid = Number(userId);
@@ -112,6 +130,8 @@ const Card = (props) => {
                       {param.month} {param.year}
                     </b>
                   </span>
+                  <br />
+                  <span style={{fontSize:'0.8rem',color:"blue"}}>Created By: {getUser.name}</span>
                 </Box>
               </Box>
             </Box>

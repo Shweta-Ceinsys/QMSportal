@@ -41,6 +41,7 @@ const Cards = () => {
              month={card.month}
              year={card.year}
              launch={card.launch}
+             created_by={card.created_by}
             />
           </Grid>
         ))}
