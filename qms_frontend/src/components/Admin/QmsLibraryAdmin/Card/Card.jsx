@@ -1,4 +1,4 @@
-import { Box,  Button,  Dialog,  DialogActions,  Grid,  IconButton,  Tooltip,  Typography } from "@mui/material";
+import { Box,  Button,  Dialog,  DialogActions,  Grid,  Icon,  IconButton,  Tooltip,  Typography } from "@mui/material";
 import { useState,  useContext } from "react";
 import "./Card.css";
 
@@ -224,7 +224,7 @@ const handleLaunch = (vid) => {
         <Box display={"flex"} justifyContent={"flex-start"}  >
         <Grid container spacing={0.5} justifyContent="flex-end">
   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-    <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={8}>
+    <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={6}>
       <Tooltip title="Delete">
         <DeleteIcon
           onClick={() => DeleteHandleOpen(param.id)}
@@ -242,13 +242,14 @@ const handleLaunch = (vid) => {
       </Tooltip>
       
       <Tooltip title="Launch">
+        <IconButton  onClick={() => handleLaunch(param.id)}
+          disabled={param.launch}>
         <RocketLaunchIcon 
-          onClick={() => handleLaunch(param.id)}
-          disabled={param.launch}
+         
           sx={{
             fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Further increased icon size
             color: param.launch ? "lightgrey" : "#a5a5e0",
-            cursor: "pointer",
+            cursor: param.launch ? "not-allowed" : "pointer",
             "&:hover": {
               backgroundColor: param.launch ? "transparent" : "#A4BCDB",
               boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)",
@@ -258,7 +259,7 @@ const handleLaunch = (vid) => {
             },
           }}
         />
-          
+          </IconButton>
       </Tooltip>
     </Box>
   </Grid>
