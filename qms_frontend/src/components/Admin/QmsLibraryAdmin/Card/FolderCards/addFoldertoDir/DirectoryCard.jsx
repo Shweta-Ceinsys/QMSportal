@@ -5,7 +5,8 @@ import "./DirectoryCard.css";
  import car from '../../../../../../images/car.png';
  import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
-
+import DeleteIcon from '@mui/icons-material/Delete';
+import UploadFileIcon from '@mui/icons-material/UploadFile'; 
 import folderImage from  "../../../../../../images/folder.png"
 import { ToastContainer, toast } from "react-toastify";
 import SuperAdminService from "../../../../../../Services/superadmin"
@@ -443,67 +444,39 @@ const navigate = useNavigate();
           
         </Box>
         <Box display={"flex"} justifyContent={"flex-start"}  >
-          <Grid container spacing={0.5}>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Delete">
-                    <Button
-                      size="small"
-                      onClick={() => DeleteHandleOpen(param.dirId)}
-                    
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                        fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#F5A4A0",
-                        color: "black",
-                        boxShadow: 2,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    Delete
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Upload">
-                    <Button
-                      size="small"
-                       onClick={()=>handleOpenModal(param.subDirId)}
-                    
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                         fontSize: {xl:"14px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "10px 20px",
-                        backgroundColor: "#CDF0EA",
-                        color: "black",
-                        boxShadow: 2,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    Upload
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-          </Grid>
-                
+        <Grid container spacing={0.5} justifyContent="flex-end">
+      <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+        <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={10}>
+          <Tooltip title="Delete">
+            <DeleteIcon 
+              onClick={() => DeleteHandleOpen(param.dirId)}
+              sx={{
+                fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Increased sizes
+                color: "#F5A4A0",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "#d50000",
+                },
+                marginRight: 2, // Space between icons
+              }}
+            />
+          </Tooltip>
+          <Tooltip title="Upload">
+            <UploadFileIcon 
+              onClick={() => handleOpenModal(param.dirId)}
+              sx={{
+                fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Increased sizes
+                color: "#afade1",
+                cursor: "pointer",
+                "&:hover": {
+                  color: "#a5a5e0",
+                },
+              }}
+            />
+          </Tooltip>
+        </Box>
+      </Grid>
+    </Grid>
                 
               </Box>
               </Box>

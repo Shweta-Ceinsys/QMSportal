@@ -232,7 +232,7 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
             </Grid>
             <DialogActions>
               <Button onClick={handleClose} variant="outlined" color="secondary">Cancel</Button>
-              <Button type="submit" variant="contained" sx={{ backgroundColor: '#42a5f5', color: '#fff' }} disabled={loading}>
+              <Button type="submit" variant="contained" sx={{ backgroundColor: '#8e93e4', color: '#fff' }} disabled={loading}>
                 {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
               </Button>
             </DialogActions>

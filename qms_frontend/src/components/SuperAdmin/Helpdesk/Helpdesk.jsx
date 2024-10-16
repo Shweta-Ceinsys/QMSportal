@@ -94,7 +94,7 @@ const Helpdesk = () => {
           <Grid item xs={12} display="flex" justifyContent="flex-end" sx={{ mb: 2 }}>
             <Button 
               variant="contained" 
-              sx={{ backgroundColor: '#E6E6FA', color: '#000', '&:hover': { backgroundColor: '#D8BFD8' } }} 
+              sx={{ backgroundColor: '#d9d9f5', color: '#000', '&:hover': { backgroundColor: '#8e93e4' } }} 
               onClick={handleClickOpen}
             >
               + New Request

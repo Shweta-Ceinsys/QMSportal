@@ -745,13 +745,13 @@ const UserManagment = () => {
                             fontSize: "14px",
                             fontWeight: "bold",
                             padding: "10px 20px",
-                            backgroundColor: "#ebe9f8",
+                            backgroundColor: "#d9d9f5",
                             color: "black",
                             boxShadow: 4,
                             // color:"black",
                             "&:hover": {
                               // Apply styles on hover
-                              backgroundColor: "#A4BCDB",
+                              backgroundColor: "#8e93e4",
                               boxShadow:
                                 "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                             },

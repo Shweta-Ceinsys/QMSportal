@@ -206,7 +206,7 @@ const Topbar = () => {
             elevation={3}
             style={{
               width: "100%",
-              border: "4px solid #CDF0EA",
+              border: "4px solid #579aef",
               justifyContent: "center",
               alignItems: "center",
               overflowY: "auto",
@@ -222,7 +222,7 @@ const Topbar = () => {
                 display={"flex"}
                 flexDirection={"row"}
                 justifyContent={"space-between"}
-                backgroundColor={"#CDF0EA"}
+                // backgroundColor={"#CDF0EA"}
                 boxShadow={5}
               >
                 <Box
@@ -329,10 +329,10 @@ const Topbar = () => {
                   variant="contained"
                   sx={{
                     mt: 1,
-                    backgroundColor: "#CDF0EA",
+                    backgroundColor: "#d1d2f2",
                     color: "Black",
                     "&:hover": {
-                      boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
+                     backgroundColor: "#d9d9f5", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
                   }}

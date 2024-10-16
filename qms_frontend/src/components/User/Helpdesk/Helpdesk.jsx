@@ -101,7 +101,7 @@ const Helpdesk = () => {
           <Grid item xs={12} display="flex" justifyContent="flex-end" sx={{ mb: 2 }}>
             <Button 
               variant="contained" 
-              sx={{ backgroundColor: '#E6E6FA', color: '#000', '&:hover': { backgroundColor: '#D8BFD8' } }} 
+              sx={{ backgroundColor: '#d9d9f5', color: '#000', '&:hover': { backgroundColor: '#8e93e4' } }} 
               onClick={handleClickOpen}
             >
               + New Request
@@ -132,18 +132,20 @@ const Helpdesk = () => {
           <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {/* Grid for no tickets image */}
             {tickets.length === 0 && (
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
-                <img
-                  src={noTicketsImage}
-                  alt="No tickets"
-                  style={{
-                    maxWidth: '150%',
-                    maxHeight: '400px',
-                    opacity: 0.3,
-                    display: 'block',
-                  }}
-                />
-              </Grid>
+
+               <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2, marginLeft: "290px"}}>
+               <img
+                 src={noTicketsImage}
+                 alt="No tickets"
+                 style={{
+                   maxWidth: '150%',
+                   maxHeight: '400px',
+                   opacity: 0.3,
+                   display: 'block',
+                 }}
+               />
+             </Grid>
+
             )}
 
             {/* Grid for displaying tickets */}

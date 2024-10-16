@@ -134,7 +134,7 @@ const FolderCards = () => {
               justifyContent: "center",
               alignItems: "center",
               overflowY: "auto",
-              border: "4px solid #CDF0EA",
+              border: "4px solid #579aef",
             }}
           >
             <Box
@@ -147,10 +147,10 @@ const FolderCards = () => {
                 display={"flex"}
                 flexDirection={"row"}
                 justifyContent={"space-between"}
-                sx={{
-                  backgroundColor: "#CDF0EA",
-                  boxShadow: 5,
-                }}
+                // sx={{
+                //   backgroundColor: "#CDF0EA",
+                //   boxShadow: 5,
+                // }}
               >
                 <Box
                   className="textname"
@@ -192,11 +192,11 @@ const FolderCards = () => {
                   size="small"
                   sx={{
                     mt: 1,
-                    backgroundColor: "#CDF0EA",
+                    backgroundColor: "#d1d2f2",
                     color: "black",
                     "&:hover": {
                       // Apply styles on hover
-                      backgroundColor: "#A4BCDB",
+                      backgroundColor: "#8e93e4",
                       boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                     },
                     margin: "0 auto", // Center the button horizontally
@@ -264,7 +264,7 @@ const FolderCards = () => {
                         // color:"black",
                         "&:hover": {
                           // Apply styles on hover
-                          backgroundColor: "#f4f1fb",
+                          backgroundColor: "#8e93e4",
                           boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
                         },
                       }}

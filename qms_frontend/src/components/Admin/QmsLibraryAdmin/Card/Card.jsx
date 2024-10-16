@@ -5,7 +5,8 @@ import "./Card.css";
  import car from '../../../../images/car.png';
  import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import { useNavigate } from "react-router-dom";
-
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import DeleteIcon from '@mui/icons-material/Delete';
 import folderImage from  "../../../../images/folder.png"
 import { toast } from "react-toastify";
 import SuperAdminService from "../../../../Services/superadmin";
@@ -221,73 +222,49 @@ const handleLaunch = (vid) => {
           
         </Box>
         <Box display={"flex"} justifyContent={"flex-start"}  >
-          <Grid container spacing={0.5}>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Delete">
-                    <Button
-                      size="small"
-                      onClick={() => DeleteHandleOpen(param.id)}
-                    
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                        fontSize: {xl:"13px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "5px 10px",
-                        backgroundColor: "#F5A4A0",
-                        color: "black",
-                        boxShadow: 2,
-                        
-                        "&:hover": {
-                        
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    Delete
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-            <Grid  item xs="5" sm="5" md="5" lg="5" xl="5">
-            <Box>
-                  <Tooltip title="Launch">
-                    <Button
-                      size="small"
-                      onClick={() =>  handleLaunch(param.id)}
-                      disabled={param.launch
-                      }
-                      sx={{
-                        width:"100%",
-                         marginTop:4,
-                         fontSize: {xl:"13px",lg:"13px",md:"12px" ,sm:"11px",xs:"10px"},
-                        fontWeight: "bold",
-                        padding: "5px 10px",
-                        backgroundColor: "#CDF0EA",
-                        color: "black",
-                        boxShadow: 2,
-                        // color:"black",
-                        "&:hover": {
-                          // Apply styles on hover
-                          backgroundColor: "#A4BCDB",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                        "&:disabled": {
-                          // Apply styles on hover
-                          color:"green",
-                          backgroundColor: "lightgrey",
-                          boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)", // Apply box shadow
-                        },
-                      }}
-                    >
-                    {isLaunched ? "Launched" :"Launch"}
-                    </Button>
-                  </Tooltip>
-                </Box>
-            </Grid>
-          </Grid>
+        <Grid container spacing={0.5} justifyContent="flex-end">
+  <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
+    <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={8}>
+      <Tooltip title="Delete">
+        <DeleteIcon
+          onClick={() => DeleteHandleOpen(param.id)}
+          sx={{
+            fontSize:{ xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Further increased icon size
+            color: "#F5A4A0",
+            cursor: "pointer",
+            "&:hover": {
+              color: "#d50000",
+            },
+            marginRight: 2,
+          }}
+        />
+         
+      </Tooltip>
+      
+      <Tooltip title="Launch">
+        <RocketLaunchIcon 
+          onClick={() => handleLaunch(param.id)}
+          disabled={param.launch}
+          sx={{
+            fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Further increased icon size
+            color: param.launch ? "lightgrey" : "#a5a5e0",
+            cursor: "pointer",
+            "&:hover": {
+              backgroundColor: param.launch ? "transparent" : "#A4BCDB",
+              boxShadow: "0 0 10px 5px rgba(255, 255, 255, 0.5)",
+            },
+            "&:disabled": {
+              color: "#afade1",
+            },
+          }}
+        />
+          
+      </Tooltip>
+    </Box>
+  </Grid>
+</Grid>
+
+
                 
                 
               </Box>
