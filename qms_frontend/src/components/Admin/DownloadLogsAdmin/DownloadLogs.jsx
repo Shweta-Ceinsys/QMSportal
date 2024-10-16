@@ -47,25 +47,33 @@ const DownloadLogList = ({ isAdmin }) => {
   };
 
   const filteredRows = rows.filter((row) => {
-    // Role filtering can be implemented here if necessary
     if (filterRole !== "All" && row.role !== filterRole) {
       return false;
     }
-    return (
-      searchText === "" ||
-      Object.values(row).some((value) =>
-        value.toString().toLowerCase().includes(searchText.toLowerCase())
+    if (
+      searchText &&
+      Object.values(row).some(
+        (value) =>
+          value &&
+          value.toString().toLowerCase().includes(searchText.toLowerCase())
       )
-    );
+    ) {
+      return true;
+    }
+    return !searchText;
   });
+  
+  
+  
+  const handleSearchChange = (event) => {
+    setSearchText(event.target.value);
+  };
 
   const handleFilterChange = (event) => {
     setFilterRole(event.target.value);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchText(event.target.value);
-  };
+ 
 
   return (
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>

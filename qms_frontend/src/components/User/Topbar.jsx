@@ -110,7 +110,7 @@ const Topbar = () => {
   var Role = sessionStorage.getItem("Role");
 
   const handleOpenModal = () => {
-    setOpenModal(false);
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {

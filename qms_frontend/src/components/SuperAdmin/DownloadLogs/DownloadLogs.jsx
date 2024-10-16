@@ -54,12 +54,23 @@ const DownloadLogList = () => {
   //   }
   // };
 
-  const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchText.toLowerCase())
-    )
-  );
-
+  const filteredRows = rows.filter((row) => {
+  
+    if (
+      searchText &&
+      Object.values(row).some(
+        (value) =>
+          value &&
+          value.toString().toLowerCase().includes(searchText.toLowerCase())
+      )
+    ) {
+      return true;
+    }
+    return !searchText;
+  });
+  
+  
+  
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -90,7 +101,7 @@ const DownloadLogList = () => {
                 </Box>
 
                 <DataGrid
-                  rows={rows}
+                  rows={filteredRows}
                   columns={columns}
                   autoHeight
                   pageSize={5}

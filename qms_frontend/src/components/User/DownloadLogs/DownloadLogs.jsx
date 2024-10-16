@@ -30,7 +30,7 @@ const DownloadLogList = () => {
 
 
   useEffect(() => {
-    console.log("UserId",userid);
+   
     DownloadService.getDownloadLogsByUserId(userid)
         .then((response) => {
           setRows(response.data); // Set rows with the response data
@@ -40,26 +40,27 @@ const DownloadLogList = () => {
         });
   }, []);
 
-  // const fetchDownloadLogs = () => {
-  //   if (userId) {
-  //     DownloadService.getDownloadLogsByUserId(userId)
-  //       .then((response) => {
-  //         setRows(response.data); // Set rows with the response data
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error fetching download logs:", error);
-  //       });
-  //   } else {
-  //     console.error("User ID not found in session storage.");
-  //   }
-  // };
 
-  const filteredRows = rows.filter((row) =>
-    Object.values(row).some((value) =>
-      value.toString().toLowerCase().includes(searchText.toLowerCase())
-    )
-  );
 
+
+
+  const filteredRows = rows.filter((row) => {
+  
+    if (
+      searchText &&
+      Object.values(row).some(
+        (value) =>
+          value &&
+          value.toString().toLowerCase().includes(searchText.toLowerCase())
+      )
+    ) {
+      return true;
+    }
+    return !searchText;
+  });
+  
+  
+  
   const handleSearchChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -90,7 +91,7 @@ const DownloadLogList = () => {
                 </Box>
 
                 <DataGrid
-                  rows={rows}
+                  rows={filteredRows}
                   columns={columns}
                   autoHeight
                   pageSize={5}
