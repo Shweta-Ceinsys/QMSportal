@@ -19,7 +19,6 @@ const DownloadLogList = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 100 },
-    { field: "userid", headerName: "User ID", flex: 1 },
     { field: "username", headerName: "User Name", flex: 2 },
     { field: "filename", headerName: "File Name", flex: 2 },
     { field: "download_date", headerName: "Downloaded At", flex: 2 },
@@ -31,6 +30,7 @@ const DownloadLogList = () => {
 
 
   useEffect(() => {
+    console.log("UserId",userid);
     DownloadService.getDownloadLogsByUserId(userid)
         .then((response) => {
           setRows(response.data); // Set rows with the response data

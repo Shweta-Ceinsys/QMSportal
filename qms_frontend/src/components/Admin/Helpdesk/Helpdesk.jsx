@@ -4,7 +4,7 @@ import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
 import noTicketsImage from '../../../images/helpdesk.png'; // Image for no tickets available
 import TicketService from '../../../Services/adminticketService'; // Import the ticket service
-
+import { toast,ToastContainer } from 'react-toastify';
 const Helpdesk = () => {
   const [status, setStatus] = useState('active'); // Current status (active or closed)
   const [tickets, setTickets] = useState([]); // List of tickets
@@ -52,12 +52,13 @@ const Helpdesk = () => {
     try {
       await TicketService.resolveAndCloseTicket(ticketId);
       fetchTickets(); // Refresh the ticket list after resolving
-      alert('Ticket resolved and closed successfully.');
+      toast.success('Ticket resolved and closed successfully.'); // Use toast for success notification
     } catch (error) {
       console.error('Error resolving and closing ticket:', error);
-      alert(error.response?.data || 'Error closing ticket');
+      toast.error(error.response?.data || 'Error closing ticket'); // Use toast for error notification
     }
   };
+  
 
   return (
     <Box sx={{ minHeight: '100vh', boxShadow: 1 }}backgroundColor = "#eef0f6">
@@ -66,7 +67,7 @@ const Helpdesk = () => {
         <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
           {/* Status selection buttons */}
           <Grid item xs={12} container justifyContent="center" alignItems="center" sx={{ flexDirection: 'column' }}>
-            <Grid item display="flex" justifyContent='center' sx={{ mb: 2 }}>
+            <Grid item display="flex" justifyContent='center' sx={{ mb: 2, marginLeft: "290px" }}>
               <ButtonGroup>
                 <Button
                   onClick={() => handleStatusChange('active')}
@@ -101,11 +102,11 @@ const Helpdesk = () => {
           </Grid>
         </Grid>
 
-        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} justifyContent="flex-start" sx={{ mt: 3 }}>
+        <Box display={"flex"} flexDirection={"row"} flexWrap={"wrap"} justifyContent="center" sx={{ mt: 3 }}>
           <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {/* Grid for no tickets image */}
             {tickets.length === 0 && (
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2, marginLeft: "290px"}}>
                 <img
                   src={noTicketsImage}
                   alt="No tickets"
@@ -123,25 +124,24 @@ const Helpdesk = () => {
             <Grid item xs={12} sx={{ px: 2, marginLeft: '290px'}}>
   <Box>
     {tickets.length > 0 ? (
-      <Grid container spacing={2} sx={{ flexWrap: 'wrap', justifyContent: 'center' }}>
-        {tickets.slice().reverse().map(ticket => (
-        <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={4}>
-        <Box
-          sx={{
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            p: 2,
-            mb: 2,
-            cursor: 'pointer',
-            boxShadow: 4,
-            width: '90%', // Adjust width as needed
-            maxWidth: '350px', // Set a maximum width for the ticket
-            mx: 'auto', // Center the box horizontally
-            backgroundColor: 'whitesmoke'
-            // You can also add padding to reduce the space further if needed
-          }}
-          onClick={() => handleTicketClick(ticket)} // Show ticket details on click
-        >
+     <Grid container spacing={1} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
+     {tickets.slice().reverse().map(ticket => (
+       <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={3}>
+         <Box
+           sx={{
+             border: '1px solid #ccc',
+             borderRadius: '4px',
+             p: 1, // Reduced padding
+             mb: 1, // Reduced bottom margin
+             cursor: 'pointer',
+             boxShadow: 2, // Adjust shadow to make it lighter
+             width: '90%', // Maintain width
+             maxWidth: '350px', // Maintain maximum width
+             mx: 'auto', // Center the box horizontally
+             backgroundColor: 'whitesmoke'
+           }}
+           onClick={() => handleTicketClick(ticket)} // Show ticket details on click
+         >
                           <Typography variant="h6">{ticket.subject}</Typography>
                           <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
                           
@@ -172,6 +172,7 @@ const Helpdesk = () => {
           <TicketDetail ticket={selectedTicket} onClose={handleTicketDetailClose} />
         )}
       </Box>
+      <ToastContainer style={{ zIndex: "1000000" }} />
     </Box>
   );
 };

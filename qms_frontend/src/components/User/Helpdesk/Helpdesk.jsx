@@ -4,7 +4,7 @@ import Topbar from "../Topbar";
 import TicketDetail from './TicketDetail';
 import TicketFormDialog from './TicketFormDialog';
 import noTicketsImage from '../../../images/helpdesk.png';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import TicketService from '../../../Services/TicketService'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -25,23 +25,12 @@ const Helpdesk = () => {
       setTickets([]);
     }
   };
-  const navigates = useNavigate();
-  const handleClickNavigateSPage = () => {
- 
-    setTimeout(() => {
-      navigates(0);
-    }, 3000);
-  };
 
   const fetchTicketHistory = async () => {
     const UserId = sessionStorage.getItem('UserId');
     try {
       const response = await TicketService.getTicketHistory(UserId);
       setTickets(response.data);
-      // const closedTickets = response.data?.filter(ticket =>
-      //   ticket.status === 'Closed' || ticket.status === 'Withdrawn'
-      // ) || [];
-      // setTickets(closedTickets);
     } catch (error) {
       console.error('Error fetching ticket history:', error);
       toast.error("Error fetching ticket history.");
@@ -90,9 +79,10 @@ const Helpdesk = () => {
     try {
       await TicketService.withdrawTicket(selectedTicket.id);
       setHistory([...history, selectedTicket]);
+      toast.success("Ticket withdrawn successfully.");
       setTickets(tickets.filter(ticket => ticket.id !== selectedTicket.id));
       setSelectedTicket(null);
-      toast.success("Ticket withdrawn successfully.");
+     
     } catch (error) {
       console.error('Error withdrawing ticket:', error);
       toast.error("Failed to withdraw ticket.");
@@ -101,6 +91,7 @@ const Helpdesk = () => {
 
   return (
     <Box sx={{ backgroundColor: '#f9f9f9', minHeight: '100vh', boxShadow: 1 }}>
+
       <Topbar />
       <Box sx={{ mt: 10, mb: 5, p: 2 }}>
         <Grid container spacing={3} sx={{ justifyContent: 'center' }}>
@@ -138,7 +129,7 @@ const Helpdesk = () => {
           <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {/* Grid for no tickets image */}
             {tickets.length === 0 && (
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2, marginLeft: "290px"}}>
                 <img
                   src={noTicketsImage}
                   alt="No tickets"
@@ -158,20 +149,19 @@ const Helpdesk = () => {
     {tickets.length > 0 ? (
       <Grid container spacing={2} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
         {tickets.slice().reverse().map(ticket => (
-        <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={4}>
+        <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={3}>
         <Box
           sx={{
             border: '1px solid #ccc',
             borderRadius: '4px',
-            p: 2,
-            mb: 2,
+            p: 1, // Reduced padding
+            mb: 1, // Reduced bottom margin
             cursor: 'pointer',
-            boxShadow: 4,
-            width: '90%', // Adjust width as needed
-            maxWidth: '350px', // Set a maximum width for the ticket
+            boxShadow: 2, // Adjust shadow to make it lighter
+            width: '90%', // Maintain width
+            maxWidth: '350px', // Maintain maximum width
             mx: 'auto', // Center the box horizontally
             backgroundColor: 'whitesmoke'
-            // You can also add padding to reduce the space further if needed
           }}
           onClick={() => handleTicketClick(ticket)} // Show ticket details on click
         >
@@ -198,7 +188,9 @@ const Helpdesk = () => {
 
         <TicketFormDialog open={open} onClose={handleClose} setTickets={setTickets} />
       </Box>
+      <ToastContainer style={{ zIndex: "1000000" }} />
     </Box>
+
   );
 };
 

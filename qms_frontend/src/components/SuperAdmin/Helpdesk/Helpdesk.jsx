@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Button, ButtonGroup, Grid, Typography } from '@mui/material';
-import { toast } from 'react-toastify';
+import { toast,ToastContainer } from 'react-toastify';
 import Topbar from "../Topbar"; // Importing the Topbar component
 import TicketDetail from './TicketDetail'; // Component to display ticket details
 import TicketFormDialog from './TicketFormDialog'; // Component for ticket creation form
@@ -126,7 +126,7 @@ const Helpdesk = () => {
           <Grid container spacing={2} sx={{ justifyContent: 'center' }}>
             {/* Grid for no tickets image */}
             {tickets.length === 0 && (
-              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2 }}>
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', mb: 2, marginLeft: "290px"}}>
                 <img
                   src={noTicketsImage}
                   alt="No tickets"
@@ -146,23 +146,22 @@ const Helpdesk = () => {
     {tickets.length > 0 ? (
       <Grid container spacing={2} sx={{ flexWrap: 'wrap', justifyContent: 'flex-start' }}>
         {tickets.slice().reverse().map(ticket => (
-        <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={4}>
-        <Box
-          sx={{
-            border: '1px solid #ccc',
-            borderRadius: '4px',
-            p: 2,
-            mb: 2,
-            cursor: 'pointer',
-            boxShadow: 4,
-            width: '90%', // Adjust width as needed
-            maxWidth: '350px', // Set a maximum width for the ticket
-            mx: 'auto', // Center the box horizontally
-            backgroundColor: 'whitesmoke'
-            // You can also add padding to reduce the space further if needed
-          }}
-          onClick={() => handleTicketClick(ticket)} // Show ticket details on click
-        >
+          <Grid item key={ticket.id} xs={12} sm={6} md={4} lg={3}>
+            <Box
+              sx={{
+                border: '1px solid #ccc',
+                borderRadius: '4px',
+                p: 1, // Reduced padding
+                mb: 1, // Reduced bottom margin
+                cursor: 'pointer',
+                boxShadow: 2, // Adjust shadow to make it lighter
+                width: '90%', // Maintain width
+                maxWidth: '350px', // Maintain maximum width
+                mx: 'auto', // Center the box horizontally
+                backgroundColor: 'whitesmoke'
+              }}
+              onClick={() => handleTicketClick(ticket)} // Show ticket details on click
+            >
                           <Typography variant="h6">{ticket.subject}</Typography>
                           <Typography variant="body2" color="textSecondary">{ticket.category}</Typography>
                            <Typography variant='body2' color="textSecondary" sx={{ mt: 2, textAlign: 'right', color: getStatusColor(ticket.status)  }}>{ticket.status}</Typography>
@@ -186,6 +185,7 @@ const Helpdesk = () => {
 
         <TicketFormDialog open={open} onClose={handleClose} setTickets={setTickets} />
       </Box>
+      <ToastContainer style={{ zIndex: "1000000" }} />
     </Box>
   );
 };

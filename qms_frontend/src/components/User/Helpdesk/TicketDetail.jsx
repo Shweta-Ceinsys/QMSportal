@@ -1,72 +1,9 @@
-// import React from 'react';
-// import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, IconButton,Box } from '@mui/material';
-// import CloseIcon from '@mui/icons-material/Close';
-// import DownloadIcon from '@mui/icons-material/Download';// Import your desired icon
-// // TicketDetail component for displaying ticket information
-// const TicketDetail = ({ ticket, onClose, onWithdraw }) => (
-//   <Dialog open={Boolean(ticket)} onClose={onClose} fullWidth maxWidth="md">
-//     {/* Dialog title showing the ticket subject */}
-//     <DialogTitle>
-//       {ticket?.subject} {/* Optional chaining to safely access ticket subject */}
-//       {/* Close button for the dialog */}
-//       <IconButton onClick={onClose} color="inherit" aria-label="close" sx={{ position: 'absolute', right: 8, top: 8 }}>
-//         <CloseIcon /> {/* Icon for closing the dialog */}
-//       </IconButton>
-//     </DialogTitle>
-    
-//     {/* Dialog content displaying ticket details */}
-//     <DialogContent>
-//       <Typography variant="h6">Details:</Typography>
-//       <Typography variant="body2">Category: {ticket?.category}</Typography> {/* Display ticket category */}
-//       <Typography variant="body1">Description: {ticket?.description}</Typography> {/* Display ticket description */}
-      
-//       {/* Display ticket status */}
-//       <Typography variant="body2" sx={{ mt: 2 }}>
-//         Status: <strong>{ticket?.status || 'N/A'}</strong> {/* Display ticket status */}
-//       </Typography>
-
-//  {/* If there is an attached file, show its details */}
-//  {ticket?.filename && (
-//         <Box display="flex" alignItems="center"> {/* Use Box for horizontal alignment */}
-//           <Typography variant="body1" sx={{ marginRight: 1 }}>Attached File: {ticket.filename}</Typography>
-//           <Button 
-//             onClick={() => {
-//               // Logic for downloading the file
-//               const url = ticket.filepath; // Use the path stored in the backend
-//               const a = document.createElement('a');
-//               a.href = url;
-//               a.download = ticket.filename; // Set the download filename
-//               document.body.appendChild(a);
-//               a.click();
-//               document.body.removeChild(a);
-//             }}
-//             startIcon={<DownloadIcon />} // Replace with your desired icon
-//           >
-//             {/* Optionally, you can also display text here */}
-//             </Button>
-//         </Box>
-// )}
-
-//       {/* Display the date and time when the ticket was generated */}
-//       <Typography variant="body2" sx={{ mt: 2, textAlign: 'right' }}>
-//         Created At: {ticket?.createdAt ? new Date(ticket.createdAt).toLocaleString() : 'N/A'}
-//       </Typography>
-//     </DialogContent>
-    
-//     {/* Dialog actions with a button to withdraw the ticket */}
-//     <DialogActions>
-//       <Button onClick={onWithdraw} color="primary">Withdraw Ticket</Button> {/* Withdraw button */}
-//     </DialogActions>
-//   </Dialog>
-// );
-
-// export default TicketDetail;
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, IconButton, Box, CircularProgress } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import DownloadIcon from '@mui/icons-material/Download';
 import TicketService from '../../../Services/TicketService'; // Import your TicketService
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { toast,ToastContainer } from 'react-toastify'; // Import toast for notifications
 
 const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
   const [loading, setLoading] = useState(false); // State for loading
@@ -118,6 +55,7 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
   
   
   return (
+    <Box >
     <Dialog open={Boolean(ticket)} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
         {ticket?.subject}
@@ -129,7 +67,9 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
       <DialogContent>
         <Typography variant="h6">Details:</Typography>
         <Typography variant="body2">Category: {ticket?.category}</Typography>
-        <Typography variant="body1">Description: {ticket?.description}</Typography>
+        <Typography variant="body1" style={{ wordWrap: 'break-word', maxWidth: '500px' }}>
+  Description: {ticket?.description}
+</Typography>
         
         <Typography variant="body2" sx={{ mt: 2 }}>
           Status: <strong>{ticket?.status || 'N/A'}</strong>
@@ -157,6 +97,8 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
         <Button onClick={onWithdraw} color="primary">Withdraw Ticket</Button>
       </DialogActions>
     </Dialog>
+    <ToastContainer style={{ zIndex: "1000000" }} />
+    </Box>
   );
 };
 

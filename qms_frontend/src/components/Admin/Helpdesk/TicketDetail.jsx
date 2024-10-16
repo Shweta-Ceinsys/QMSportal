@@ -47,10 +47,6 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => (
       )}
     </DialogContent>
     
-    {/* Dialog actions with a button to withdraw the ticket */}
-    <DialogActions>
-      <Button onClick={onClose} color="primary">Close Ticket</Button> {/* Withdraw button */}
-    </DialogActions>
   </Dialog>
 );
 

@@ -28,7 +28,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/Ceinsys.jpg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-
+import MailOutlineIcon from '@mui/icons-material/MailOutline'; // Import the Mail icon
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import React, { useEffect, useState } from "react";
@@ -547,11 +547,25 @@ const Topbar = () => {
   </ListItemIcon>
   <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
 </ListItem>
-
       <Divider />
       {/* Add more menu items here as needed */}
     </List>
-    {/* Add more content here as needed */}
+    <Box sx={{ padding: '20px', marginTop: 'auto', textAlign: 'center' }}>
+    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+      Contact Us:
+    </Typography>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <MailOutlineIcon sx={{ marginRight: '5px', color: '#333' }} /> {/* Icon added here */}
+      <Typography variant="body2" sx={{ color: '#333' }}>
+        <a 
+          href="mailto:QMS_Release@ceinsys.com" 
+          style={{ textDecoration: 'none', color: '#333' }}
+        >
+          QMS_Release@ceinsys.com
+        </a>
+      </Typography>
+    </Box>
+  </Box>
   </Box>
   <Box
   display="flex"

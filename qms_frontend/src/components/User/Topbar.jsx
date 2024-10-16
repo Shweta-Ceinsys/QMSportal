@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import DescriptionIcon from '@mui/icons-material/Description';
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
-import MenuIcon from '@mui/icons-material/Menu';
+
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import ceinsysLogo from "../../images/Ceinsys.jpg";
@@ -39,6 +39,7 @@ import { toast } from "react-toastify";
 import NotificationService from "../../Services/NotificationService";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+import MailOutlineIcon from '@mui/icons-material/MailOutline'; // Import the Mail icon
 const Topbar = () => {
   const [menuAnchor, setMenuAnchor] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -491,61 +492,79 @@ const Topbar = () => {
     <div>
       <Grid container spacing={0}>
       <Grid item xs={12}>
-         {/* Sidebar Navigation */}
-      <Box
-            component="nav"
-            sx={{
-              zIndex: 99991,
-              display: 'flex',
-              flexDirection: 'column',
-              background: 'linear-gradient(45deg,#5a9cef ,#fdf9fd)',
-              width: '270px',
-              height: '100%',
-              position: 'fixed',
-              top: '0',
-              left: '0',
-              // padding: '20px 0', // Added padding for the sidebar
-            }}
-          >
-            <img
-              src={ceinsysLogo}
-              alt="Logo"
-              style={{
-                width: '100%',
-                height: '72.5px',
-                display: 'block',
-                // marginTop: '0px',
-                marginBottom: '20px', // Spacing below logo
-              }}
-            />      
-            <List>
+   {/* Sidebar Navigation */}
+   <Box
+  component="nav"
+  sx={{
+    zIndex: 99991,
+    display: 'flex',
+    flexDirection: 'column',
+    background: 'linear-gradient(45deg, #5a9cef, #fdf9fd)',
+    width: '270px',
+    height: '100%',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    paddingBottom: '20px', // Add padding at the bottom for aesthetics
+  }}
+>
+  <img
+    src={ceinsysLogo}
+    alt="Logo"
+    style={{
+      width: '100%',
+      height: '72.5px',
+      display: 'block',
+      marginBottom: '20px', // Spacing below logo
+    }}
+  />      
+  <List>
     <ListItem button component={Link} to="/uQmsLibrary" className="menu-item">
-  <ListItemIcon>
-    <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
-  </ListItemIcon>
-  <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-<ListItem button component={Link} to="/udownloadlogs" className="menu-item">
-  <ListItemIcon>
-  <DownloadIcon sx={{ fontSize: 24 }} />
-  </ListItemIcon>
-  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-      <ListItem button component={Link} to="/uhelpdesk" className="menu-item">
-  <ListItemIcon>
-    <HelpOutlineIcon sx={{ fontSize: 24 }} /> {/* Icon added here */}
-  </ListItemIcon>
-  <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
-</ListItem>
-
-      <Divider />
-      {/* Add more menu items here as needed */}
-    </List>
-    {/* Add more content here as needed */}
-  </Box>
+      <ListItemIcon>
+        <DescriptionIcon sx={{ fontSize: 24 }} />
+      </ListItemIcon>
+      <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+    </ListItem>
+    <Divider />
     
+    <ListItem button component={Link} to="/udownloadlogs" className="menu-item">
+      <ListItemIcon>
+        <DownloadIcon sx={{ fontSize: 24 }} />
+      </ListItemIcon>
+      <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+    </ListItem>
+    <Divider />
+    
+    <ListItem button component={Link} to="/uhelpdesk" className="menu-item">
+      <ListItemIcon>
+        <HelpOutlineIcon sx={{ fontSize: 24 }} />
+      </ListItemIcon>
+      <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
+    </ListItem>
+    <Divider />
+    
+    {/* Add more menu items here as needed */}
+  </List>
+
+                                                                                  {/* Contact Us Section */}
+  <Box sx={{ padding: '20px', marginTop: 'auto', textAlign: 'center' }}>
+    <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+      Contact Us:
+    </Typography>
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <MailOutlineIcon sx={{ marginRight: '5px', color: '#333' }} /> {/* Icon added here */}
+      <Typography variant="body2" sx={{ color: '#333' }}>
+        <a 
+          href="mailto:QMS_Release@ceinsys.com" 
+          style={{ textDecoration: 'none', color: '#333' }}
+        >
+          QMS_Release@ceinsys.com
+        </a>
+      </Typography>
+    </Box>
+  </Box>
+</Box>
+
 
 
   <Box

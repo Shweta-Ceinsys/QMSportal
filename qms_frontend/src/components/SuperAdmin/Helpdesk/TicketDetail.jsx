@@ -3,7 +3,7 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Typography, Button, 
 import CloseIcon from '@mui/icons-material/Close';
 import DownloadIcon from '@mui/icons-material/Download';
 import TicketService from '../../../Services/TicketService'; // Import your TicketService
-import { toast } from 'react-toastify'; // Import toast for notifications
+import { toast,ToastContainer } from 'react-toastify'; // Import toast for notifications
 
 const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
   const [loading, setLoading] = useState(false); // State for loading
@@ -55,6 +55,7 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
   
   
   return (
+    <Box>
     <Dialog open={Boolean(ticket)} onClose={onClose} fullWidth maxWidth="md">
       <DialogTitle>
         {ticket?.subject}
@@ -94,6 +95,8 @@ const TicketDetail = ({ ticket, onClose, onWithdraw }) => {
         <Button onClick={onWithdraw} color="primary">Withdraw Ticket</Button>
       </DialogActions>
     </Dialog>
+    <ToastContainer style={{ zIndex: "1000000" }} />
+    </Box>
   );
 };
 
