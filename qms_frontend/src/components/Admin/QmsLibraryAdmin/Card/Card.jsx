@@ -1,5 +1,5 @@
 import { Box,  Button,  Dialog,  DialogActions,  Grid,  Icon,  IconButton,  Tooltip,  Typography } from "@mui/material";
-import { useState,  useContext, useEffect } from "react";
+import { useState,  useContext } from "react";
 import "./Card.css";
 
  import car from '../../../../images/car.png';
@@ -16,23 +16,7 @@ const Card = (props) => {
   const param = props;
  
   const { setData } = useContext(DataContext);
-  const [getUser, setUser] = useState({});
-  //  const [isLoading, setIsLoading] = useState(false);
-   
-  useEffect(() => {
-    // setIsLoading(true);
-    SuperAdminService.getUserById(param.created_by)
-    .then((response) => {
-      setUser(response.data);
-      // setIsLoading(false);
-
-    })
-    .catch((error) => {
-      console.error('Error fetching Model List:', error);
-      // setIsLoading(false);
-    });
-   
-  }, []);
+ 
 
   const userId = sessionStorage.getItem("UserId");
   const userid = Number(userId);
@@ -230,8 +214,7 @@ const handleLaunch = (vid) => {
             }
           }} >
             <span><b >{param.version}  </b></span><br/>
-            <span><b >{param.month} {param.year}</b></span><br/>
-            <span style={{fontSize:'0.8rem',color:"blue"}}>Created By: {getUser.name}</span>
+            <span><b >{param.month} {param.year}</b></span>
           </Box>
 
         
@@ -241,7 +224,7 @@ const handleLaunch = (vid) => {
         <Box display={"flex"} justifyContent={"flex-start"}  >
         <Grid container spacing={0.5} justifyContent="flex-end">
   <Grid item xs={6} sm={6} md={6} lg={6} xl={6}>
-    <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={4}>
+    <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={6}>
       <Tooltip title="Delete">
         <DeleteIcon
           onClick={() => DeleteHandleOpen(param.id)}
