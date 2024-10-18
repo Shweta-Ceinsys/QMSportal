@@ -18,6 +18,7 @@ const DirecotoryCard = (props) => {
   
 const { setSubDirId } = useContext(DataContext);
 
+
 const navigate = useNavigate();
   const toggleTable = (dirId) => {
     
@@ -302,7 +303,7 @@ const navigate = useNavigate();
                   textAlign: 'center',
                   transition: 'background-color 0.3s, color 0.3s',
                   ':hover': {
-                    backgroundColor: '#A4BCDB',
+                    backgroundColor: '#8e93e4',
                     color: 'black'
                   }
                 }}
@@ -449,7 +450,7 @@ const navigate = useNavigate();
         <Box display="flex" justifyContent="flex-end" alignItems="center" marginTop={10}>
           <Tooltip title="Delete">
             <DeleteIcon 
-              onClick={() => DeleteHandleOpen(param.dirId)}
+              onClick={() => DeleteHandleOpen(param.subDirId)}
               sx={{
                 fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Increased sizes
                 color: "#F5A4A0",
@@ -463,7 +464,7 @@ const navigate = useNavigate();
           </Tooltip>
           <Tooltip title="Upload">
             <UploadFileIcon 
-              onClick={() => handleOpenModal(param.dirId)}
+              onClick={() => handleOpenModal(param.subDirId)}
               sx={{
                 fontSize: { xl: 36, lg: 34, md: 32, sm: 30, xs: 28 }, // Increased sizes
                 color: "#afade1",

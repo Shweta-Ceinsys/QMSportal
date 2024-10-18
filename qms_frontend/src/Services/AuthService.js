@@ -66,7 +66,7 @@ class AuthService extends Component {
 
 
 forgetPassword = (email,password) => {
-  return axios.post(URL + "forgetPassword",{
+  return axios.post(URL + "forgetPassword",null,{
       params: {
           email:email ,
           password:password

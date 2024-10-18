@@ -1,18 +1,13 @@
-
-
 import React, { useState } from "react";
 import {
   Button,
   Typography,
   Box,
   TextField,
-  IconButton,
-  InputAdornment,
-  Grid,
   Paper,
   Modal,
+  Grid,
 } from "@mui/material";
-import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,7 +33,6 @@ const Login = () => {
 
   const onChangeEmail = (e) => setEmail(e.target.value);
   const onChangePassword = (e) => setPassword(e.target.value);
-  const handleTogglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -83,7 +77,7 @@ const Login = () => {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           height: '100%',
-          position: 'absolute',
+          position: 'fixed',
           top: 0,
           left: 0,
           width: '100%',
@@ -91,33 +85,37 @@ const Login = () => {
         }}
       />
 
-      {/* Logo and Welcome Text */}
-      <Box sx={{ position: 'absolute', top: '300px', left: '0', right: '0', textAlign: 'center', zIndex: 3 }}>
-        <img src={CeinsysLogo} alt="Ceinsys Logo" style={{ width: '150px', marginBottom: '30px' }} />
-      </Box>
+      {/* Centered Logo and Button */}
+      <Box
+        sx={{
+          position: 'fixed',
+          zIndex: 3,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
 
-      {/* Centered Sign-In Button */}
-      <Grid
-        item
-        xs={12}
-        container
-        alignItems="center"
-        justifyContent="center"
-        sx={{ position: 'relative', zIndex: 3, marginTop: '400px' }} // Increased marginTop for the button
+          height: '100%',
+          left:"45%",
+          marginTop:'1.5%'
+        }}
       >
+        <img
+          src={CeinsysLogo}
+          alt="Ceinsys Logo"
+          style={{ width: '140px', maxWidth: '100%' }}
+        />
         <Button
           variant="contained"
           onClick={handleOpen}
           sx={{
             backgroundColor: "#fcfcfd",
             color: "#000000",
+            zIndex: 1,
+          
             border: "2px solid rgba(255, 255, 255, 0.3)",
-            borderRadius: '0px',
-            boxShadow: "none",
-            transition: 'all 0.3s ease',
-            padding: '1px 20px',
-            minWidth: '150px',
-            fontSize: { xs: '0.9rem', sm: '1.0rem', md: '1.4rem' },
+            fontSize: { xs: '0.7rem', sm: '0.8.rem', md: '1rem' }, // Responsive font size
+            padding: { xs: '10px 20px', sm: '12px 24px', md: '10px 18px' }, // Responsive padding
             '&:hover': {
               backgroundColor: "rgba(255, 255, 255, 0.3)",
               color: "#ffffff",
@@ -127,23 +125,23 @@ const Login = () => {
         >
           SIGN IN
         </Button>
-      </Grid>
+      </Box>
 
       {/* Modal for Sign-In */}
       <Modal open={open} onClose={handleClose} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Paper
-  elevation={6}
-  sx={{
-    width: { xs: '90%', sm: '80%', md: '60%', lg: '50%' },
-    maxWidth: '400px',
-    padding: 4,
-    borderRadius: '0px',
-    backdropFilter: 'blur(10px)',
-    background: 'linear-gradient(135deg, #3095f0,  #b6bced,#fdf9fd)', // Gradient background
-    boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
-    border: '1px solid rgba(255, 255, 255, 0.5)',
-  }}
->
+        <Paper
+          elevation={6}
+          sx={{
+            width: { xs: '90%', sm: '80%', md: '60%', lg: '50%' },
+            maxWidth: '410px',
+            padding: 4,
+            borderRadius: '0px',
+            backdropFilter: 'blur(10px)',
+            background: 'linear-gradient(135deg, #3095f0,  #b6bced,#fdf9fd)',
+            boxShadow: "0 12px 24px rgba(0, 0, 0, 0.3)",
+            border: '1px solid rgba(255, 255, 255, 0.5)',
+          }}
+        >
           <Box textAlign="center" mb={2}>
             <img src={SignInLogo} alt="Sign In Logo" style={{ width: '80%', maxWidth: '300px' }} />
           </Box>
@@ -151,7 +149,7 @@ const Login = () => {
             SIGN IN
           </Typography>
 
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ width: '100%', px: 2 }}>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ width: '100%',  }}>
             <TextField
               margin="normal"
               required
@@ -174,25 +172,16 @@ const Login = () => {
               value={password}
               onChange={onChangePassword}
               variant="standard"
-              // InputProps={{
-              //   endAdornment: (
-              //     <InputAdornment position="end">
-              //       <IconButton
-              //         aria-label="toggle password visibility"
-              //         onClick={handleTogglePasswordVisibility}
-              //         edge="end"
-              //       >
-              //         {showPassword ? <VisibilityOff /> : <Visibility />}
-              //       </IconButton>
-              //     </InputAdornment>
-              //   ),
-              // }}
               sx={textFieldStyles}
             />
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", mt: 3 }}>
-              <Button type="submit" variant="contained" nb sx={buttonStyles}>
+              <Button type="submit" variant="contained" sx={buttonStyles}>
                 SIGN IN
               </Button>
+            </Box>
+
+            <Box>
+              <a href="/forgotPassword">Forgot Pasword?</a>
             </Box>
           </Box>
         </Paper>
@@ -234,12 +223,3 @@ const buttonStyles = {
 };
 
 export default Login;
-
-
-
-
-
-
-
-
-

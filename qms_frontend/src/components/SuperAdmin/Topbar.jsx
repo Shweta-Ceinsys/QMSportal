@@ -16,7 +16,7 @@ import {
   TextField,
   Tooltip,
   Typography,
-  Drawer,
+
   List,
   ListItem,
 } from "@mui/material";
@@ -55,19 +55,15 @@ const Topbar = () => {
 
   const [count, setCount] = useState(0);
 
-  //State for NotificationAcchor
+
   const [notiAnchor, setNotiAnchor] = useState(null);
-
-  //Notifications
   const [data, setData] = useState([]);
-
-  //History
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
     NotificationService.unReadCount(id)
       .then((response) => {
-        // Now you can use the count value
+      
         setCount(response.data);
         console.log("Unread notification count:", count);
       })
@@ -75,12 +71,7 @@ const Topbar = () => {
         console.error("Error fetching notification count:", error);
       });
   }, [notiAnchor]);
-  const toggleDrawer = (open) => (event) => {
-    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-      return;
-    }
-    setOpenDrawer(open);
-  };
+
 
   const [expanded, setExpanded] = useState(false);
 
@@ -488,6 +479,43 @@ const Topbar = () => {
     setShowHistory(false);
   };
 
+  // ======================================================================Activate Button=======================================================================
+
+  
+  const [selected, setSelected] = useState('');
+  
+  const Item = ({ title, to, icon, selected, setSelected }) => {
+    const location = useLocation();
+    const isSelected = location.pathname === to;
+  
+    const handleClick = () => {
+      if (selected !== title) {
+        setSelected(title);
+      }
+    };
+  
+    return (
+      <Tooltip title={title} placement="right">
+        <ListItem
+          button
+          component={Link}
+          to={to}
+          onClick={handleClick}
+          style={{
+            color: isSelected ? "#3b82f6" : "black",
+          }}
+        >
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={
+            <Typography style={{ fontWeight: 'bold', fontSize: '16px' }}>
+              {title}
+            </Typography>
+          } />
+        </ListItem>
+      </Tooltip>
+    );
+  };
+  
   return (
     <div>
       <Grid container spacing={0}>
@@ -519,34 +547,38 @@ const Topbar = () => {
                 marginBottom: '20px', // Spacing below logo
               }}
             />
- <List>
-    <ListItem button component={Link} to="/QmsLibrary" className="menu-item">
-  <ListItemIcon>
-    <DescriptionIcon sx={{ fontSize: 24 }} /> {/* Your chosen icon */}
-  </ListItemIcon>
-  <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-<ListItem button component={Link} to="/user" className="menu-item">
-  <ListItemIcon>
-    <GroupIcon sx={{ fontSize: 24 }} /> {/* User Management icon */}
-  </ListItemIcon>
-  <ListItemText primary="User Management" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-<ListItem button component={Link} to="/downloadlogs" className="menu-item">
-  <ListItemIcon>
-  <DownloadIcon sx={{ fontSize: 24 }} />
-  </ListItemIcon>
-  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-      <ListItem button component={Link} to="/helpdesk" className="menu-item">
-  <ListItemIcon>
-    <HelpOutlineIcon sx={{ fontSize: 24 }} /> {/* Icon added here */}
-  </ListItemIcon>
-  <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} /> {/* Adjust margin-left */}
-</ListItem>
+<List>
+      <Item 
+        title="QMS Artefact" 
+        to="/QmsLibrary" 
+        icon={<DescriptionIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="User Management" 
+        to="/user" 
+        icon={<GroupIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="Download Logs" 
+        to="/downloadlogs" 
+        icon={<DownloadIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="Help Desk" 
+        to="/helpdesk" 
+        icon={<HelpOutlineIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
       <Divider />
       {/* Add more menu items here as needed */}
     </List>
@@ -687,6 +719,7 @@ const Topbar = () => {
       </Grid>
   
     {ChangePasswordModal}
+   
   </div>
   
 );

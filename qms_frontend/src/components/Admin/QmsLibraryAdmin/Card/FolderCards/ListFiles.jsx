@@ -271,21 +271,21 @@ const ListFiles = (props) => {
               variant="standard"
               value={searchText}
               onChange={handleSearchChange}
-              sx={{
-                ml: 1,
-                "& .MuiInputBase-root": {
-                  color: "inherit", // Maintain text color
-                },
-                "& .MuiInput-underline:before": {
-                  borderBottomColor: "currentColor", // Maintain underline color
-                },
-                "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-                  borderBottomColor: "currentColor", // Maintain underline color on hover
-                },
-                "& .MuiInput-underline:after": {
-                  borderBottomColor: "currentColor", // Maintain underline color after typing
-                },
-              }}
+              // sx={{
+              //   ml: 1,
+              //   "& .MuiInputBase-root": {
+              //     color: "inherit", // Maintain text color
+              //   },
+              //   "& .MuiInput-underline:before": {
+              //     borderBottomColor: "currentColor", // Maintain underline color
+              //   },
+              //   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
+              //     borderBottomColor: "currentColor", // Maintain underline color on hover
+              //   },
+              //   "& .MuiInput-underline:after": {
+              //     borderBottomColor: "currentColor", // Maintain underline color after typing
+              //   },
+              // }}
             />
           </FormControl>
         </Box>

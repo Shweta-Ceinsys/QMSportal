@@ -488,6 +488,43 @@ const Topbar = () => {
     setShowHistory(false);
   };
 
+  // ======================================================================Activate Button=======================================================================
+
+  
+  const [selected, setSelected] = useState('');
+  
+  const Item = ({ title, to, icon, selected, setSelected }) => {
+    const location = useLocation();
+    const isSelected = location.pathname === to;
+  
+    const handleClick = () => {
+      if (selected !== title) {
+        setSelected(title);
+      }
+    };
+  
+    return (
+      <Tooltip title={title} placement="right">
+        <ListItem
+          button
+          component={Link}
+          to={to}
+          onClick={handleClick}
+          style={{
+            color: isSelected ? "#3b82f6" : "black",
+          }}
+        >
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={
+            <Typography style={{ fontWeight: 'bold', fontSize: '16px' }}>
+              {title}
+            </Typography>
+          } />
+        </ListItem>
+      </Tooltip>
+    );
+  };
+  
   return (
     <div>
     <Grid container spacing={0}>
@@ -519,37 +556,43 @@ const Topbar = () => {
                 marginBottom: '20px', // Spacing below logo
               }}
             />
-            <List>
-              <ListItem button component={Link} to="/aQmsLibrary" className="menu-item">
-                <ListItemIcon>
-                  <DescriptionIcon sx={{ fontSize: 24 }} />
-                </ListItemIcon>
-                <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-              </ListItem>
-              <Divider />
-              <ListItem button component={Link} to="/auserlist" className="menu-item">
-                <ListItemIcon>
-                  <PeopleAltOutlinedIcon sx={{ fontSize: 24 }} />
-                </ListItemIcon>
-                <ListItemText primary="User List" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-              </ListItem>
-              <Divider />
-              <ListItem button component={Link} to="/adownloadlogs" className="menu-item">
-  <ListItemIcon>
-  <DownloadIcon sx={{ fontSize: 24 }} />
-  </ListItemIcon>
-  <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-</ListItem>
-<Divider />
-              <ListItem button component={Link} to="/ahelpdesk" className="menu-item">
-                <ListItemIcon>
-                  <HelpOutlineIcon sx={{ fontSize: 24 }} />
-                </ListItemIcon>
-                <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px'}} />
-              </ListItem>
-              <Divider />
-              {/* Add more menu items here as needed */}
-            </List>
+
+<List>
+      <Item 
+        title="QMS Artefact" 
+        to="/aQmsLibrary" 
+        icon={<DescriptionIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="User List" 
+        to="/auserlist" 
+        icon={<PeopleAltOutlinedIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="Download Logs" 
+        to="/adownloadlogs" 
+        icon={<DownloadIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="Help Desk" 
+        to="/ahelpdesk" 
+        icon={<HelpOutlineIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      {/* Add more menu items here as needed */}
+    </List>
+           
             <Box sx={{ padding: '20px', marginTop: 'auto', textAlign: 'center' }}>
     <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
       Contact Us:

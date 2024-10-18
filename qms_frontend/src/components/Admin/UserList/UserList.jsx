@@ -83,7 +83,7 @@ const UserList = () => {
                 <Box sx={{ padding: 2 }}>
                   <Box
                     display="flex"
-                    justifyContent="space-between"
+                    justifyContent="flex-start"
                     alignItems="center"
                     marginBottom="10px"
                   >

@@ -22,7 +22,8 @@ const ForgotPassword = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -46,8 +47,15 @@ const ForgotPassword = () => {
     setPassword(password);
   };
 
+  const onChangeConfirmPassword = (e) => {
+    const password = e.target.value;
+    setConfirmPassword(password);
+  };
   const handleTogglePasswordVisibility = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+  const handleToggleConfirmPasswordVisibility = () => {
+    setShowConfirmPassword((prevShowPassword) => !prevShowPassword);
   };
 
   const handleSubmit = (event) => {
@@ -59,10 +67,17 @@ const ForgotPassword = () => {
         toast.warning("Please Enter Username!");
       } else if (password.trim().length === 0) {
         toast.warning("Please Enter Password!");
+      }else if (confirmPassword.trim().length === 0) {
+        toast.warning("Please Enter Confirm Password!");
+      } else if (password !== confirmPassword) {
+        toast.warning("Both Password must be the same!");
       } else {
-        const response = AuthService.forgetPassword(email, password);
+        const response = AuthService.forgetPassword(email,password);
         toast.success("Password changed Successfuly");
-        navigate("/login");
+        setTimeout(()=>{
+          navigate("/login");
+        },2000)
+      
       }
     } catch (error) {
       console.error("Error adding user:", error);
@@ -177,6 +192,35 @@ const ForgotPassword = () => {
                   ),
                 }}
               />
+          
+          <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="confirmPassword"
+                  type={showConfirmPassword ? "text" : "password"}
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={onChangeConfirmPassword}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleToggleConfirmPasswordVisibility}
+                          edge="end"
+                        >
+                          {showConfirmPassword ? (
+                            <VisibilityOff />
+                          ) : (
+                            <Visibility />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
               <div
                 style={{
                   display: "flex",

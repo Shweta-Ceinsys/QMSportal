@@ -488,6 +488,46 @@ const Topbar = () => {
     setShowHistory(false);
   };
 
+
+
+  
+  // ======================================================================Activate Button=======================================================================
+
+  
+  const [selected, setSelected] = useState('');
+  
+  const Item = ({ title, to, icon, selected, setSelected }) => {
+    const location = useLocation();
+    const isSelected = location.pathname === to;
+  
+    const handleClick = () => {
+      if (selected !== title) {
+        setSelected(title);
+      }
+    };
+  
+    return (
+      <Tooltip title={title} placement="right">
+        <ListItem
+          button
+          component={Link}
+          to={to}
+          onClick={handleClick}
+          style={{
+            color: isSelected ? "#3b82f6" : "black",
+          }}
+        >
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={
+            <Typography style={{ fontWeight: 'bold', fontSize: '16px' }}>
+              {title}
+            </Typography>
+          } />
+        </ListItem>
+      </Tooltip>
+    );
+  };
+
   return (
     <div>
       <Grid container spacing={0}>
@@ -517,34 +557,37 @@ const Topbar = () => {
       display: 'block',
       marginBottom: '20px', // Spacing below logo
     }}
-  />      
+  /> 
+
   <List>
-    <ListItem button component={Link} to="/uQmsLibrary" className="menu-item">
-      <ListItemIcon>
-        <DescriptionIcon sx={{ fontSize: 24 }} />
-      </ListItemIcon>
-      <ListItemText primary="QMS Artefact" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-    </ListItem>
-    <Divider />
-    
-    <ListItem button component={Link} to="/udownloadlogs" className="menu-item">
-      <ListItemIcon>
-        <DownloadIcon sx={{ fontSize: 24 }} />
-      </ListItemIcon>
-      <ListItemText primary="Download Logs" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-    </ListItem>
-    <Divider />
-    
-    <ListItem button component={Link} to="/uhelpdesk" className="menu-item">
-      <ListItemIcon>
-        <HelpOutlineIcon sx={{ fontSize: 24 }} />
-      </ListItemIcon>
-      <ListItemText primary="Help Desk" sx={{ fontWeight: 'bold', fontSize: '16px' }} />
-    </ListItem>
-    <Divider />
-    
-    {/* Add more menu items here as needed */}
-  </List>
+      <Item 
+        title="QMS Artefact" 
+        to="/uQmsLibrary" 
+        icon={<DescriptionIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+     
+      <Item 
+        title="Download Logs" 
+        to="/udownloadlogs" 
+        icon={<DownloadIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      <Item 
+        title="Help Desk" 
+        to="/uhelpdesk" 
+        icon={<HelpOutlineIcon sx={{ fontSize: 24 }} />} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
+      <Divider />
+      {/* Add more menu items here as needed */}
+    </List>     
+  
 
                                                                                   {/* Contact Us Section */}
   <Box sx={{ padding: '20px', marginTop: 'auto', textAlign: 'center' }}>
