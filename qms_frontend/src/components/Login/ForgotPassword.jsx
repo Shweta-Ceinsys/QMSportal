@@ -21,21 +21,12 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+ 
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const [params, setParams] = useState({
-    email: "",
-    password: "",
-  });
+  
 
   const onChangeUsername = (e) => {
     const email = e.target.value;
@@ -85,18 +76,23 @@ const ForgotPassword = () => {
     }
   };
   return (
-    <div
-      className="app"
-      style={{ backgroundColor: "#F6F5F2", width: "100vw", height: "100vh" }}
-    >
-      <Grid container spacing={0} sx={{ height: "100%" }}>
-        <Grid item xs={false} md={7} lg={8} xl={8} />
+    <Box className="app" sx={{ borderRadius: '0px',
+    backdropFilter: 'blur(10px)',
+    background: 'linear-gradient(135deg, #3095f0,  #b6bced,#fdf9fd)',backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100%',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',}}>
+      <Grid container spacing={0} sx={{overflowY:"auto"}}>
+        <Grid item xs={false} md={3} lg={3} xl={3} />
         <Grid
           item
           xs={12}
-          md={5}
-          lg={4}
-          xl={3}
+          md={6}
+          lg={6}
+          xl={6}
           sx={{
             display: "flex",
             justifyContent: "center",
@@ -120,19 +116,7 @@ const ForgotPassword = () => {
               },
             }}
           >
-            <Button
-              onClick={() => {
-                handleCloseModal();
-              }}
-              sx={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                mt: 2,
-              }}
-            >
-              Close
-            </Button>
+          
 
             {/* Logo */}
             <div style={{ margin: "8px", textAlign: "center" }}>
@@ -239,7 +223,7 @@ const ForgotPassword = () => {
                     },
                   }}
                 >
-                  Sign In
+                 Submit
                 </Button>
                 <ToastContainer />
               </div>
@@ -247,7 +231,7 @@ const ForgotPassword = () => {
           </Box>
         </Grid>
       </Grid>
-    </div>
+    </Box>
   );
 };
 
