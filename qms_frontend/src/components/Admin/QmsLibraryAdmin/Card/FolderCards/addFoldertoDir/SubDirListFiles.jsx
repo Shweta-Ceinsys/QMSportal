@@ -8,10 +8,7 @@ import {
   FormControl,
   Grid,
   IconButton,
-  Modal,
-  Paper,
   TextField,
-  Tooltip,
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
@@ -19,14 +16,12 @@ import SuperAdminService from "../../../../../../Services/superadmin";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+
 import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../../../.././DataContext";
 import AddSubDirectory from "./addsubButton";
-import DirectoryCards from "./index";
 
-const ListFiles = (props) => {
+const ListFiles = () => {
   const [rows, setRows] = useState([]);
 
   const { setSubDirId } = useContext(DataContext);
@@ -50,10 +45,6 @@ const ListFiles = (props) => {
       });
   }, []);
 
-  let navigate = useNavigate();
-  const handleNavigate = () => {
-    navigate(`/afLists`);
-  };
   const handleDownload = (id) => {
     SuperAdminService.downloadFile(id, UserId)
       .then((response) => {
@@ -251,22 +242,16 @@ const ListFiles = (props) => {
     },
   ];
 
-  
   return (
     <div className="app" style={{ backgroundColor: "#EEF0F6" }}>
       <main className="content">
         <Topbar />
-        <Box marginTop={"90px"} >
-        <Box>
-          <AddSubDirectory />
+        <Box marginTop={"90px"}>
+          <Box>
+            <AddSubDirectory />
           </Box>
-          {/* <Box >
-          
-            <DirectoryCards />
-          
-          </Box> */}
-          
-         <Box marginLeft={"280px"}>
+
+          <Box marginLeft={"280px"}>
             <Box>
               {/* Search TextField */}
               <FormControl variant="standard" sx={{ m: 1, minWidth: 100 }}>
@@ -293,32 +278,32 @@ const ListFiles = (props) => {
                 />
               </FormControl>
             </Box>
-            <Box
-            
-              sx={{mr: 1 ,
-                
-              }}
-            >
+            <Box sx={{ mr: 1 }}>
               <Box style={{ height: `calc(100vh - 240px)` }}>
-                <DataGrid rows={filteredRows} columns={columns} stickyHeader sx={{
-                      "& .MuiDataGrid-root": {
-                        border: "none",
-                      },
-                      "& .MuiDataGrid-columnHeaders": {
-                        backgroundColor: "#F0EBE3 !important",
-                        borderBottom: "none",
-                      },
-                      "& .MuiDataGrid-footerContainer": {
-                        borderTop: "none",
-                      },
-                    }} />
+                <DataGrid
+                  rows={filteredRows}
+                  columns={columns}
+                  stickyHeader
+                  sx={{
+                    "& .MuiDataGrid-root": {
+                      border: "none",
+                    },
+                    "& .MuiDataGrid-columnHeaders": {
+                      backgroundColor: "#F0EBE3 !important",
+                      borderBottom: "none",
+                    },
+                    "& .MuiDataGrid-footerContainer": {
+                      borderTop: "none",
+                    },
+                  }}
+                />
               </Box>
             </Box>
-            </Box>
+          </Box>
         </Box>
       </main>
       {DeleteDialog}
-     
+
       <ToastContainer style={{ zIndex: "1000000" }} />
     </div>
   );

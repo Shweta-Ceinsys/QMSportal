@@ -1,30 +1,17 @@
+import { Box, Grid, IconButton, Tooltip } from "@mui/material";
 
+import { useNavigate } from "react-router-dom";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
-
-import { Box,  Grid, IconButton, Tooltip,} from "@mui/material";
-
-import {  useNavigate } from "react-router-dom";
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
-
-
-
-
-const AddSubDirectory =() =>{
-
-
-  
+const AddSubDirectory = () => {
   let navigate = useNavigate();
-  const  navigateRoute =()=>{
-    
+  const navigateRoute = () => {
     navigate(`/afLists`);
-   
-   }
- 
+  };
 
-
-    return(
-        <Box>
-        <Box
+  return (
+    <Box>
+      <Box
         display="flex"
         justifyContent="flex-start"
         alignItems={"center"}
@@ -35,9 +22,7 @@ const AddSubDirectory =() =>{
           <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
             <Box>
               <Tooltip title="Back">
-                <IconButton 
-                 onClick={navigateRoute}
-                >
+                <IconButton onClick={navigateRoute}>
                   <ArrowBackOutlinedIcon
                     variant="outlined"
                     sx={{ color: "black" }}
@@ -46,15 +31,9 @@ const AddSubDirectory =() =>{
               </Tooltip>
             </Box>
           </Grid>
-         
         </Grid>
-      
       </Box>
-   
-       
-      </Box>
-      
-    );
-
-}
+    </Box>
+  );
+};
 export default AddSubDirectory;

@@ -8,10 +8,9 @@ import {
   FormControl,
   Grid,
   IconButton,
-  Modal,
-  Paper,
+ 
   TextField,
-  Tooltip,
+ 
   Typography,
 } from "@mui/material";
 import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
@@ -19,14 +18,14 @@ import SuperAdminService from "../../../../../Services/superadmin";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
+
+
 import CloseIcon from "@mui/icons-material/Close";
 import { DataContext } from "../../../../../DataContext";
-import DirecotoryCard from "./addFoldertoDir/DirectoryCard";
+
 import DirectoryCards from "./addFoldertoDir";
 import AddSubDirectory from "./addsubDirectory";
-const ListFiles = (props) => {
+const ListFiles = () => {
   const [rows, setRows] = useState([]);
 
   const { setDirId } = useContext(DataContext);
@@ -50,10 +49,7 @@ const ListFiles = (props) => {
       });
   }, []);
 
-  let navigate = useNavigate();
-  const navigateRoute = () => {
-    navigate(`/afCards`);
-  };
+
   const handleDownload = (id) => {
     SuperAdminService.downloadFile(id, UserId)
       .then((response) => {
@@ -271,37 +267,14 @@ const ListFiles = (props) => {
               variant="standard"
               value={searchText}
               onChange={handleSearchChange}
-              // sx={{
-              //   ml: 1,
-              //   "& .MuiInputBase-root": {
-              //     color: "inherit", // Maintain text color
-              //   },
-              //   "& .MuiInput-underline:before": {
-              //     borderBottomColor: "currentColor", // Maintain underline color
-              //   },
-              //   "& .MuiInput-underline:hover:not(.Mui-disabled):before": {
-              //     borderBottomColor: "currentColor", // Maintain underline color on hover
-              //   },
-              //   "& .MuiInput-underline:after": {
-              //     borderBottomColor: "currentColor", // Maintain underline color after typing
-              //   },
-              // }}
+             
             />
           </FormControl>
         </Box>
         <Box
           marginLeft="280px"
           sx={{mr:1,
-            // "& .MuiDataGrid-root": {
-            //   border: "none",
-            // },
-            // "& .MuiDataGrid-columnHeaders": {
-            //   backgroundColor: "#F0EBE3 !important",
-            //   borderBottom: "none",
-            // },
-            // "& .MuiDataGrid-footerContainer": {
-            //   borderTop: "none",
-            // },
+          
           }}
         >
           <Box

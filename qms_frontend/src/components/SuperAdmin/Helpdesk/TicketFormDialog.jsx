@@ -14,12 +14,15 @@ import {
   Slide,
   CircularProgress,
   Grid,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import CloseIcon from '@mui/icons-material/Close';
 import TicketService from '../../../Services/TicketService'; 
 import { toast, ToastContainer } from 'react-toastify'; 
 import { useNavigate } from 'react-router-dom';
+
 
 const Transition = React.forwardRef((props, ref) => <Slide direction="down" ref={ref} {...props} />);
 
@@ -121,7 +124,14 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
 
   return (
     <Box>
-      <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" TransitionComponent={Transition}>
+      <Grid container >
+        <Grid item xs={false} md={4} lg={4} xl={3}  ></Grid>
+        <Grid item  xs={12}
+          md={5}
+          lg={5}
+          xl={6}>
+        <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md" TransitionComponent={Transition}  sx={{ zIndex: 999999,overflow: 'auto' }} >
+          <Box sx={{ border: "4px solid #579aef",}}>
         <DialogTitle>
           <Box sx={{ display: 'flex', alignItems: 'center', px: 2 }}>
             <Typography variant="h6" sx={{ flexGrow: 1 }}>New Ticket</Typography>
@@ -130,10 +140,13 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
             </IconButton>
           </Box>
         </DialogTitle>
-        <DialogContent sx={{ maxHeight: '80vh', overflow: 'hidden' }}>
+        <DialogContent >
           <form onSubmit={handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
+           
+              <FormControl fullWidth={"100%"}>
+            
                 <Select 
                   name="category" 
                   value={formData.category} 
@@ -142,12 +155,14 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
                   variant="outlined" 
                   fullWidth 
                   required
+                  MenuProps={{ style: { zIndex: 9999992 } }}
                 >
                   <MenuItem value="" disabled>Select Category</MenuItem>
                   <MenuItem value="technical">Technical Query</MenuItem>
                   <MenuItem value="template">Template Query</MenuItem>
                   <MenuItem value="general">General Query</MenuItem>
                 </Select>
+                </FormControl>
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField 
@@ -238,7 +253,12 @@ const TicketFormDialog = ({ open, onClose, setTickets }) => {
             </DialogActions>
           </form>
         </DialogContent>
+        </Box>
       </Dialog>
+        </Grid>
+        <Grid item xs={false} md={4} lg={4} xl={3}></Grid>
+      </Grid>
+      
       <ToastContainer style={{ zIndex: "1000000" }} />
     </Box>
   );

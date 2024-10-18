@@ -30,13 +30,7 @@ const DownloadLogList = ({ isAdmin }) => {
   }, []); 
 
   const fetchDownloadLogs =()=> {
-    // try {
-      // const response =  DownloadService.getAllDownloadLogs();
-      // console.log("Download Logs",response.data);
-      // setRows(response.data);
-    // } catch (error) {
-    //   console.error("Error fetching download logs:", error.response);
-    // }
+   
     DownloadService.getAllDownloadLogs()
       .then((response) => {
         setRows(response.data);

@@ -1,25 +1,30 @@
-
 import { ToastContainer, toast } from "react-toastify";
-import Topbar from "../../../Topbar";
-import { Box, Button, Dialog, DialogActions,  FormControl,  Grid, IconButton, Modal, Paper, TextField, Tooltip, Typography } from "@mui/material";
-import { DataGrid, GridActionsCellItem } from "@mui/x-data-grid";
+
+import {
+  Box,
+  Button,
+  Grid,
+  IconButton,
+  Modal,
+  Paper,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+
 import SuperAdminService from "../../../../../Services/superadmin";
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import { useContext, useEffect, useState } from "react";
-import {  useNavigate } from "react-router-dom";
-import ArrowBackOutlinedIcon from '@mui/icons-material/ArrowBackOutlined';
+
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import CloseIcon from "@mui/icons-material/Close";
-import { DataContext } from "../../../../../DataContext";
-import DirecotoryCard from "./addFoldertoDir/DirectoryCard";
-import DirectoryCards from "./addFoldertoDir";
+
 import AddCircleOutlineOutlinedIcon from "@mui/icons-material/AddCircleOutlineOutlined";
 
-const AddSubDirectory =() =>{
-         // -----------------------------------------------------Add sub Directory to Directory---------------------------------------
-      
+const AddSubDirectory = () => {
+  // -----------------------------------------------------Add sub Directory to Directory---------------------------------------
+
   const [openModal, setOpenModal] = useState(false);
-  const storedId = sessionStorage.getItem('directoryId');
+  const storedId = sessionStorage.getItem("directoryId");
   const idString = sessionStorage.getItem("UserId"); // Retrieves the UserId as a string
   const CurrentUser = Number(idString);
 
@@ -47,7 +52,6 @@ const AddSubDirectory =() =>{
   };
   const navigates = useNavigate();
   const handleClickNavigateSPage = () => {
- 
     setTimeout(() => {
       navigates(0);
     }, 3000);
@@ -66,7 +70,7 @@ const AddSubDirectory =() =>{
 
         setAddFolder({
           name: "",
-          dir:0,
+          dir: 0,
           created_by: 0,
         });
 
@@ -79,11 +83,9 @@ const AddSubDirectory =() =>{
     }
   };
   let navigate = useNavigate();
-  const  navigateRoute =()=>{
-    
+  const navigateRoute = () => {
     navigate(`/afCards`);
-   
-   }
+  };
 
   // ============================================================================Code For  Add User Component===============================================================
 
@@ -128,10 +130,6 @@ const AddSubDirectory =() =>{
                 display={"flex"}
                 flexDirection={"row"}
                 justifyContent={"space-between"}
-                // sx={{
-                //   backgroundColor: "#CDF0EA",
-                //   boxShadow: 5,
-                // }}
               >
                 <Box
                   className="textname"
@@ -192,9 +190,9 @@ const AddSubDirectory =() =>{
       </Grid>
     </Modal>
   );
-    return(
-        <Box>
-        <Box
+  return (
+    <Box>
+      <Box
         display="flex"
         justifyContent="flex-start"
         alignItems={"center"}
@@ -205,9 +203,7 @@ const AddSubDirectory =() =>{
           <Grid item xs="1" sm="1" md="1" lg="1" xl="1">
             <Box>
               <Tooltip title="Back">
-                <IconButton 
-                 onClick={navigateRoute}
-                >
+                <IconButton onClick={navigateRoute}>
                   <ArrowBackOutlinedIcon
                     variant="outlined"
                     sx={{ color: "black" }}
@@ -227,7 +223,7 @@ const AddSubDirectory =() =>{
                 <Tooltip title="Add Version">
                   <Button
                     size="small"
-                     onClick={handleOpenModal}
+                    onClick={handleOpenModal}
                     startIcon={<AddCircleOutlineOutlinedIcon color="black" />}
                     sx={{
                       m: 1,
@@ -253,13 +249,10 @@ const AddSubDirectory =() =>{
             </Box>
           </Grid>
         </Grid>
-      
       </Box>
       {AddVersionModal}
-        <ToastContainer style={{ zIndex: "1000000" }} />
-      </Box>
-      
-    );
-
-}
+      <ToastContainer style={{ zIndex: "1000000" }} />
+    </Box>
+  );
+};
 export default AddSubDirectory;
